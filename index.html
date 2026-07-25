@@ -353,6 +353,17 @@
   .reason-chip:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
   /* listening */
+  .item-tag {
+    align-self: center;
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 11px;
+    color: var(--ink-soft);
+    background: var(--surface-2);
+    border-radius: 999px;
+    padding: 3px 10px;
+    letter-spacing: 0.03em;
+  }
   .listen-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -507,7 +518,8 @@
 
     <div class="footnote">
       データはこの端末のブラウザ内にのみ保存されます。<br>
-      HSK4真題4セット（41004・41005・41006・41007）のリスニング180問・語彙50語を収録。
+      HSK4真題4セット（41004・41005・41006・41007）のリスニング180問・語彙50語を収録。<br>
+      <button id="resetBtn" style="background:none;border:none;color:var(--ink-soft);text-decoration:underline;font-size:11px;cursor:pointer;padding:6px 0;font-family:inherit;">進捗をリセット</button>
     </div>
   </div>
 
@@ -894,6 +906,12 @@
     return it.hanzi ? "vocab" : "listening";
   }
 
+  function itemLabel(id) {
+    var m = id.match(/^l-(\d+)-(\d+)$/);
+    if (m) return m[1] + " · Q" + Number(m[2]);
+    return id;
+  }
+
   function renderStep() {
     stopAllAudio();
     var body = document.getElementById("sessionBody");
@@ -961,6 +979,7 @@
 
     body.innerHTML =
       '<div class="card" id="flipCard" tabindex="0" role="button" aria-label="タップして答えを見る">' +
+        '<div class="item-tag">' + itemLabel(it.id) + '</div>' +
         '<div class="hanzi-row">' +
           '<div class="hanzi">' + it.hanzi + '</div>' +
           '<button class="mini-play-btn" id="vocabPlayBtn" aria-label="発音を再生">▶</button>' +
@@ -1058,6 +1077,7 @@
 
     body.innerHTML =
       '<div class="listen-card">' +
+        '<div class="item-tag">' + itemLabel(it.id) + '</div>' +
         '<button class="play-btn" id="playBtn" aria-label="音声を再生">▶</button>' +
         '<div class="listen-hint">タップして音声を聞く</div>' +
         '<div class="question-text">' + it.question + '</div>' +
@@ -1096,6 +1116,13 @@
 
   window.startSession = startSession;
   window.goHome = goHome;
+
+  document.getElementById("resetBtn").addEventListener("click", function () {
+    if (!confirm("これまでの学習進捗（連続日数・習得状況）をすべて消去します。よろしいですか？")) return;
+    localStorage.removeItem(STORE_KEY);
+    state = loadState();
+    renderHome();
+  });
 
   renderHome();
 })();
