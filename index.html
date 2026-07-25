@@ -1,0 +1,1070 @@
+<title>每日一练 - HSK4毎日トレーニング</title>
+<style>
+  :root {
+    --bg: #EFF1EC;
+    --surface: #FFFFFF;
+    --surface-2: #E4E7E0;
+    --ink: #1F2A24;
+    --ink-soft: #55605A;
+    --accent: #2F6F5E;
+    --accent-soft: #DCEAE4;
+    --danger: #AD4A3A;
+    --danger-soft: #F3DEDA;
+    --border: #D9DCD3;
+    --font-ui: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
+    --font-hanzi: "Songti SC", "Noto Serif SC", "Hiragino Serif", serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121613;
+      --surface: #1B211D;
+      --surface-2: #232B25;
+      --ink: #E7E9E2;
+      --ink-soft: #A8AEA4;
+      --accent: #5FBF9E;
+      --accent-soft: #1E3B32;
+      --danger: #E2897A;
+      --danger-soft: #3A211E;
+      --border: #303830;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121613;
+    --surface: #1B211D;
+    --surface-2: #232B25;
+    --ink: #E7E9E2;
+    --ink-soft: #A8AEA4;
+    --accent: #5FBF9E;
+    --accent-soft: #1E3B32;
+    --danger: #E2897A;
+    --danger-soft: #3A211E;
+    --border: #303830;
+  }
+  :root[data-theme="light"] {
+    --bg: #EFF1EC;
+    --surface: #FFFFFF;
+    --surface-2: #E4E7E0;
+    --ink: #1F2A24;
+    --ink-soft: #55605A;
+    --accent: #2F6F5E;
+    --accent-soft: #DCEAE4;
+    --danger: #AD4A3A;
+    --danger-soft: #F3DEDA;
+    --border: #D9DCD3;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-ui);
+    -webkit-font-smoothing: antialiased;
+  }
+  .shell {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100dvh;
+    padding: 20px 18px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  header.topbar {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  header.topbar h1 {
+    font-size: 19px;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.01em;
+  }
+  header.topbar .sub {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+  .streak-chip {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .streak-chip .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 14px;
+  }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .stat-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px 10px;
+    text-align: center;
+  }
+  .stat-tile .n {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .stat-tile .l {
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  .mode-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .mode-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    color: inherit;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .mode-card:active { transform: scale(0.98); }
+  .mode-card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .mode-card .glyph {
+    font-family: var(--font-hanzi);
+    font-size: 26px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .mode-card.review .glyph {
+    background: var(--danger-soft);
+    color: var(--danger);
+  }
+  .mode-card .body { flex: 1; min-width: 0; }
+  .mode-card .title { font-size: 15px; font-weight: 700; }
+  .mode-card .desc { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+  .mode-card .badge {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    flex-shrink: 0;
+  }
+
+  .footnote {
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-align: center;
+    line-height: 1.6;
+    margin-top: auto;
+    padding-top: 10px;
+  }
+
+  /* session view */
+  .session { display: none; flex-direction: column; gap: 16px; flex: 1; }
+  .session.active { display: flex; }
+  .home-view.hidden { display: none; }
+
+  .session-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .back-btn {
+    background: none;
+    border: none;
+    color: var(--ink-soft);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px 8px 4px 0;
+    line-height: 1;
+  }
+  .back-btn:focus-visible { outline: 2px solid var(--accent); border-radius: 6px; }
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    background: var(--surface-2);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 999px;
+    transition: width 0.25s ease;
+  }
+  .progress-count {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px 22px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    min-height: 260px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .hanzi-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .hanzi {
+    font-family: var(--font-hanzi);
+    font-size: 56px;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+  .mini-play-btn {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mini-play-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .reveal-hint {
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .answer-block { display: none; flex-direction: column; gap: 10px; width: 100%; }
+  .answer-block.show { display: flex; }
+  .pinyin {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--accent);
+  }
+  .meaning {
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .example-block {
+    border-top: 1px dashed var(--border);
+    padding-top: 10px;
+    text-align: left;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .example-block .ex-zh {
+    font-family: var(--font-hanzi);
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .example-block .ex-pinyin {
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  .grade-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .grade-btn {
+    display: none;
+    border: none;
+    border-radius: 14px;
+    padding: 16px 10px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .grade-btn.show { display: block; }
+  .grade-btn.wrong { background: var(--danger-soft); color: var(--danger); }
+  .grade-btn.right { background: var(--accent-soft); color: var(--accent); }
+  .grade-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+  .reason-row {
+    display: none;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .reason-row.show { display: flex; }
+  .reason-chip {
+    border: 1px solid var(--danger);
+    background: var(--danger-soft);
+    color: var(--danger);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .reason-chip:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+  /* listening */
+  .listen-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 26px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .play-btn {
+    align-self: center;
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    border: none;
+    background: var(--accent);
+    color: var(--surface);
+    font-size: 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .play-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .listen-hint { text-align: center; font-size: 12px; color: var(--ink-soft); }
+  .question-text { font-size: 15px; font-weight: 600; text-align: center; }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option-btn {
+    text-align: left;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .option-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .option-btn.correct { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  .option-btn.incorrect { background: var(--danger-soft); border-color: var(--danger); color: var(--danger); }
+  .option-btn[disabled] { cursor: default; }
+  .transcript {
+    display: none;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    border-top: 1px dashed var(--border);
+    padding-top: 12px;
+  }
+  .transcript.show { display: block; }
+  .transcript .ja {
+    display: block;
+    margin-top: 6px;
+    color: var(--ink);
+    opacity: 0.85;
+  }
+  .next-btn {
+    display: none;
+    border: none;
+    border-radius: 14px;
+    padding: 15px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    background: var(--ink);
+    color: var(--bg);
+    cursor: pointer;
+  }
+  .next-btn.show { display: block; }
+  .next-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* end of session */
+  .done-view { display: none; flex: 1; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; }
+  .done-view.show { display: flex; }
+  .done-view .big { font-size: 40px; }
+  .done-view .msg { font-size: 15px; color: var(--ink-soft); }
+  .home-btn {
+    border: none;
+    border-radius: 14px;
+    padding: 14px 28px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    background: var(--accent);
+    color: var(--surface);
+    cursor: pointer;
+  }
+  .home-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+  .empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 14px;
+    padding: 20px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+
+<div class="shell">
+
+  <div class="home-view" id="homeView">
+    <header class="topbar">
+      <div>
+        <h1>每日一练</h1>
+        <div class="sub">HSK4 毎日トレーニング</div>
+      </div>
+      <div class="streak-chip">🔥<span class="num" id="streakNum">0</span>日</div>
+    </header>
+
+    <div class="stat-row">
+      <div class="stat-tile"><div class="n" id="statDue">0</div><div class="l">今日の予定</div></div>
+      <div class="stat-tile"><div class="n" id="statReview">0</div><div class="l">苦手</div></div>
+      <div class="stat-tile"><div class="n" id="statMastered">0</div><div class="l">習得済み</div></div>
+    </div>
+
+    <div class="mode-list">
+      <button class="mode-card" onclick="startSession('vocab')">
+        <div class="glyph">词</div>
+        <div class="body">
+          <div class="title">単語カード</div>
+          <div class="desc">語彙を見て、意味を思い出す</div>
+        </div>
+        <div class="badge" id="badgeVocab">0</div>
+      </button>
+      <button class="mode-card" onclick="startSession('listening')">
+        <div class="glyph">听</div>
+        <div class="body">
+          <div class="title">リスニング</div>
+          <div class="desc">音声を聞いて、正解を選ぶ</div>
+        </div>
+        <div class="badge" id="badgeListening">0</div>
+      </button>
+      <button class="mode-card review" onclick="startSession('review')">
+        <div class="glyph">错</div>
+        <div class="body">
+          <div class="title">苦手だけ復習</div>
+          <div class="desc">間違えた問題だけをもう一度</div>
+        </div>
+        <div class="badge" id="badgeReview">0</div>
+      </button>
+    </div>
+
+    <div class="footnote">
+      データはこの端末のブラウザ内にのみ保存されます。<br>
+      HSK4真題4セット（41004・41005・41006・41007）のリスニング180問・語彙50語を収録。
+    </div>
+  </div>
+
+  <div class="session" id="sessionView">
+    <div class="session-head">
+      <button class="back-btn" onclick="goHome()" aria-label="ホームに戻る">←</button>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-count" id="progressCount">0/0</div>
+    </div>
+
+    <div id="sessionBody"></div>
+
+    <div class="done-view" id="doneView">
+      <div class="big">✅</div>
+      <div class="msg" id="doneMsg"></div>
+      <button class="home-btn" onclick="goHome()">ホームに戻る</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---- HSK4真題4セット（41004・41005・41006・41007）から抽出した実データ ----
+  var VOCAB = [
+    {id:"v1",hanzi:"伤心",pinyin:"shāng xīn",meaning:"悲しむ、心を痛める",example:{zh:"听到这个消息，她伤心地哭了起来。",pinyin:"Tīng dào zhège xiāoxi, tā shāngxīn de kū le qǐlái.",ja:"この知らせを聞いて、彼女は悲しくて泣き出した。"}},
+    {id:"v2",hanzi:"按时",pinyin:"àn shí",meaning:"時間通りに",example:{zh:"医生让我按时吃药，不能忘记。",pinyin:"Yīshēng ràng wǒ ànshí chī yào, bù néng wàngjì.",ja:"医者は私に時間通りに薬を飲むように言った、忘れてはいけない。"}},
+    {id:"v3",hanzi:"距离",pinyin:"jù lí",meaning:"距離",example:{zh:"我家离公司的距离不算远，坐地铁只要二十分钟。",pinyin:"Wǒ jiā lí gōngsī de jùlí bú suàn yuǎn, zuò dìtiě zhǐ yào èrshí fēnzhōng.",ja:"私の家から会社までの距離はそれほど遠くなく、地下鉄で20分しかかからない。"}},
+    {id:"v4",hanzi:"坚持",pinyin:"jiān chí",meaning:"堅持する、頑張り続ける",example:{zh:"虽然很累，但他还是坚持每天跑步。",pinyin:"Suīrán hěn lèi, dàn tā háishi jiānchí měitiān pǎobù.",ja:"疲れているけれど、彼は毎日走ることを続けている。"}},
+    {id:"v5",hanzi:"耐心",pinyin:"nài xīn",meaning:"根気、辛抱強い",example:{zh:"教小孩子写字需要很大的耐心。",pinyin:"Jiāo xiǎoháizi xiězì xūyào hěn dà de nàixīn.",ja:"子供に字を教えるには大きな忍耐が必要だ。"}},
+    {id:"v6",hanzi:"个子",pinyin:"gè zi",meaning:"背丈、身長",example:{zh:"他个子很高，一眼就能在人群中看到他。",pinyin:"Tā gèzi hěn gāo, yìyǎn jiù néng zài rénqún zhōng kàndào tā.",ja:"彼は背が高く、人ごみの中でもすぐに見つけられる。"}},
+    {id:"v7",hanzi:"严格",pinyin:"yán gé",meaning:"厳格である",example:{zh:"这位老师对学生要求很严格。",pinyin:"Zhè wèi lǎoshī duì xuésheng yāoqiú hěn yángé.",ja:"この先生は学生に対してとても厳しい。"}},
+    {id:"v8",hanzi:"后悔",pinyin:"hòu huǐ",meaning:"後悔する",example:{zh:"我很后悔当时没有听你的建议。",pinyin:"Wǒ hěn hòuhuǐ dāngshí méiyǒu tīng nǐ de jiànyì.",ja:"あのときあなたの助言を聞かなかったことをとても後悔している。"}},
+    {id:"v9",hanzi:"温度",pinyin:"wēn dù",meaning:"温度",example:{zh:"今天的温度比昨天低了很多，出门要多穿点儿。",pinyin:"Jīntiān de wēndù bǐ zuótiān dī le hěn duō, chūmén yào duō chuān diǎnr.",ja:"今日の気温は昨日よりずっと低いので、出かけるときは厚着したほうがいい。"}},
+    {id:"v10",hanzi:"直接",pinyin:"zhí jiē",meaning:"直接に",example:{zh:"有什么问题你可以直接跟我说。",pinyin:"Yǒu shénme wèntí nǐ kěyǐ zhíjiē gēn wǒ shuō.",ja:"何か問題があれば直接私に言ってください。"}},
+    {id:"v11",hanzi:"重点",pinyin:"zhòng diǎn",meaning:"重点、ポイント",example:{zh:"复习的时候要抓住重点，别浪费时间。",pinyin:"Fùxí de shíhou yào zhuāzhù zhòngdiǎn, bié làngfèi shíjiān.",ja:"復習するときは重要な点をしっかりつかんで、時間を無駄にしないようにしよう。"}},
+    {id:"v12",hanzi:"提醒",pinyin:"tí xǐng",meaning:"注意を促す、気づかせる",example:{zh:"谢谢你提醒我，不然我就忘了今天的会议。",pinyin:"Xièxie nǐ tíxǐng wǒ, bùrán wǒ jiù wàng le jīntiān de huìyì.",ja:"教えてくれてありがとう、そうでなければ今日の会議を忘れるところだった。"}},
+    {id:"v13",hanzi:"尊重",pinyin:"zūn zhòng",meaning:"尊重する",example:{zh:"无论对方是谁，我们都应该尊重他的意见。",pinyin:"Wúlùn duìfāng shì shéi, wǒmen dōu yīnggāi zūnzhòng tā de yìjiàn.",ja:"相手が誰であっても、私たちはその人の意見を尊重すべきだ。"}},
+    {id:"v14",hanzi:"幽默",pinyin:"yōu mò",meaning:"ユーモラスな、ユーモアがある",example:{zh:"他说话很幽默，总能让大家笑起来。",pinyin:"Tā shuōhuà hěn yōumò, zǒng néng ràng dàjiā xiào qǐlái.",ja:"彼の話し方はとてもユーモラスで、いつもみんなを笑わせる。"}},
+    {id:"v15",hanzi:"竞争",pinyin:"jìng zhēng",meaning:"競争する",example:{zh:"现在市场上的竞争越来越激烈。",pinyin:"Xiànzài shìchǎng shàng de jìngzhēng yuèláiyuè jīliè.",ja:"今、市場での競争はますます激しくなっている。"}},
+    {id:"v16",hanzi:"举办",pinyin:"jǔ bàn",meaning:"開催する",example:{zh:"学校下个月要举办一场篮球比赛。",pinyin:"Xuéxiào xià ge yuè yào jǔbàn yì chǎng lánqiú bǐsài.",ja:"学校は来月バスケットボールの試合を開催する予定だ。"}},
+    {id:"v17",hanzi:"可是",pinyin:"kě shì",meaning:"しかし、でも",example:{zh:"我很想去旅游，可是最近工作太忙了。",pinyin:"Wǒ hěn xiǎng qù lǚyóu, kěshì zuìjìn gōngzuò tài máng le.",ja:"旅行に行きたいけれど、最近仕事がとても忙しい。"}},
+    {id:"v18",hanzi:"味道",pinyin:"wèi dào",meaning:"味",example:{zh:"这道菜的味道有点儿咸，你尝尝。",pinyin:"Zhè dào cài de wèidao yǒudiǎnr xián, nǐ chángchang.",ja:"この料理の味は少し塩辛い、食べてみて。"}},
+    {id:"v19",hanzi:"食品",pinyin:"shí pǐn",meaning:"食品",example:{zh:"超市里的食品种类越来越丰富了。",pinyin:"Chāoshì lǐ de shípǐn zhǒnglèi yuèláiyuè fēngfù le.",ja:"スーパーの食品の種類はますます豊富になっている。"}},
+    {id:"v20",hanzi:"流行",pinyin:"liú xíng",meaning:"流行する",example:{zh:"这种颜色的衣服今年很流行。",pinyin:"Zhè zhǒng yánsè de yīfu jīnnián hěn liúxíng.",ja:"この色の服は今年とても流行している。"}},
+    {id:"v21",hanzi:"主动",pinyin:"zhǔ dòng",meaning:"積極的だ、自発的だ",example:{zh:"遇到问题应该主动去解决，不要总是等别人帮忙。",pinyin:"Yùdào wèntí yīnggāi zhǔdòng qù jiějué, búyào zǒngshì děng biéren bāngmáng.",ja:"問題に出会ったら自分から進んで解決すべきで、いつも人の助けを待っていてはいけない。"}},
+    {id:"v22",hanzi:"重新",pinyin:"chóng xīn",meaning:"改めて、再び",example:{zh:"这份报告写得不好，请你重新写一遍。",pinyin:"Zhè fèn bàogào xiě de bù hǎo, qǐng nǐ chóngxīn xiě yí biàn.",ja:"この報告書はよく書けていないので、もう一度書き直してください。"}},
+    {id:"v23",hanzi:"来不及",pinyin:"lái bu jí",meaning:"間に合わない",example:{zh:"再不出发就来不及赶飞机了。",pinyin:"Zài bù chūfā jiù láibují gǎn fēijī le.",ja:"今すぐ出発しないと飛行機に間に合わなくなる。"}},
+    {id:"v24",hanzi:"严重",pinyin:"yán zhòng",meaning:"深刻だ、重大だ",example:{zh:"这次事故造成了严重的经济损失。",pinyin:"Zhè cì shìgù zàochéng le yánzhòng de jīngjì sǔnshī.",ja:"今回の事故は深刻な経済的損失をもたらした。"}},
+    {id:"v25",hanzi:"大概",pinyin:"dà gài",meaning:"大体、おそらく",example:{zh:"从这儿到火车站大概需要半个小时。",pinyin:"Cóng zhèr dào huǒchēzhàn dàgài xūyào bàn ge xiǎoshí.",ja:"ここから駅までだいたい30分かかる。"}},
+    {id:"v26",hanzi:"适应",pinyin:"shì yìng",meaning:"適応する",example:{zh:"刚到北京的时候，我花了很长时间才适应那里的气候。",pinyin:"Gāng dào Běijīng de shíhou, wǒ huā le hěn cháng shíjiān cái shìyìng nàli de qìhòu.",ja:"北京に着いたばかりの頃、私はその土地の気候に慣れるのにとても長い時間がかかった。"}},
+    {id:"v27",hanzi:"污染",pinyin:"wū rǎn",meaning:"汚染する",example:{zh:"为了保护环境，我们应该减少空气污染。",pinyin:"Wèile bǎohù huánjìng, wǒmen yīnggāi jiǎnshǎo kōngqì wūrǎn.",ja:"環境を守るために、私たちは大気汚染を減らすべきだ。"}},
+    {id:"v28",hanzi:"及时",pinyin:"jí shí",meaning:"タイムリーに、すぐに",example:{zh:"幸好送医院及时，病人现在没有危险了。",pinyin:"Xìnghǎo sòng yīyuàn jíshí, bìngrén xiànzài méiyǒu wēixiǎn le.",ja:"幸い病院に運ぶのが間に合ったので、患者は今はもう危険な状態ではない。"}},
+    {id:"v29",hanzi:"钥匙",pinyin:"yào shi",meaning:"鍵",example:{zh:"我把家里的钥匙忘在办公室了。",pinyin:"Wǒ bǎ jiā lǐ de yàoshi wàng zài bàngōngshì le.",ja:"家の鍵をオフィスに忘れてきてしまった。"}},
+    {id:"v30",hanzi:"回忆",pinyin:"huí yì",meaning:"思い出す、回想する",example:{zh:"每次听到这首歌，我都会回忆起大学时代。",pinyin:"Měi cì tīngdào zhè shǒu gē, wǒ dōu huì huíyì qǐ dàxué shídài.",ja:"この歌を聞くたびに、大学時代を思い出す。"}},
+    {id:"v31",hanzi:"适合",pinyin:"shì hé",meaning:"適する、ふさわしい",example:{zh:"这件衣服的颜色很适合你。",pinyin:"Zhè jiàn yīfu de yánsè hěn shìhé nǐ.",ja:"この服の色はあなたにとても似合っている。"}},
+    {id:"v32",hanzi:"由于",pinyin:"yóu yú",meaning:"～のため、～によって",example:{zh:"由于天气原因，今天的比赛取消了。",pinyin:"Yóuyú tiānqì yuányīn, jīntiān de bǐsài qǔxiāo le.",ja:"天候の理由により、今日の試合は中止になった。"}},
+    {id:"v33",hanzi:"页",pinyin:"yè",meaning:"ページ",example:{zh:"请大家翻到课本第三十页。",pinyin:"Qǐng dàjiā fān dào kèběn dì sānshí yè.",ja:"皆さん教科書の30ページを開いてください。"}},
+    {id:"v34",hanzi:"收拾",pinyin:"shōu shi",meaning:"片付ける",example:{zh:"出发前，我得先把房间收拾一下。",pinyin:"Chūfā qián, wǒ děi xiān bǎ fángjiān shōushi yíxià.",ja:"出発する前に、まず部屋を片付けなければならない。"}},
+    {id:"v35",hanzi:"不过",pinyin:"bú guò",meaning:"しかし、ただ",example:{zh:"这家饭馆儿菜很好吃，不过价格有点儿贵。",pinyin:"Zhè jiā fànguǎnr cài hěn hǎochī, búguò jiàgé yǒudiǎnr guì.",ja:"このレストランの料理はとても美味しいが、値段が少し高い。"}},
+    {id:"v36",hanzi:"毕业",pinyin:"bì yè",meaning:"卒業する",example:{zh:"他去年从大学毕业，现在在一家公司工作。",pinyin:"Tā qùnián cóng dàxué bìyè, xiànzài zài yì jiā gōngsī gōngzuò.",ja:"彼は去年大学を卒業し、今はある会社で働いている。"}},
+    {id:"v37",hanzi:"窄",pinyin:"zhǎi",meaning:"狭い",example:{zh:"这条路太窄了，大车开不进去。",pinyin:"Zhè tiáo lù tài zhǎi le, dà chē kāi bú jìnqù.",ja:"この道は狭すぎて、大きな車は入れない。"}},
+    {id:"v38",hanzi:"误会",pinyin:"wù huì",meaning:"誤解する",example:{zh:"都是一场误会，其实我没有生你的气。",pinyin:"Dōu shì yì chǎng wùhuì, qíshí wǒ méiyǒu shēng nǐ de qì.",ja:"これはすべて誤解で、実は私はあなたに怒っていない。"}},
+    {id:"v39",hanzi:"羡慕",pinyin:"xiàn mù",meaning:"うらやむ",example:{zh:"我很羡慕她能说一口流利的英语。",pinyin:"Wǒ hěn xiànmù tā néng shuō yì kǒu liúlì de Yīngyǔ.",ja:"彼女が流暢な英語を話せることを私はとてもうらやましく思う。"}},
+    {id:"v40",hanzi:"详细",pinyin:"xiáng xì",meaning:"詳しい、詳細である",example:{zh:"请把事情的经过详细地告诉我。",pinyin:"Qǐng bǎ shìqing de jīngguò xiángxì de gàosu wǒ.",ja:"事の経緯を詳しく私に教えてください。"}},
+    {id:"v41",hanzi:"偶尔",pinyin:"ǒu ěr",meaning:"たまに、時折",example:{zh:"我平时很少喝咖啡，偶尔喝一杯。",pinyin:"Wǒ píngshí hěn shǎo hē kāfēi, ǒu'ěr hē yì bēi.",ja:"私は普段コーヒーをほとんど飲まないが、たまに一杯飲む。"}},
+    {id:"v42",hanzi:"印象",pinyin:"yìn xiàng",meaning:"印象",example:{zh:"第一次见面，他给我留下了很好的印象。",pinyin:"Dì yī cì jiànmiàn, tā gěi wǒ liú xià le hěn hǎo de yìnxiàng.",ja:"初めて会ったとき、彼は私に良い印象を残した。"}},
+    {id:"v43",hanzi:"经验",pinyin:"jīng yàn",meaning:"経験",example:{zh:"这位老师有二十年的教学经验。",pinyin:"Zhè wèi lǎoshī yǒu èrshí nián de jiàoxué jīngyàn.",ja:"この先生には20年の教育経験がある。"}},
+    {id:"v44",hanzi:"一共",pinyin:"yí gòng",meaning:"合計で、全部で",example:{zh:"这些东西一共多少钱？",pinyin:"Zhèxiē dōngxi yígòng duōshao qián?",ja:"これらの品物は全部でいくらですか。"}},
+    {id:"v45",hanzi:"安排",pinyin:"ān pái",meaning:"手配する、段取りする",example:{zh:"老师帮我们安排了下周的参观活动。",pinyin:"Lǎoshī bāng wǒmen ānpái le xià zhōu de cānguān huódòng.",ja:"先生は私たちのために来週の見学活動を手配してくれた。"}},
+    {id:"v46",hanzi:"扔",pinyin:"rēng",meaning:"捨てる、投げる",example:{zh:"别把垃圾扔在地上，扔进垃圾桶里。",pinyin:"Bié bǎ lājī rēng zài dì shàng, rēng jìn lājītǒng lǐ.",ja:"ゴミを地面に捨てないで、ゴミ箱に捨ててください。"}},
+    {id:"v47",hanzi:"准时",pinyin:"zhǔn shí",meaning:"時間通りに",example:{zh:"会议九点开始，请大家准时到。",pinyin:"Huìyì jiǔ diǎn kāishǐ, qǐng dàjiā zhǔnshí dào.",ja:"会議は9時に始まりますので、皆さん時間通りにお越しください。"}},
+    {id:"v48",hanzi:"份",pinyin:"fèn",meaning:"（部数・人数分を数える量詞）",example:{zh:"请给我一份炒饭，谢谢。",pinyin:"Qǐng gěi wǒ yí fèn chǎofàn, xièxie.",ja:"チャーハンを一つください、ありがとう。"}},
+    {id:"v49",hanzi:"恐怕",pinyin:"kǒng pà",meaning:"おそらく～だろう",example:{zh:"天这么黑，恐怕要下雨了。",pinyin:"Tiān zhème hēi, kǒngpà yào xiàyǔ le.",ja:"空がこんなに暗いので、たぶん雨が降りそうだ。"}},
+    {id:"v50",hanzi:"骄傲",pinyin:"jiāo ào",meaning:"誇りに思う／傲慢である",example:{zh:"儿子考上了大学，父母都感到很骄傲。",pinyin:"Érzi kǎoshàng le dàxué, fùmǔ dōu gǎndào hěn jiāo'ào.",ja:"息子が大学に合格し、両親はとても誇らしく思っている。"}}
+  ];
+
+  var LISTENING = [
+    {id:"l-41004-01",transcript:"很多妻子都希望自己的丈夫能记住他们结婚的日子，并且能在每年的这一天收到他送的礼物。",question:"妻子希望丈夫陪她逛街。",options:["对","错"],answer:1,transcriptJa:"多くの妻は、夫が二人の結婚記念日を覚えていて、毎年その日に贈り物をもらえることを望んでいる。"},
+    {id:"l-41004-02",transcript:"抱歉，这张表格您填得不对，请稍等一下，我再拿一张新的给您，请您重新填写一下。",question:"表格填写错了。",options:["对","错"],answer:0,transcriptJa:"申し訳ございません、こちらの用紙の記入に誤りがあります。少々お待ちください、新しい用紙をお持ちしますので、もう一度ご記入をお願いします。"},
+    {id:"l-41004-03",transcript:"去面试的时候衣服要穿得正式一些，不能太随便，穿戴整齐表示你对面试者的尊重，会给他留下一个好的印象。",question:"面试时必须准时到。",options:["对","错"],answer:1,transcriptJa:"面接に行くときは服装をきちんと正式にすべきで、あまりカジュアルにしてはいけない。きちんとした服装は面接官への敬意を表し、良い印象を与える。"},
+    {id:"l-41004-04",transcript:"出汗可以影响人的体温。大量运动后人会觉得很热，这时出汗可以使体温降低。相反，在寒冷的环境下，少出汗，可以留住体内的热量。",question:"多出汗对身体好。",options:["对","错"],answer:1,transcriptJa:"汗をかくことは体温に影響する。激しい運動をした後は暑く感じるが、このとき汗をかくことで体温を下げることができる。逆に寒い環境では、汗を少なくかくことで体内の熱を保つことができる。"},
+    {id:"l-41004-05",transcript:"狗是很聪明的动物，但要让它完成一些任务，只教一次是不可能让它马上就记住的，应该耐心地一遍一遍地教给它，使它熟悉，然后才能学会。",question:"教狗学习需要耐心。",options:["对","错"],answer:0,transcriptJa:"犬はとても賢い動物だが、何かの作業を覚えさせるには、一度教えただけではすぐに覚えさせることはできない。根気強く何度も教えて慣れさせて、それから初めて覚えられるのだ。"},
+    {id:"l-41004-06",transcript:"到机场后，他才发现忘记带信用卡了，他乘坐的航班大约半小时后就要起飞了，他只好改签下一趟航班。",question:"他没带护照。",options:["对","错"],answer:1,transcriptJa:"空港に着いてから、彼はクレジットカードを忘れてきたことに気づいた。彼が乗る便はあと30分ほどで出発するため、彼は仕方なく次の便に変更した。"},
+    {id:"l-41004-07",transcript:"现在朋友之间流行发各种幽默短信，这给我们的生活带来一些快乐。但是如果同样的短信你收到了三四遍，再幽默的短信你也笑不出来了。",question:"发短信很麻烦。",options:["对","错"],answer:1,transcriptJa:"最近友人同士でいろいろなユーモラスなショートメッセージを送り合うのが流行っていて、私たちの生活に楽しさをもたらしている。しかし同じメッセージを3、4回も受け取ると、どんなに面白いメッセージでも笑えなくなる。"},
+    {id:"l-41004-08",transcript:"舞会上最好不要直接拒绝别人的邀请，如果不得不拒绝，可以告诉他：“我有些累了，想休息一下。”之后也不要很快又接受其他人的邀请。",question:"不要直接拒绝邀请。",options:["对","错"],answer:0,transcriptJa:"ダンスパーティーでは、人からの誘いを直接断らない方がよい。もしどうしても断らなければならない場合は、「少し疲れたので休みたいです」と伝えるとよい。その後すぐに他の人の誘いを受けるのも避けた方がよい。"},
+    {id:"l-41004-09",transcript:"太阳对我们的影响实在是太大了，它每天为地球提供阳光和热量，保证动植物在合适温度下正常生长，这种情况在将来至少四十亿年不会改变。",question:"太阳对大自然的影响很大。",options:["对","错"],answer:0,transcriptJa:"太陽が私たちに与える影響は本当に大きい。太陽は毎日地球に日光と熱を提供し、動植物が適した温度で正常に成長することを保証している。この状況は今後少なくとも40億年は変わらないだろう。"},
+    {id:"l-41004-10",transcript:"春天天气忽冷忽热，容易感冒，医生提醒人们要注意室内空气质量，早上起床后应该打开窗户换换空气。如果感冒了，要及时去医院。",question:"春天容易感冒。",options:["对","错"],answer:0,transcriptJa:"春は気温が急に寒くなったり暖かくなったりして、風邪を引きやすい。医者は、室内の空気の質に注意し、朝起きたら窓を開けて空気を入れ替えるよう呼びかけている。もし風邪を引いたら、すぐに病院に行くべきだ。"},
+    {id:"l-41004-11",transcript:"男：今天吃得太多了，肚子有点儿不舒服。\n女：喝点儿热茶可能会好一些。",question:"男的怎么了？",options:["想喝茶","啤酒喝多了","肚子不舒服","不想去医院"],answer:2,transcriptJa:"男：今日は食べ過ぎて、お腹が少し調子悪い。\n女：温かいお茶を少し飲むと楽になるかもしれないよ。"},
+    {id:"l-41004-12",transcript:"女：都九点了，你怎么还在睡懒觉？快起床吧。\n男：昨晚看网球比赛看到两点半，这不周六吗，平时哪能睡到九点？",question:"根据对话，可以知道什么？",options:["昨晚有比赛","比赛推迟了","男的很紧张","女的是记者"],answer:0,transcriptJa:"女：もう9時なのに、まだ寝坊してるの？早く起きて。\n男：昨夜テニスの試合を2時半まで見てたんだ。今日は土曜日じゃないか、普段は9時まで寝られないよ。"},
+    {id:"l-41004-13",transcript:"男：这件事让小刘负责怎么样？\n女：我觉得挺合适的，他就是学这个专业的，做事情也很仔细。",question:"女的觉得小刘怎么样？",options:["长得很帅","需要鼓励","不太成熟","符合要求"],answer:3,transcriptJa:"男：この件は劉くんに任せたらどうかな？\n女：それはぴったりだと思う。彼はまさにこの専門を学んでいたし、仕事も丁寧だから。"},
+    {id:"l-41004-14",transcript:"女：那位导游给我的感觉很不错，这几天我们玩得很愉快。\n男：同意，她的服务态度确实挺好，我们真应该好好谢谢她。",question:"他们打算感谢谁？",options:["警察","导游","服务员","售货员"],answer:1,transcriptJa:"女：あのガイドさん、すごく感じが良かったよね。ここ数日、楽しく過ごせた。\n男：同感だよ。彼女の対応は本当に良かった。ちゃんとお礼を言うべきだね。"},
+    {id:"l-41004-15",transcript:"男：小姐，您好，您想买什么家具？需要我为您介绍一下吗？\n女：谢谢，我想买沙发，有蓝色的吗？",question:"女的要买什么？",options:["沙发","空调","眼镜","袜子"],answer:0,transcriptJa:"男：いらっしゃいませ。どんな家具をお求めですか？ご案内しましょうか？\n女：ありがとう、ソファを買いたいのですが、青色のものはありますか？"},
+    {id:"l-41004-16",transcript:"女：真对不起，把您吵醒了。\n男：别客气，我正好也要起来活动活动了。",question:"男的刚才最可能在做什么？",options:["睡觉","看电视","弹钢琴","阅读杂志"],answer:0,transcriptJa:"女：本当にごめんなさい、起こしてしまって。\n男：気にしないで、ちょうど起きて体を動かそうと思っていたところだから。"},
+    {id:"l-41004-17",transcript:"男：奇怪，你忘记放糖了吗？这杯咖啡怎么这么苦？\n女：你的在那儿呢，这杯是我的，我的没放糖。",question:"他们在谈什么？",options:["蛋糕","果汁","饼干","咖啡"],answer:3,transcriptJa:"男：おかしいな、砂糖を入れ忘れた？このコーヒー、なんでこんなに苦いんだ？\n女：あなたのはあそこにあるよ。これは私のだから、私のは砂糖を入れてないの。"},
+    {id:"l-41004-18",transcript:"女：喂，你中午几点到？我请个假去火车站接你。\n男：不用专门来接我，我行李很少，你放心吧，家里见。",question:"男的是什么意思？",options:["不用来接","想提前回家","还有个约会","路上堵车了"],answer:0,transcriptJa:"女：もしもし、お昼何時に着くの？休みを取って駅まで迎えに行くよ。\n男：わざわざ迎えに来なくていいよ、荷物も少ないし。安心して、家で会おう。"},
+    {id:"l-41004-19",transcript:"男：晚上有什么安排吗？跟我们去游泳吧。\n女：不了，我爸今天过生日，家里来了一些亲戚，我得回去帮忙。",question:"今天是谁过生日？",options:["女儿","父亲","爷爷","奶奶"],answer:1,transcriptJa:"男：今夜は何か予定ある？一緒に泳ぎに行こうよ。\n女：やめておくわ。今日は父の誕生日で、家に親戚が来ているの。手伝いに帰らないと。"},
+    {id:"l-41004-20",transcript:"女：我今天做的酸菜鱼怎么样？你尝了吗？\n男：还可以，鱼肉很鲜，如果汤里再加一点儿盐就更好了。",question:"男的觉得鱼怎么样？",options:["比较咸","太辣了","不太新鲜","盐放少了"],answer:3,transcriptJa:"女：今日作った酸菜魚（サンツァイユー）はどう？食べてみた？\n男：まあまあだね、魚の身は新鮮だよ。スープにもう少し塩を足すともっと良くなると思う。"},
+    {id:"l-41004-21",transcript:"男：你现在在哪儿呢？找时间把咱们在公园照的照片发给我？\n女：抱歉，照相机刚被我妹借走了，暂时发不了，明天一定发给你。",question:"女的为什么现在不能发照片？",options:["生病了","相机借走了","正在收拾家","怕打扰男的"],answer:1,transcriptJa:"男：今どこにいるの？時間があるとき、公園で撮った写真を送ってくれる？\n女：ごめん、カメラをさっき妹に借りられちゃって、今は送れないの。明日必ず送るね。"},
+    {id:"l-41004-22",transcript:"女：你这条裤子脏死了，一起扔洗衣机里洗洗吧。\n男：等一下！口袋里还有两张电影票。",question:"他们俩最可能是什么关系？",options:["邻居","夫妻","司机和乘客","大夫和护士"],answer:1,transcriptJa:"女：あなたのこのズボン、すごく汚れてるね、洗濯機に入れて洗おう。\n男：ちょっと待って！ポケットに映画のチケットが2枚入ってる。"},
+    {id:"l-41004-23",transcript:"男：这张画儿挂这儿可以吗？\n女：这儿地方太小，有点儿窄，还是挂对面的墙上吧。",question:"女的是什么意见？",options:["挂张地图","注意节约","挂对面墙上","抬进厨房里"],answer:2,transcriptJa:"男：この絵、ここに掛けてもいい？\n女：ここは場所が小さくて、ちょっと狭いから、向かいの壁に掛けたほうがいいよ。"},
+    {id:"l-41004-24",transcript:"女：马上就要毕业了，你准备在学校附近租房子吗？\n男：学校附近太贵。离学校远点儿没关系，只要离地铁或者公交车站近就行。",question:"男的对房子有什么要求？",options:["楼层好","购物方便","交通方便","周围热闹"],answer:2,transcriptJa:"女：もうすぐ卒業だけど、学校の近くで部屋を借りるつもり？\n男：学校の近くは高すぎるよ。学校から少し遠くても構わない、地下鉄やバス停に近ければいいんだ。"},
+    {id:"l-41004-25",transcript:"男：去长城玩儿的同事，请明天到公司集合，九点出发，一共是十二位同事。现在还有人要报名吗？\n女：明天我们参观多长时间？大概几点能回来？",question:"女的关心什么？",options:["见面的地点","回来的时间","工资和奖金","公司的规定"],answer:1,transcriptJa:"男：万里の長城へ行く同僚は、明日会社に集合してください。9時出発で、合計12名の同僚です。今、参加を申し込みたい人はいますか？\n女：明日の見学はどのくらいの時間かかりますか？だいたい何時ごろ戻れますか？"},
+    {id:"l-41004-26",transcript:"女：好久不见，最近在忙什么呢？\n男：我在办签证，准备出国。\n女：你的生意不是做得很顺利吗？怎么突然想出国留学了？\n男：你误会了，我是去旅游。",question:"男的为什么要出国？",options:["读博士","去旅游","谈生意","学法律"],answer:1,transcriptJa:"女：お久しぶり、最近何を忙しくしてるの？\n男：ビザの手続きをしていて、出国する準備をしているんだ。\n女：あなたの仕事は順調じゃなかったの？どうして急に留学しようと思ったの？\n男：誤解だよ、旅行に行くんだ。"},
+    {id:"l-41004-27",transcript:"男：你穿这件衣服看起来又高又瘦，很漂亮。\n女：真的啊？太好了，你说我穿哪个颜色更好呢？\n男：你穿这个黄色的就行，不过白的也不错。\n女：那我再试试白的，两个比较一下。",question:"女的是什么意思？",options:["她变胖了","不能打折","想买衬衫","再试试白的"],answer:3,transcriptJa:"男：この服を着ると背が高くてスリムに見えて、きれいだよ。\n女：本当？よかった、どの色のほうがいいと思う？\n男：この黄色のでいいと思うけど、白いのも悪くないよ。\n女：じゃあもう一度白いのを試してみて、二つを比べてみるわ。"},
+    {id:"l-41004-28",transcript:"女：听说你大学二年级的时候就开始在广告公司工作了。\n男：是的，这让我积累了较为丰富的工作经验。\n女：这样做不会影响你的学习吗？\n男：我认为不会，实际工作能让我更理解书本上的知识。",question:"男的对参加工作怎么看？",options:["收入高","压力大","能积累经验","会影响学习"],answer:2,transcriptJa:"女：大学2年生のときからもう広告会社で働いていたと聞いたけど。\n男：そうだよ、おかげで比較的豊富な仕事の経験を積むことができた。\n女：それで勉強に影響しない？\n男：影響しないと思うよ、実際の仕事のおかげで教科書の知識をより理解できるんだ。"},
+    {id:"l-41004-29",transcript:"男：你研究生考试考得怎么样？\n女：数学可能考得不太理想。\n男：大家都觉得题挺难的。你复习那么长时间了，肯定没问题。\n女：谢谢！五号成绩就出来了，到时候就知道了。",question:"成绩什么时候出来？",options:["5号","15号","星期五","星期日"],answer:0,transcriptJa:"男：大学院の試験はどうだった？\n女：数学はあまり理想的にできなかったかも。\n男：みんな問題がかなり難しかったと言っているよ。あんなに長く復習したんだから、きっと大丈夫だよ。\n女：ありがとう！5日には結果が出るから、そのときにわかるね。"},
+    {id:"l-41004-30",transcript:"女：先生您好，您的座位在这儿。\n男：谢谢。请把菜单给我。\n女：给您，这个是今天的特价菜。\n男：我不吃羊肉，我先看看其他的菜吧。",question:"关于男的，可以知道什么？",options:["口渴了","迟到了","爱开玩笑","不吃羊肉"],answer:3,transcriptJa:"女：いらっしゃいませ、お客様のお席はこちらです。\n男：ありがとう。メニューをください。\n女：どうぞ、これは本日の特価メニューです。\n男：私は羊肉を食べないので、まず他の料理を見てみます。"},
+    {id:"l-41004-31",transcript:"男：你不是两点就出发了？难道路上花了两个多小时？\n女：我半路上跟另一辆车撞了，刚才把车送去修了。\n男：撞得严重吗？你怎么那么不小心！\n女：没事，不严重，就是把车门擦坏了。但恐怕一星期都不能开车了。",question:"关于女的，可以知道什么？",options:["撞车了","超速了","发烧了","住院了"],answer:0,transcriptJa:"男：2時にはもう出発したんじゃないの？まさか道中で2時間以上かかったの？\n女：途中で別の車とぶつかったの、さっき修理に出してきたところ。\n男：ひどくぶつかったの？なんでそんなに不注意なんだ！\n女：大丈夫、ひどくはないよ、ドアを擦って傷つけただけ。でも1週間は運転できないかもしれない。"},
+    {id:"l-41004-32",transcript:"女：海洋公园到底是不是在东边啊？怎么还没到？\n男：方向肯定没错，估计再有几分钟就到了吧。\n女：再晚了我们就来不及看表演了。\n男：别担心，下午还有一场呢。",question:"女的现在心情怎么样？",options:["得意","紧张","吃惊","着急"],answer:3,transcriptJa:"女：海洋公園って本当に東にあるの？どうしてまだ着かないの？\n男：方向は間違いないはずだよ、あと数分で着くと思う。\n女：これ以上遅くなったらショーに間に合わなくなる。\n男：心配しないで、午後にもう一回あるから。"},
+    {id:"l-41004-33",transcript:"男：今天是小王请客？他有什么高兴事儿呀？\n女：他搬新家了，晚上请老同学们去家里吃饭，顺便看看他的新房子。\n男：是吗？他在哪儿买的房子？\n女：他那儿的名字好像是“长江花园”，环境很好，很安静。",question:"小王怎么了？",options:["去打针了","买了台电脑","买新房子了","写错地址了"],answer:2,transcriptJa:"男：今日は王さんのおごりなの？何かいいことでもあったの？\n女：彼、新しい家に引っ越したの。今晩昔の同級生たちを家に招いて食事をするそうよ、ついでに新しい家も見せてもらうの。\n男：そうなんだ？どこで家を買ったの？\n女：たしか「長江花園」という名前の場所らしいよ、環境がとても良くて静かなところ。"},
+    {id:"l-41004-34",transcript:"女：明天的演唱会你要不要看？\n男：我当然想去，可惜票早就卖光了。\n女：正好我朋友多给了我一张，那到时候一起去吧。\n男：真的假的？你是在开玩笑骗我吧？\n女：怎么会呢？明晚七点南门见。",question:"明天晚上他们在哪儿见面？",options:["南门","西门","教室","图书馆旁边"],answer:0,transcriptJa:"女：明日のコンサート、見に行きたい？\n男：もちろん行きたいよ、でも残念ながらチケットはもう売り切れてしまった。\n女：ちょうど友達が余分に1枚くれたの、じゃあ一緒に行こうよ。\n男：本当？冗談で騙してるんじゃない？\n女：そんなわけないでしょ？明日の夜7時に南門で会おう。"},
+    {id:"l-41004-35",transcript:"男：这些塑料盒子还有用吗？\n女：没用了。\n男：没用的东西就放垃圾桶里，别到处乱扔。\n女：好吧，那我现在把房间整理一下。",question:"女的是什么态度？",options:["同意","原谅","太麻烦","十分满意"],answer:0,transcriptJa:"男：このプラスチックの箱、まだ使うの？\n女：もう使わないよ。\n男：使わないものはゴミ箱に入れて、あちこちに散らかさないで。\n女：わかった、じゃあ今から部屋を片付けるわ。"},
+    {id:"l-41004-36",transcript:"北方人爱吃饺子，除了因为饺子味道鲜美，还因为人们忙了一年，过年时全家人坐在一起包饺子，是很好的交流机会。另外，还跟北方的气候有关，北方比南方寒冷，吃热饺子让人感觉很暖和、很舒服。",question:"北方人过年有什么习惯？",options:["爬山","理发","吃饺子","吃面条"],answer:2,transcriptJa:"北方の人は餃子が好きだ。それは餃子の味が美味しいからだけでなく、一年間忙しく働いた人々が、正月に家族全員で座って餃子を包むことが、良い交流の機会になるからでもある。また、北方の気候とも関係がある。北方は南方より寒く、熱い餃子を食べると体が温まり、とても心地よく感じられるのだ。"},
+    {id:"l-41004-37",transcript:"北方人爱吃饺子，除了因为饺子味道鲜美，还因为人们忙了一年，过年时全家人坐在一起包饺子，是很好的交流机会。另外，还跟北方的气候有关，北方比南方寒冷，吃热饺子让人感觉很暖和、很舒服。",question:"说话人认为北方的气候怎么样？",options:["干燥","寒冷","暖和","常刮风"],answer:1,transcriptJa:"北方の人は餃子が好きだ。それは餃子の味が美味しいからだけでなく、一年間忙しく働いた人々が、正月に家族全員で座って餃子を包むことが、良い交流の機会になるからでもある。また、北方の気候とも関係がある。北方は南方より寒く、熱い餃子を食べると体が温まり、とても心地よく感じられるのだ。"},
+    {id:"l-41004-38",transcript:"教育不同性格的孩子要使用不同的办法：对那些活泼的孩子要给他们一些限制；对那些害羞的孩子要经常鼓励他们说出自己的看法，当他们这样做了以后，要表扬他们，这样才能让每一个孩子都健康地发展。",question:"根据这段话，教育孩子要考虑哪方面的不同？",options:["性别","性格","兴趣","标准"],answer:1,transcriptJa:"性格の異なる子供を教育するには、異なる方法を用いる必要がある。活発な子供にはある程度の制限を与えるべきであり、恥ずかしがり屋の子供には自分の考えを言うように常に励ますべきである。そうしたときには褒めてあげる。そうすることで初めて、すべての子供が健全に成長できるのだ。"},
+    {id:"l-41004-39",transcript:"教育不同性格的孩子要使用不同的办法：对那些活泼的孩子要给他们一些限制；对那些害羞的孩子要经常鼓励他们说出自己的看法，当他们这样做了以后，要表扬他们，这样才能让每一个孩子都健康地发展。",question:"这段话主要谈什么？",options:["现代教育学","什么是感情","儿童的爱好","怎样教育孩子"],answer:3,transcriptJa:"性格の異なる子供を教育するには、異なる方法を用いる必要がある。活発な子供にはある程度の制限を与えるべきであり、恥ずかしがり屋の子供には自分の考えを言うように常に励ますべきである。そうしたときには褒めてあげる。そうすることで初めて、すべての子供が健全に成長できるのだ。"},
+    {id:"l-41004-40",transcript:"一个人听一只小鸟叫，觉得很好听，尽管他完全不懂小鸟唱的是什么。一个人看一张画，他看来看去都看不懂画的是什么，但是仍然觉得好看。其实在人们不懂什么是美的时候，美一直都在，美不会因为人们不懂而改变。",question:"关于小鸟，可以知道什么？",options:["腿很长","羽毛很软","叫声很好听","喜欢听音乐"],answer:2,transcriptJa:"ある人が小鳥の鳴き声を聞いて、とても美しいと感じた。たとえ小鳥が何を歌っているのかまったく理解できなくても。ある人が一枚の絵を見て、何度見てもそれが何を描いているのか分からなくても、やはり美しいと感じる。実は、人々が美とは何かを理解していないときでも、美はずっと存在しており、人々が理解していないからといって美が変わることはないのだ。"},
+    {id:"l-41004-41",transcript:"一个人听一只小鸟叫，觉得很好听，尽管他完全不懂小鸟唱的是什么。一个人看一张画，他看来看去都看不懂画的是什么，但是仍然觉得好看。其实在人们不懂什么是美的时候，美一直都在，美不会因为人们不懂而改变。",question:"美有什么特点？",options:["很难判断","一直都在","让人兴奋","大家都能懂"],answer:1,transcriptJa:"ある人が小鳥の鳴き声を聞いて、とても美しいと感じた。たとえ小鳥が何を歌っているのかまったく理解できなくても。ある人が一枚の絵を見て、何度見てもそれが何を描いているのか分からなくても、やはり美しいと感じる。実は、人々が美とは何かを理解していないときでも、美はずっと存在しており、人々が理解していないからといって美が変わることはないのだ。"},
+    {id:"l-41004-42",transcript:"生活是什么？不同的人有不同的看法。有人说，生活是一杯酒，辣中带香；有人说，生活是一块巧克力，甜中带些苦；也有人说，生活是一个圆面包，最中间那部分是最好吃的，然而不是每个人都能吃到。生活究竟是什么？可能我们每个人都有自己的答案。",question:"这段话谈的是什么？",options:["职业","生活","食品","味道"],answer:1,transcriptJa:"人生とは何か？人によって考え方は異なる。ある人は、人生は一杯の酒で、辛さの中に香りがあると言う。ある人は、人生は一かけらのチョコレートで、甘さの中に少し苦みがあると言う。また、人生は丸いパンで、真ん中の部分が一番おいしいが、誰もがそれを食べられるわけではないと言う人もいる。人生とは結局何なのか？おそらく私たち一人一人が自分自身の答えを持っているのだろう。"},
+    {id:"l-41004-43",transcript:"生活是什么？不同的人有不同的看法。有人说，生活是一杯酒，辣中带香；有人说，生活是一块巧克力，甜中带些苦；也有人说，生活是一个圆面包，最中间那部分是最好吃的，然而不是每个人都能吃到。生活究竟是什么？可能我们每个人都有自己的答案。",question:"圆面包有什么特点？",options:["中间最好吃","不太受欢迎","样子很特别","价格很便宜"],answer:0,transcriptJa:"人生とは何か？人によって考え方は異なる。ある人は、人生は一杯の酒で、辛さの中に香りがあると言う。ある人は、人生は一かけらのチョコレートで、甘さの中に少し苦みがあると言う。また、人生は丸いパンで、真ん中の部分が一番おいしいが、誰もがそれを食べられるわけではないと言う人もいる。人生とは結局何なのか？おそらく私たち一人一人が自分自身の答えを持っているのだろう。"},
+    {id:"l-41004-44",transcript:"现在，做一个网站变得越来越容易了。不仅许多公司有网站，而且很多人都有自己的网站。访问各种各样的网站已经成为人们生活的一部分，网站，极大地丰富了现代人的精神生活。",question:"关于网站，下列哪个正确？",options:["十分普遍","合格的不多","数量在减少","内容都差不多"],answer:0,transcriptJa:"今、ウェブサイトを作ることはますます簡単になっている。多くの会社がウェブサイトを持っているだけでなく、多くの個人も自分のウェブサイトを持っている。さまざまなウェブサイトを閲覧することはすでに人々の生活の一部となっており、ウェブサイトは現代人の精神生活を大いに豊かにしている。"},
+    {id:"l-41004-45",transcript:"现在，做一个网站变得越来越容易了。不仅许多公司有网站，而且很多人都有自己的网站。访问各种各样的网站已经成为人们生活的一部分，网站，极大地丰富了现代人的精神生活。",question:"说话人对网站是什么态度？",options:["支持","批评","怀疑","讨厌"],answer:0,transcriptJa:"今、ウェブサイトを作ることはますます簡単になっている。多くの会社がウェブサイトを持っているだけでなく、多くの個人も自分のウェブサイトを持っている。さまざまなウェブサイトを閲覧することはすでに人々の生活の一部となっており、ウェブサイトは現代人の精神生活を大いに豊かにしている。"},
+    {id:"l-41005-01",transcript:"在接受调查的学生中，有超过百分之八十的人希望自己能有机会出国留学，但只有大约百分之二十的人已经开始申请国外学校。",question:"很多学生希望出国留学。",options:["对","错"],answer:0,transcriptJa:"調査を受けた学生のうち、80％以上の人が海外留学の機会を得たいと望んでいるが、実際に海外の学校への出願を始めている人はおよそ20％にすぎない。"},
+    {id:"l-41005-02",transcript:"你别跟我开玩笑了，我从来没学过游泳，怎么去比赛啊？你去问问小王吧，他每个周末都去游泳。",question:"他想参加网球比赛。",options:["对","错"],answer:1,transcriptJa:"冗談言わないでよ、私は今まで泳ぎを習ったことがないのに、どうやって試合に出るの？王くんに聞いてみて、彼は毎週末泳ぎに行ってるから。"},
+    {id:"l-41005-03",transcript:"年轻就是健康，年轻就是美丽。不要太担心胖瘦，也不要太关心自己长得是不是漂亮，是不是帅，年轻人最重要的是要对自己有信心。",question:"年轻人应该相信自己。",options:["对","错"],answer:0,transcriptJa:"若さとは健康であり、若さとは美しさである。太っているか痩せているかをあまり気にしすぎず、自分が綺麗かどうか、かっこいいかどうかもあまり気にしすぎないほうがいい。若者にとって最も大切なのは、自分に自信を持つことだ。"},
+    {id:"l-41005-04",transcript:"姐，咱们弄错方向了，去西边的公共汽车应该在对面坐。正好前边有个天桥，我们从那儿过马路吧。",question:"他们要坐地铁。",options:["对","错"],answer:1,transcriptJa:"お姉ちゃん、方向を間違えたよ。西へ行くバスは向かい側で乗らないといけない。ちょうど前に歩道橋があるから、そこから道を渡ろう。"},
+    {id:"l-41005-05",transcript:"我喜欢阳光，因为阳光给了万物生命。因为有了阳光，花园里的小草更绿了；因为有了阳光，天空下的海洋更蓝了。",question:"阳光的作用很大。",options:["对","错"],answer:0,transcriptJa:"私は日光が好きだ。日光は万物に命を与えるから。日光があるからこそ、庭の草はより緑になり、日光があるからこそ、空の下の海はより青くなる。"},
+    {id:"l-41005-06",transcript:"第一印象是指在第一次见面时给别人留下的印象，第一印象往往是最深的，而且很难改变。",question:"第一印象不容易忘记。",options:["对","错"],answer:0,transcriptJa:"第一印象とは、初めて会ったときに相手に与える印象のことを指す。第一印象は往々にして最も深く残り、変えるのが難しい。"},
+    {id:"l-41005-07",transcript:"有能力的人可以把复杂的事情变简单，而没能力的人却经常把简单的事情变复杂。这就是这两种人的区别。",question:"没能力的人没有责任心。",options:["对","错"],answer:1,transcriptJa:"能力のある人は複雑な物事を簡単にすることができるが、能力のない人はよく簡単な物事を複雑にしてしまう。これがこの二種類の人の違いである。"},
+    {id:"l-41005-08",transcript:"我从小就非常喜欢读书。长大后，发现身边的图书越来越多，而时间是有限的，所以，不仅要会读书，还要会选择其中的好书来阅读。",question:"好书越来越少。",options:["对","错"],answer:1,transcriptJa:"私は小さい頃から読書がとても好きだった。大人になってから、身の回りの本がどんどん増えていく一方で、時間は限られていることに気づいた。だから、本を読めるだけでなく、その中から良い本を選んで読む力も必要なのだ。"},
+    {id:"l-41005-09",transcript:"越来越多的人选择上网看新闻，因为这样很方便，网站的报道更及时，内容也更详细、丰富。",question:"很多人仍然爱看报纸。",options:["对","错"],answer:1,transcriptJa:"ますます多くの人がネットでニュースを見ることを選んでいる。そのほうが便利で、サイトの報道はより速く、内容もより詳しく豊富だからだ。"},
+    {id:"l-41005-10",transcript:"虽然还有一部分宾馆会向客人提供免费的毛巾、牙膏和牙刷，但是每次出差，她都会自己带这些东西，很少用宾馆里的。",question:"她不愿意用宾馆的毛巾。",options:["对","错"],answer:0,transcriptJa:"一部のホテルでは今も客に無料でタオルや歯磨き粉、歯ブラシを提供しているが、彼女は出張のたびにこれらのものを自分で持参し、ホテルのものを使うことはめったにない。"},
+    {id:"l-41005-11",transcript:"男：你钢琴弹得真好。\n女：我以前是钢琴老师，专门教儿童弹钢琴。",question:"女的原来的职业是什么？",options:["医生","护士","老师","售货员"],answer:2,transcriptJa:"男：ピアノが本当に上手ですね。\n女：以前ピアノの先生をしていて、子供にピアノを教えることを専門にしていました。"},
+    {id:"l-41005-12",transcript:"女：小李，我给你介绍个女朋友吧，说说你有什么条件。\n男：我，我喜欢活泼可爱的女孩子。",question:"男的觉得哪种女孩子比较好？",options:["聪明","勇敢","活泼可爱","个子矮的"],answer:2,transcriptJa:"女：李くん、彼女を紹介してあげようか。どんな条件が希望か言ってみて。\n男：僕は、活発でかわいい女の子が好きです。"},
+    {id:"l-41005-13",transcript:"男：王教授，您明天早上几点到？我去火车站接您。\n女：辛苦你了，我明天早上七点四十到北京。",question:"女的明天几点到北京？",options:["早上7：40","上午8点半","14：20","19：35"],answer:0,transcriptJa:"男：王教授、明日の朝何時に着かれますか？駅までお迎えに行きます。\n女：お疲れ様です、明日の朝7時40分に北京に着きます。"},
+    {id:"l-41005-14",transcript:"女：刚才太危险了，那辆车怎么回事？\n男：不知道，突然加速，估计是新手，刚学会开车。",question:"那辆车的司机怎么了？",options:["喝酒了","发烧了","不敢开车","车开得不好"],answer:3,transcriptJa:"女：さっきは本当に危なかった、あの車どうしたの？\n男：分からない、急に加速して。おそらく初心者で、運転を覚えたばかりなんだろう。"},
+    {id:"l-41005-15",transcript:"男：今天是母亲节，记得给妈妈打个电话。\n女：谢谢您的提醒，差点儿忘记了，我现在就打。",question:"女的准备给谁打电话？",options:["父亲","母亲","丈夫","孩子"],answer:1,transcriptJa:"男：今日は母の日だよ、お母さんに電話するのを忘れないで。\n女：教えてくれてありがとう、危うく忘れるところだった、今すぐかけるわ。"},
+    {id:"l-41005-16",transcript:"女：校长，这份材料我已经按照您的要求改好了。\n男：谢谢你，先放我办公桌上吧，你再帮我发一份传真。",question:"关于女的，可以知道什么？",options:["很不满意","在办签证","在收传真","材料改完了"],answer:3,transcriptJa:"女：校長先生、この資料はご要望通りに修正しました。\n男：ありがとう、まず私の机の上に置いておいて。それから、ファックスを1通送るのを手伝ってもらえますか。"},
+    {id:"l-41005-17",transcript:"男：真抱歉，明天我得加班，不能陪你去购物了。\n女：既然这样，只好安排在下周了，没关系。",question:"男的为什么不去购物了？",options:["要请客","要加班","有约会","要收拾行李"],answer:1,transcriptJa:"男：本当にごめん、明日残業しなきゃいけなくて、買い物に付き合えなくなった。\n女：それなら、来週に予定を変えるしかないね、大丈夫だよ。"},
+    {id:"l-41005-18",transcript:"女：你叔叔刚打电话来说给你发了个电子邮件，让你查收。\n男：我正在收呢，真奇怪，一直说我的密码有错，没错啊。",question:"男的为什么感到奇怪？",options:["信没寄出","弟弟还没醒","打不开信箱","没见到阿姨"],answer:2,transcriptJa:"女：さっき叔父さんから電話があって、あなたにメールを送ったから確認してって。\n男：今受信してるところだけど、本当に変だな、ずっとパスワードが間違ってるって出る、間違ってないのに。"},
+    {id:"l-41005-19",transcript:"男：这个酸菜鱼如果能再辣点儿就更好了。\n女：再辣点儿？你真行！我眼泪都快要辣出来了。",question:"女的怎么了？",options:["流泪了","吃饱了","觉得太辣","认为可惜"],answer:2,transcriptJa:"男：この酸菜魚、もう少し辛かったらもっといいのに。\n女：もっと辛く？あなたすごいね！私はもう辛さで涙が出そうだよ。"},
+    {id:"l-41005-20",transcript:"女：我实在跑不动了，你让我休息一会儿吧。\n男：你才跑了十分钟，要坚持，至少再跑十分钟。",question:"男的是什么意思？",options:["散散步","别迟到","休息一下","再跑一会儿"],answer:3,transcriptJa:"女：もう本当に走れない、少し休ませて。\n男：まだ10分しか走ってないよ、頑張って、少なくともあと10分は走ろう。"},
+    {id:"l-41005-21",transcript:"男：小姐，这是我的报名表，是交给您吗？\n女：对。请等一下，请在这儿填一下您的联系电话。",question:"根据对话，可以知道什么？",options:["他们在理发","他俩是夫妻","男的想请假","男的在报名"],answer:3,transcriptJa:"男：すみません、これが私の申込書です、これはあなたに渡せばいいですか？\n女：はい。少々お待ちください、ここに連絡先の電話番号をご記入ください。"},
+    {id:"l-41005-22",transcript:"女：你们今天讨论得怎么样？有结果吗？\n男：大家都同意把招聘会推迟到五月十二号。",question:"大家希望什么时候举行招聘会？",options:["5月","6月","11月","12月"],answer:0,transcriptJa:"女：今日の話し合いはどうだった？結果は出た？\n男：みんな採用説明会を5月12日に延期することに同意したよ。"},
+    {id:"l-41005-23",transcript:"男：那箱饮料可不轻，还是我来搬吧。\n女：麻烦你了，还得请你帮忙，谢谢你。",question:"男的在帮女的做什么？",options:["擦桌子","搬饮料","修家具","整理房间"],answer:1,transcriptJa:"男：あの飲み物の箱は重いから、僕が運ぶよ。\n女：お手数おかけします、手伝ってもらってありがとう。"},
+    {id:"l-41005-24",transcript:"女：你知道怎么去世界公园吗？我明天要去那儿附近办点儿事。\n男：我对那儿也不太熟悉，不过网上有地图，我帮你查查。",question:"男的是什么意思？",options:["他认识路","他很准时","他上网查查","他们一起去"],answer:2,transcriptJa:"女：世界公園への行き方知ってる？明日そこの近くで用事があるの。\n男：僕もそこはあまり詳しくないけど、ネットに地図があるから調べてあげるよ。"},
+    {id:"l-41005-25",transcript:"男：大夫，我的牙最近疼得厉害，不知道是怎么回事。\n女：你先躺这儿，好，张开嘴我看看。",question:"男的哪里不舒服？",options:["嘴","牙","头","耳朵"],answer:1,transcriptJa:"男：先生、最近歯がひどく痛むんです、どうしたのか分からなくて。\n女：まずここに横になってください。はい、口を開けて見せてください。"},
+    {id:"l-41005-26",transcript:"女：今天怎么这么安静呀？\n男：刚刚经理让我写篇总结，我正考虑怎么写呢。\n女：总结？哪方面的？\n男：快到年底了，市场方面的。",question:"经理让男的做什么？",options:["道歉","写总结","翻译文章","感谢女的"],answer:1,transcriptJa:"女：今日はどうしてこんなに静かなの？\n男：さっき部長にまとめを書くよう言われて、どう書こうか考えているところなんだ。\n女：まとめ？どの方面の？\n男：もうすぐ年末だから、市場方面のだよ。"},
+    {id:"l-41005-27",transcript:"男：奶奶，我去打羽毛球了，再见。\n女：等一下，你把那个塑料袋拿下去扔垃圾桶里。\n男：是那个红色的吗？\n女：对，就是洗衣机旁边那个。",question:"那个塑料袋是什么颜色的？",options:["白","黑","黄","红"],answer:3,transcriptJa:"男：おばあちゃん、バドミントンをしに行ってくるね、行ってきます。\n女：ちょっと待って、そのビニール袋を持って行ってゴミ箱に捨ててきて。\n男：あの赤いやつ？\n女：そう、洗濯機のそばにあるやつ。"},
+    {id:"l-41005-28",transcript:"女：刘师傅，您孩子要上大学了吧？\n男：我正想找你呢，你说让他报个什么专业好呢？国际关系？\n女：这主要还得看孩子自己的意见。\n男：也对，那我回去再和他商量商量。",question:"女的是什么看法？",options:["学中文","别有压力","别打扰孩子","让孩子决定"],answer:3,transcriptJa:"女：劉さん、お子さんもうすぐ大学に入るんですよね？\n男：ちょうどあなたに相談しようと思っていたんです。何の専攻を選ばせたらいいと思いますか？国際関係とか？\n女：それは主にお子さん自身の意見次第だと思いますよ。\n男：それもそうですね、じゃあ帰ってもう一度彼と相談してみます。"},
+    {id:"l-41005-29",transcript:"男：明天的考试有多少人参加？\n女：大约三百人。\n男：这儿的座位恐怕不够吧？要不要考虑换到旁边的那个教室？\n女：不用。这个大教室实际上能坐四百人。",question:"他们在谈什么？",options:["考试场地","周围环境","银行地址","参观人数"],answer:0,transcriptJa:"男：明日の試験には何人参加するの？\n女：だいたい300人くらい。\n男：ここの席じゃ足りないんじゃない？隣の教室に変えることを考えたほうがいいんじゃない？\n女：その必要はないよ。この大教室は実際400人座れるから。"},
+    {id:"l-41005-30",transcript:"女：好了吗？你今天吃得不多。\n男：本来我也不饿。出门前我吃了块儿巧克力蛋糕。\n女：好吧，剩下的我们带走？\n男：当然，不能浪费。",question:"他们最可能在哪儿？",options:["超市","商店","饭馆儿","大使馆"],answer:2,transcriptJa:"女：もういい？今日はあまり食べなかったね。\n男：もともとお腹が空いてなかったんだ。出かける前にチョコレートケーキを一切れ食べたから。\n女：分かった、残りは持ち帰る？\n男：もちろん、無駄にしちゃいけないから。"},
+    {id:"l-41005-31",transcript:"男：下午的面试怎么样？顺利吗？\n女：还行，他们问的问题都挺容易的。就是当时有点儿紧张。\n男：什么时候可以知道结果？\n女：明天或者后天吧，他们会打电话通知。",question:"女的觉得面试怎么样？",options:["不难","很轻松","时间短","不太正式"],answer:0,transcriptJa:"男：午後の面接どうだった？順調だった？\n女：まあまあ、聞かれた質問はどれも簡単だったよ。ただそのとき少し緊張したけど。\n男：結果はいつ分かるの？\n女：明日か明後日かな、電話で連絡が来るはず。"},
+    {id:"l-41005-32",transcript:"女：工作半天了，起来活动活动。\n男：好，坐久了确实有些难受。\n女：今天天气不错，外面很凉快，我们去楼下走走？\n男：行，我顺便买本杂志。",question:"今天天气怎么样？",options:["很热","很凉快","刮大风了","要下雨了"],answer:1,transcriptJa:"女：半日働いたし、立って体を動かそうよ。\n男：うん、長く座っていると確かに疲れるね。\n女：今日は天気がいいし、外は涼しいから、下に降りて歩こうか？\n男：いいね、ついでに雑誌を1冊買ってくるよ。"},
+    {id:"l-41005-33",transcript:"男：有空的时候欢迎你来我这儿玩儿。\n女：好的，不过暂时可能去不了，最近事情多。\n男：没问题。你最近忙什么呢？\n女：快放暑假了，学校要组织老师们去东南亚旅游。",question:"男的邀请女的做什么？",options:["去跳舞","去爬山","当警察","去他那儿玩儿"],answer:3,transcriptJa:"男：暇なときは僕のところに遊びに来て。\n女：うん、でも当分は行けないかも、最近忙しくて。\n男：大丈夫だよ。最近何を忙しくしてるの？\n女：もうすぐ夏休みになるから、学校が先生たちを東南アジア旅行に連れて行く予定なの。"},
+    {id:"l-41005-34",transcript:"女：先生，这里禁止停车。\n男：这里不是停车场吗？\n女：不是，停车场在那边，离这儿不远。\n男：好，我马上开走。谢谢你。\n女：不客气。",question:"男的要去哪儿？",options:["长城","洗手间","停车场","足球场"],answer:2,transcriptJa:"女：お客様、ここは駐車禁止です。\n男：ここは駐車場じゃないんですか？\n女：違います、駐車場はあちらです、ここからそう遠くありません。\n男：分かりました、すぐに車を動かします。ありがとう。\n女：どういたしまして。"},
+    {id:"l-41005-35",transcript:"男：复习得怎么样了？\n女：材料这么厚，我估计看不完了。\n男：来得及，复习要注意方法，要复习重点内容。\n女：只好这样了，这些语法知识太难了。",question:"男的认为应该怎么复习？",options:["要仔细","复习重点","加快速度","多做练习"],answer:1,transcriptJa:"男：復習はどう進んでる？\n女：資料がこんなに厚くて、読み終わらないと思う。\n男：間に合うよ、復習は方法に気をつけて、重要な内容を復習しないと。\n女：そうするしかないね、この文法の知識は本当に難しい。"},
+    {id:"l-41005-36",transcript:"提到结婚，人们会很自然地想起爱情。爱情确实是结婚的重要原因，但仅有爱情是不够的。两个人还应该互相支持，互相信任。只有这样才能很好地生活在一起。",question:"结婚的重要原因是什么？",options:["感动","爱情","受不了孤单","两个人很合适"],answer:1,transcriptJa:"結婚と言えば、人は自然と愛情を思い浮かべる。愛情は確かに結婚の重要な理由だが、愛情だけでは足りない。二人はさらに互いに支え合い、互いに信頼し合うべきである。そうして初めて、共に良い生活を送ることができるのだ。"},
+    {id:"l-41005-37",transcript:"提到结婚，人们会很自然地想起爱情。爱情确实是结婚的重要原因，但仅有爱情是不够的。两个人还应该互相支持，互相信任。只有这样才能很好地生活在一起。",question:"两个人怎样才能很好地一起生活？",options:["不要害羞","不要解释","减少误会","互相支持、信任"],answer:3,transcriptJa:"結婚と言えば、人は自然と愛情を思い浮かべる。愛情は確かに結婚の重要な理由だが、愛情だけでは足りない。二人はさらに互いに支え合い、互いに信頼し合うべきである。そうして初めて、共に良い生活を送ることができるのだ。"},
+    {id:"l-41005-38",transcript:"有个人看见一个孩子在路边哭，就问他为什么哭。孩子说刚才不小心丢了十块钱。见孩子那么难过，那个人就拿出十块钱送给他。没想到孩子哭得更难过了。那个人很奇怪，就问：“我刚才不是给你十块钱了吗？为什么还哭呢？”孩子回答：“如果没丢那十块钱，我现在已经有二十块了。”",question:"那个孩子为什么哭？",options:["钱丢了","打针了","爸爸生病了","被爷爷批评了"],answer:0,transcriptJa:"ある人が道端で子供が泣いているのを見かけ、なぜ泣いているのか尋ねた。子供は、さっきうっかり10元をなくしてしまったと言った。子供がそんなに悲しそうにしているのを見て、その人は10元を取り出して子供にあげた。ところが子供はもっと激しく泣き出した。その人は不思議に思い、「さっき10元をあげたのに、どうしてまだ泣いているの？」と尋ねた。子供は答えた。「もしあの10元をなくしていなければ、今頃20元持っていたのに」。"},
+    {id:"l-41005-39",transcript:"有个人看见一个孩子在路边哭，就问他为什么哭。孩子说刚才不小心丢了十块钱。见孩子那么难过，那个人就拿出十块钱送给他。没想到孩子哭得更难过了。那个人很奇怪，就问：“我刚才不是给你十块钱了吗？为什么还哭呢？”孩子回答：“如果没丢那十块钱，我现在已经有二十块了。”",question:"那个孩子现在有多少钱？",options:["10块","20块","30块","100块"],answer:0,transcriptJa:"ある人が道端で子供が泣いているのを見かけ、なぜ泣いているのか尋ねた。子供は、さっきうっかり10元をなくしてしまったと言った。子供がそんなに悲しそうにしているのを見て、その人は10元を取り出して子供にあげた。ところが子供はもっと激しく泣き出した。その人は不思議に思い、「さっき10元をあげたのに、どうしてまだ泣いているの？」と尋ねた。子供は答えた。「もしあの10元をなくしていなければ、今頃20元持っていたのに」。"},
+    {id:"l-41005-40",transcript:"幽默是一种让人羡慕的能力，有这种能力的人能在任何事情中发现有趣的东西，再无聊的事经过他们的嘴都可能变成笑话，甚至让人笑得肚子疼。一个有幽默感的人不管走到哪里，都会给别人带去愉快的心情，所以总是受到大家的欢迎。",question:"幽默的人怎么样？",options:["很诚实","做事马虎","会讲笑话","有时觉得无聊"],answer:2,transcriptJa:"ユーモアとは人に羨ましがられる能力であり、この能力を持つ人はどんな物事の中にも面白いものを見つけ出すことができる。どんなにつまらないことでも、彼らの口を通せば笑い話になり、人をお腹が痛くなるほど笑わせることさえある。ユーモアのセンスがある人はどこに行っても人に楽しい気分をもたらすので、いつもみんなに歓迎される。"},
+    {id:"l-41005-41",transcript:"幽默是一种让人羡慕的能力，有这种能力的人能在任何事情中发现有趣的东西，再无聊的事经过他们的嘴都可能变成笑话，甚至让人笑得肚子疼。一个有幽默感的人不管走到哪里，都会给别人带去愉快的心情，所以总是受到大家的欢迎。",question:"幽默的人为什么受欢迎？",options:["使人快乐","十分礼貌","遇事冷静","能给人安全感"],answer:0,transcriptJa:"ユーモアとは人に羨ましがられる能力であり、この能力を持つ人はどんな物事の中にも面白いものを見つけ出すことができる。どんなにつまらないことでも、彼らの口を通せば笑い話になり、人をお腹が痛くなるほど笑わせることさえある。ユーモアのセンスがある人はどこに行っても人に楽しい気分をもたらすので、いつもみんなに歓迎される。"},
+    {id:"l-41005-42",transcript:"许多人都有过后悔的经历，其实，只要我们按照自己的想法去做了，就没什么后悔的，因为我们不可能把所有的事情全部做对。另外，让我们走向成功的，往往是我们从过去做错的事情中得到的经验。",question:"许多人都有过怎样的经历？",options:["后悔","得意","紧张","激动"],answer:0,transcriptJa:"多くの人が後悔した経験を持っている。しかし実際には、自分の考えに従って行動しさえすれば、後悔することは何もない。なぜなら私たちがすべての物事を完璧にこなすことは不可能だからだ。また、私たちを成功へと導くのは、往々にして過去に間違えたことから得た経験なのである。"},
+    {id:"l-41005-43",transcript:"许多人都有过后悔的经历，其实，只要我们按照自己的想法去做了，就没什么后悔的，因为我们不可能把所有的事情全部做对。另外，让我们走向成功的，往往是我们从过去做错的事情中得到的经验。",question:"什么能帮助我们走向成功？",options:["理想","努力工作","正确的方法","失败的经验"],answer:3,transcriptJa:"多くの人が後悔した経験を持っている。しかし実際には、自分の考えに従って行動しさえすれば、後悔することは何もない。なぜなら私たちがすべての物事を完璧にこなすことは不可能だからだ。また、私たちを成功へと導くのは、往々にして過去に間違えたことから得た経験なのである。"},
+    {id:"l-41005-44",transcript:"今天，你们终于完成了大学四年的学习任务，马上就要开始新的生活了。我代表学校向同学们表示祝贺！祝你们在今后取得更大的成绩，也希望你们以后有时间多回学校来看看。",question:"说话人最可能是谁？",options:["导游","校长","记者","服务员"],answer:1,transcriptJa:"今日、皆さんはついに大学4年間の学業を終え、まもなく新しい生活を始めようとしています。学校を代表して、皆さんにお祝いを申し上げます！今後さらに大きな成果を収められますよう、そして今後時間があるときに、また学校に戻って見に来てくれることを願っています。"},
+    {id:"l-41005-45",transcript:"今天，你们终于完成了大学四年的学习任务，马上就要开始新的生活了。我代表学校向同学们表示祝贺！祝你们在今后取得更大的成绩，也希望你们以后有时间多回学校来看看。",question:"这段话最可能是在什么时候说的？",options:["访问","开学","毕业","放寒假"],answer:2,transcriptJa:"今日、皆さんはついに大学4年間の学業を終え、まもなく新しい生活を始めようとしています。学校を代表して、皆さんにお祝いを申し上げます！今後さらに大きな成果を収められますよう、そして今後時間があるときに、また学校に戻って見に来てくれることを願っています。"},
+    {id:"l-41006-01",transcript:"我妻子想减肥，所以她每天早上都去骑马。结果马竟然在一个月之内瘦了二十斤。",question:"妻子减肥很成功。",options:["对","错"],answer:1,transcriptJa:"妻はダイエットしたいと思い、毎朝馬に乗りに行っている。その結果、なんと馬のほうが1か月で20斤（10キロ）も痩せてしまった。"},
+    {id:"l-41006-02",transcript:"天天在一起的朋友，不一定是你真正的朋友。真正的朋友，是那些当你遇到困难时会努力帮助你的人。",question:"对朋友要有耐心。",options:["对","错"],answer:1,transcriptJa:"毎日一緒にいる友人が、必ずしも本当の友人とは限らない。本当の友人とは、あなたが困難に遭ったときに全力で助けてくれる人のことだ。"},
+    {id:"l-41006-03",transcript:"不同的态度会带来不同的生活。人们都希望生活会向着好的方向变化，当我们开始改变自己的态度时，这种变化就开始发生了。",question:"态度改变生活。",options:["对","错"],answer:0,transcriptJa:"異なる態度は異なる人生をもたらす。人はみな人生が良い方向へ変化することを望んでいるが、私たちが自分の態度を変え始めたとき、その変化はすでに始まっているのだ。"},
+    {id:"l-41006-04",transcript:"科学研究发现，经常笑的人更容易感到幸福，而且更不容易生病。",question:"笑使人更健康。",options:["对","错"],answer:0,transcriptJa:"科学研究によれば、よく笑う人はより幸せを感じやすく、また病気にもかかりにくいことが分かっている。"},
+    {id:"l-41006-05",transcript:"我妈要给我理发，我有些怀疑：“您会理发吗？”她很有信心：“相信我，就算理坏了，我也有办法。”半小时后，妈妈说：“我给你买个帽子去。”",question:"妈妈理发的水平不高。",options:["对","错"],answer:0,transcriptJa:"母が私の髪を切ってくれるというので、私は少し疑って「切れるの？」と聞いた。母は自信満々に「私を信じて、たとえ失敗しても、なんとかする方法があるから」と言った。30分後、母は「帽子を買ってあげるわ」と言った。"},
+    {id:"l-41006-06",transcript:"到底该不该买房子，这是让一些人头疼的问题。因为已经很高的房价，将来可能会降下来，然而也有可能会变得更高。",question:"现在的房租很贵。",options:["对","错"],answer:1,transcriptJa:"家を買うべきかどうかは、一部の人にとって頭を悩ませる問題だ。すでに高い住宅価格は、将来下がるかもしれないし、逆にさらに高くなるかもしれないからだ。"},
+    {id:"l-41006-07",transcript:"父母对子女的关心，远比子女们看到的、听到的要多得多。我们的生日他们每年都记得，而又有多少人会记着给父母过生日？",question:"父母要多表扬孩子。",options:["对","错"],answer:1,transcriptJa:"親が子供にかける気遣いは、子供たちが見たり聞いたりしているよりもはるかに多い。私たちの誕生日を親は毎年覚えているが、逆に親の誕生日を覚えている人がどれだけいるだろうか？"},
+    {id:"l-41006-08",transcript:"每个人都有过一些不愉快的经历，如果总是把它们放在心里，只会让你前进的脚步慢下来。所以，现在是时候忘掉它们了。",question:"要忘掉不高兴的事情。",options:["对","错"],answer:0,transcriptJa:"誰にでも不愉快な経験はあるものだが、それをいつまでも心に留めておくと、前進する足取りを遅くするだけだ。だから、今こそそれらを忘れるべき時なのだ。"},
+    {id:"l-41006-09",transcript:"一个人性格幽默，并不是说他爱开玩笑，而是说他会开玩笑。幽默的人往往是活泼的、热情的、聪明的，所有的人都喜欢他。",question:"幽默的人很诚实。",options:["对","错"],answer:1,transcriptJa:"ある人がユーモアのある性格だというのは、その人が冗談を言うのが好きだということではなく、冗談を言うのが上手だということだ。ユーモアのある人は往々にして活発で、情熱的で、頭が良く、誰からも好かれる。"},
+    {id:"l-41006-10",transcript:"成熟，并不只是说我们的年龄，更多的时候，成熟指的是我们做事的方法和责任感。",question:"成熟不仅仅和年龄有关。",options:["对","错"],answer:0,transcriptJa:"成熟とは、単に年齢のことを指すのではない。多くの場合、成熟とは私たちの物事のやり方と責任感を指すのである。"},
+    {id:"l-41006-11",transcript:"男：真的假的？马小姐的女儿已经五岁了？\n女：没想到吧？第一次见她的时候，我也以为她刚大学毕业。\n问：他们觉得马小姐怎么样？",question:"他们觉得马小姐怎么样？",options:["可怜","负责","个子矮","长得年轻"],answer:3,transcriptJa:"男：本当？馬さんの娘さんはもう5歳になったの？\n女：意外でしょう？初めて彼女に会ったとき、私も大学を卒業したばかりだと思ったよ。\n問：彼らは馬さんについてどう思っているか。"},
+    {id:"l-41006-12",transcript:"女：这儿的风景真美呀，你看这草地，多绿啊！\n男：你站那儿别动，我给你照张相，再往左一点儿。\n问：他们最可能在哪儿？",question:"他们最可能在哪儿？",options:["宾馆","教室","树林中","大使馆"],answer:2,transcriptJa:"女：ここの景色は本当に美しいね、この草原を見て、なんて緑なんだろう！\n男：そこに立って動かないで、写真を撮ってあげるから。もう少し左に。\n問：彼らはどこにいる可能性が高いか。"},
+    {id:"l-41006-13",transcript:"男：关于那个社会调查，我打算放弃，太复杂了。\n女：现在放弃，太可惜了，你还是再考虑考虑吧。\n问：女的主要是什么意思？",question:"女的主要是什么意思？",options:["很正常","感谢老师","感到抱歉","应该坚持"],answer:3,transcriptJa:"男：あの社会調査についてだけど、やめようと思う、複雑すぎて。\n女：今やめるなんてもったいないよ、もう一度よく考えてみて。\n問：女性が言いたいことは主に何か。"},
+    {id:"l-41006-14",transcript:"女：小王，我们在哪儿见面啊？\n男：就在马路对面的天桥下吧，我马上就到。\n问：他们在哪儿见面？",question:"他们在哪儿见面？",options:["公园里","天桥下","办公室","电梯口"],answer:1,transcriptJa:"女：王さん、どこで会いましょうか？\n男：道路の向かいの歩道橋の下にしましょう、すぐ行きます。\n問：彼らはどこで会うか。"},
+    {id:"l-41006-15",transcript:"男：这个材料您那儿还有吗？我的那份被小张拿走了。\n女：有，或者我发你电子的吧。\n问：女的最可能要做什么？",question:"女的最可能要做什么？",options:["发传真","复印材料","写会议总结","发电子邮件"],answer:3,transcriptJa:"男：この資料、そちらにまだありますか？私の分は張さんに持って行かれてしまって。\n女：ありますよ、それか電子データで送りましょうか。\n問：女性は何をする可能性が高いか。"},
+    {id:"l-41006-16",transcript:"女：咱们先去吃晚饭，然后看电影，好不好？\n男：恐怕来不及吧？现在已经差一刻七点了。\n问：男的主要担心什么？",question:"男的主要担心什么？",options:["时间不够","路上堵车","顾客太多","没地方停车"],answer:0,transcriptJa:"女：先に夕飯を食べてから、映画を見に行こうよ、いい？\n男：たぶん間に合わないよ？今もう7時15分前だから。\n問：男性は主に何を心配しているか。"},
+    {id:"l-41006-17",transcript:"男：你已经到家了？你不是下周才回来吗？\n女：任务提前完成了，所以就先回来了，想给你个惊喜。\n问：女的为什么提前回家？",question:"女的为什么提前回家？",options:["亲戚结婚","准备出差","任务完成了","身体不舒服"],answer:2,transcriptJa:"男：もう家に着いたの？来週帰ってくる予定じゃなかった？\n女：任務が予定より早く終わったから、先に帰ってきたの、あなたを驚かせたくて。\n問：女性はなぜ早く帰ってきたか。"},
+    {id:"l-41006-18",transcript:"女：经理，我丈夫生病了。我想请一天假，陪他去医院看看。\n男：好，你先把家里照顾好，我们周五见。\n问：根据对话，可以知道什么？",question:"根据对话，可以知道什么？",options:["女的感冒了","女的在请假","经理不同意","母亲很辛苦"],answer:1,transcriptJa:"女：部長、夫が病気になりました。1日休みをいただいて、病院に付き添いたいのですが。\n男：分かりました、まず家のことをちゃんとやってください、金曜日に会いましょう。\n問：会話から何が分かるか。"},
+    {id:"l-41006-19",transcript:"男：您好，表格我已经填好了，您看可以吗？\n女：请留一下您的手机号，这样方便我们联系您。\n问：女的让男的做什么？",question:"女的让男的做什么？",options:["留地址","介绍菜单","留电话号码","重新填表格"],answer:2,transcriptJa:"男：こんにちは、用紙はもう記入し終わりました、これでよろしいですか？\n女：携帯電話の番号を残していただけますか、そうすればご連絡しやすくなりますので。\n問：女性は男性に何をさせようとしているか。"},
+    {id:"l-41006-20",transcript:"女：喂，刘先生，现在路上有些堵，我可能要迟到几分钟，真对不起。\n男：没关系，到了给我打电话，我下楼去接你。\n问：女的怎么了？",question:"女的怎么了？",options:["迟到了","生气了","很失望","还没出发"],answer:0,transcriptJa:"女：もしもし、劉さん、今道が少し混んでいて、数分遅れるかもしれません、本当にすみません。\n男：大丈夫ですよ、着いたら電話してください、下に降りて迎えに行きますから。\n問：女性はどうしたか。"},
+    {id:"l-41006-21",transcript:"男：能谈谈你为什么会选择这份工作吗？\n女：首先，我对这份工作很感兴趣，其次，我学的也是这个专业，比较熟悉。\n问：男的最可能在做什么？",question:"男的最可能在做什么？",options:["招聘","约会","上课","道歉"],answer:0,transcriptJa:"男：なぜこの仕事を選んだのか話していただけますか？\n女：まず、この仕事にとても興味がありますし、次に、私が学んだのもこの専門なので、よく分かっています。\n問：男性は何をしている可能性が高いか。"},
+    {id:"l-41006-22",transcript:"女：明天是六一儿童节，可别忘了给儿子买礼物，他想要块儿手表。\n男：你上次提醒我的时候，我就准备好了。\n问：为什么要给儿子准备礼物？",question:"为什么要给儿子准备礼物？",options:["新年到了","明天儿童节","手表很便宜","想鼓励儿子"],answer:1,transcriptJa:"女：明日は6月1日の子供の日だから、息子にプレゼントを買うのを忘れないでね、彼は腕時計が欲しいって。\n男：前回君が念を押してくれたとき、もう準備しておいたよ。\n問：なぜ息子にプレゼントを用意するのか。"},
+    {id:"l-41006-23",transcript:"男：这儿离长城大约还有四十公里。\n女：那再有半个小时就到了，我还以为很远呢。\n问：他们到长城还要多长时间？",question:"他们到长城还要多长时间？",options:["半小时","40分钟","一小时","一个半小时"],answer:0,transcriptJa:"男：ここから長城まではあと約40キロだよ。\n女：じゃああと30分で着くね、もっと遠いと思ってた。\n問：彼らは長城に着くまでどのくらいかかるか。"},
+    {id:"l-41006-24",transcript:"女：这么得意，网球打得不错？\n男：比上回好多了，我现在至少能接到球了。\n问：男的网球打得怎么样？",question:"男的网球打得怎么样？",options:["很厉害","有提高","比以前差","完全不会"],answer:1,transcriptJa:"女：そんなに得意げにして、テニスがうまくなったの？\n男：前回よりずっとよくなったよ、今は少なくともボールを打ち返せるようになった。\n問：男性のテニスの腕前はどうか。"},
+    {id:"l-41006-25",transcript:"男：今天下午我们还是两点在东门集合吗？\n女：时间不变，地点改在西门了。快去整理一下东西吧，我们两点准时出发。\n问：他们什么时候出发？",question:"他们什么时候出发？",options:["上午8点","上午9点","中午12点","下午两点"],answer:3,transcriptJa:"男：今日の午後、やっぱり2時に東門で集合するの？\n女：時間は変わらないけど、場所は西門に変更になったよ。早く荷物をまとめて、2時ちょうどに出発するから。\n問：彼らはいつ出発するか。"},
+    {id:"l-41006-26",transcript:"女：你当时怎么会想去学表演呢？\n男：我爸是演员，从小受他的影响，我很喜欢表演艺术。\n女：原来是这样，你家里人一定也很支持你吧。\n男：其实，我妈希望我能做一个医生。\n问：男的最可能是做什么的？",question:"男的最可能是做什么的？",options:["律师","演员","大夫","记者"],answer:1,transcriptJa:"男：あなたは当時どうして演技を学ぼうと思ったのですか？\n女：父が俳優で、小さい頃から彼の影響を受けて、演技芸術がとても好きになったんです。\n女：なるほど、そうだったんですね、ご家族もきっと応援してくれているんでしょうね。\n男：実は、母は私に医者になってほしいと思っています。\n問：男性は何をしている可能性が高いか。"},
+    {id:"l-41006-27",transcript:"男：小白，我那儿还需要个服务员，你有没有好的人选？\n女：是吗？能让我妹妹来试试吗？\n男：当然可以，我见过她，很有礼貌，明天让她来试一下吧。\n女：太好了，谢谢您给她这个机会。\n问：男的对小白的妹妹印象怎么样？",question:"男的对小白的妹妹印象怎么样？",options:["粗心","可爱","骄傲","有礼貌"],answer:3,transcriptJa:"男：小白さん、うちでまだウェイトレスが必要なんだけど、いい人いない？\n女：そうですか？私の妹に試しにやらせてもらえますか？\n男：もちろんいいよ、彼女に会ったことあるけど、とても礼儀正しいし、明日試しに来てもらおう。\n女：よかった、この機会をくれてありがとうございます。\n問：男性は小白の妹に対してどんな印象を持っているか。"},
+    {id:"l-41006-28",transcript:"女：最近太热了，真让人受不了。\n男：是，几乎离不开空调了。\n女：刚才在网上看新闻，说是到月底都这么热。\n男：夏天快点儿过去吧，秋天快点儿来吧。\n问：男的为什么希望秋天快点儿来？",question:"男的为什么希望秋天快点儿来？",options:["凉快","想爬山","水果多","喜欢下雪"],answer:0,transcriptJa:"女：最近暑すぎて、本当に耐えられない。\n男：うん、エアコンなしではいられないくらいだね。\n女：さっきネットでニュースを見たら、月末までずっとこんなに暑いって。\n男：夏よ早く過ぎてくれ、秋よ早く来てくれ。\n問：男性はなぜ秋が早く来てほしいと思っているか。"},
+    {id:"l-41006-29",transcript:"男：怎么样？报名的人多不多？\n女：昨天有一个，今天报名人数稍有下降，一个没有。\n男：别开玩笑了，快想想办法吧。\n女：现在放暑假了，没多少人看咱的通知。\n问：根据对话，可以知道什么？",question:"根据对话，可以知道什么？",options:["男的不着急","比赛推迟了","快放暑假了","报名人数少"],answer:3,transcriptJa:"男：どう？申し込みの人は多い？\n女：昨日は1人いたけど、今日は申し込み数が少し減って、1人もいない。\n男：冗談はやめて、早く何か対策を考えて。\n女：もう夏休みに入ったから、うちの通知を見る人があまりいないの。\n問：会話から何が分かるか。"},
+    {id:"l-41006-30",transcript:"女：哥，我搬不动，实在没那么大力气。\n男：让你搬那个轻的，你不听，这个纸箱子里是旧报纸、旧杂志。\n女：你要把它们卖了？\n男：不，我整理一下，房间里太乱了。\n问：纸箱子里是什么？",question:"纸箱子里是什么？",options:["巧克力蛋糕","笔记本电脑","旧报纸杂志","现代汉语词典"],answer:2,transcriptJa:"女：お兄ちゃん、運べないよ、そんな力ないもん。\n男：軽い方を運ぶように言ったのに、聞かなかったんだろう。この段ボール箱の中は古新聞と古雑誌だよ。\n女：それ売るつもり？\n男：いや、片付けるんだ、部屋が散らかりすぎてるから。\n問：段ボール箱の中身は何か。"},
+    {id:"l-41006-31",transcript:"男：你们才回来？周末银行人很多？\n女：不是，我们俩顺便去了趟超市，买了些菜。\n男：今晚做什么好吃的？\n女：我买鱼了，再做个汤。\n问：女的刚才去哪儿了？",question:"女的刚才去哪儿了？",options:["银行","饭馆儿","图书馆","火车站"],answer:0,transcriptJa:"男：やっと帰ってきたの？週末の銀行は人が多かった？\n女：ううん、私たち二人でついでにスーパーにも寄って、野菜を買ってきたの。\n男：今晩は何かおいしいもの作るの？\n女：魚を買ったから、あとスープも作るね。\n問：女性はさっきどこに行っていたか。"},
+    {id:"l-41006-32",transcript:"女：你到处找什么呢？\n男：冰箱的说明书。\n女：在你旁边那个盒子里，你找说明书干什么？\n男：冰箱灯不亮了，我看看是什么问题。\n问：冰箱怎么了？",question:"冰箱怎么了？",options:["太吵","灯不亮了","关不上门","不起作用了"],answer:1,transcriptJa:"女：あちこち何を探してるの？\n男：冷蔵庫の説明書だよ。\n女：あなたのそばの箱の中にあるよ、説明書を探してどうするの？\n男：冷蔵庫のライトがつかなくなったから、何が問題か見てみようと思って。\n問：冷蔵庫はどうなったか。"},
+    {id:"l-41006-33",transcript:"男：你今天心情不错，看样子有什么好事。\n女：告诉你一个好消息，我通过导游考试了，以后就是正式的导游了。\n男：祝贺你！老同学，这确实是个好消息。\n女：谢谢，走，我们边走边谈。\n问：男的祝贺女的什么？",question:"男的祝贺女的什么？",options:["要去留学","演出成功","考上了博士","通过了考试"],answer:3,transcriptJa:"男：今日は機嫌がいいね、何かいいことがあったみたいだね。\n女：いいニュースを教えてあげる、ガイド試験に合格したの、これから正式なガイドになるのよ。\n男：おめでとう！同級生として、これは本当にいいニュースだね。\n女：ありがとう、行こう、歩きながら話そう。\n問：男性は女性の何を祝っているか。"},
+    {id:"l-41006-34",transcript:"女：咱们这些家具都旧了，这次搬家，我们换新的。\n男：沙发换颜色亮一点儿的，现在这个颜色太深。\n女：对，另外，再买一个新洗衣机。\n男：行。\n问：根据对话，可以知道什么？",question:"根据对话，可以知道什么？",options:["窗户坏了","沙发太硬","他们要搬家","他们在逛街"],answer:2,transcriptJa:"女：うちのこれらの家具はもう古くなったから、今回の引っ越しで新しいものに替えよう。\n男：ソファはもう少し明るい色にしよう、今のこの色は暗すぎる。\n女：そうだね、それから、新しい洗濯機も買おう。\n男：いいよ。\n問：会話から何が分かるか。"},
+    {id:"l-41006-35",transcript:"男：谈什么呢？这么热闹。\n女：我们在商量寒假去哪儿玩儿呢，你有什么好主意？\n男：我想去南方旅游。\n女：好啊，那你这个北方人来组织怎么样？\n问：女的希望男的怎么样？",question:"女的希望男的怎么样？",options:["乘坐飞机","寄信回来","出国访问","组织大家旅游"],answer:3,transcriptJa:"男：何を話してるの？そんなに盛り上がって。\n女：冬休みにどこに遊びに行くか相談してるの、何かいい考えある？\n男：僕は南の方へ旅行に行きたいな。\n女：いいね、じゃああなたこの北方人が企画するのはどう？\n問：女性は男性にどうしてほしいと思っているか。"},
+    {id:"l-41006-36",transcript:"小孙子拿了一个苹果，没洗就吃了。吃完后，觉得肚子疼，很难受。于是他就去喝水，差不多喝光了一桶水。爷爷见了，奇怪地问他：“你为什么喝那么多水？”孙子说：“我刚吃了个苹果，忘记洗了。”",question:"吃了苹果后，小孙子觉得怎么样？",options:["很渴","很饱","肚子疼","有些累"],answer:2,transcriptJa:"孫がりんごを一つ手に取り、洗わずに食べてしまった。食べ終わった後、お腹が痛くなり、とても辛くなった。そこで彼は水を飲みに行き、バケツ一杯分近くの水を飲み干してしまった。おじいさんはそれを見て、不思議そうに「どうしてそんなにたくさん水を飲むんだ？」と尋ねた。孫は「さっきりんごを食べたんだけど、洗うのを忘れたんだ」と答えた。"},
+    {id:"l-41006-37",transcript:"小孙子拿了一个苹果，没洗就吃了。吃完后，觉得肚子疼，很难受。于是他就去喝水，差不多喝光了一桶水。爷爷见了，奇怪地问他：“你为什么喝那么多水？”孙子说：“我刚吃了个苹果，忘记洗了。”",question:"小孙子为什么喝了很多水？",options:["要洗苹果","皮肤干燥","为了出汗","不想浪费水"],answer:0,transcriptJa:"孫がりんごを一つ手に取り、洗わずに食べてしまった。食べ終わった後、お腹が痛くなり、とても辛くなった。そこで彼は水を飲みに行き、バケツ一杯分近くの水を飲み干してしまった。おじいさんはそれを見て、不思議そうに「どうしてそんなにたくさん水を飲むんだ？」と尋ねた。孫は「さっきりんごを食べたんだけど、洗うのを忘れたんだ」と答えた。"},
+    {id:"l-41006-38",transcript:"不管做什么事情，都应该有计划。有句话说得好：“昨晚多几分钟的准备，今天少几小时的麻烦。”这就是告诉我们，提前做好准备可以使事情更顺利地完成，减少出现麻烦的可能。",question:"提前计划有什么好处？",options:["减少麻烦","增加收入","提前结束","得到奖金"],answer:0,transcriptJa:"何をするにしても、計画を立てるべきである。「昨夜数分多く準備すれば、今日は数時間分のトラブルが減る」という言葉があるが、これはまさに、前もって準備をしておけば物事をより順調に成し遂げることができ、トラブルが起こる可能性を減らせるということを教えてくれている。"},
+    {id:"l-41006-39",transcript:"不管做什么事情，都应该有计划。有句话说得好：“昨晚多几分钟的准备，今天少几小时的麻烦。”这就是告诉我们，提前做好准备可以使事情更顺利地完成，减少出现麻烦的可能。",question:"这段话主要想告诉我们什么？",options:["按时休息","能力是关键","做事要主动","要早做准备"],answer:3,transcriptJa:"何をするにしても、計画を立てるべきである。「昨夜数分多く準備すれば、今日は数時間分のトラブルが減る」という言葉があるが、これはまさに、前もって準備をしておけば物事をより順調に成し遂げることができ、トラブルが起こる可能性を減らせるということを教えてくれている。"},
+    {id:"l-41006-40",transcript:"生活就像一个五味瓶，里面酸、甜、苦、辣、咸都有。当我们快乐幸福时，它是甜的；伤心难过时，它是酸的；失败流泪时，它是苦的……但无论哪一种味道都必不可少，因为正是这些味道组成了我们丰富多彩的生活。",question:"“甜”代表什么？",options:["安静","兴奋激动","快乐幸福","竞争的过程"],answer:2,transcriptJa:"人生はまるで五味の瓶のようなもので、その中には酸っぱさ、甘さ、苦さ、辛さ、しょっぱさがすべて入っている。私たちが楽しく幸せなとき、それは甘い。悲しく辛いとき、それは酸っぱい。失敗して涙を流すとき、それは苦い……しかしどの味も欠くことはできない。なぜなら、まさにこれらの味が私たちの豊かで彩り豊かな人生を作り上げているからだ。"},
+    {id:"l-41006-41",transcript:"生活就像一个五味瓶，里面酸、甜、苦、辣、咸都有。当我们快乐幸福时，它是甜的；伤心难过时，它是酸的；失败流泪时，它是苦的……但无论哪一种味道都必不可少，因为正是这些味道组成了我们丰富多彩的生活。",question:"这段话主要谈的是什么？",options:["季节","生活","市场","理想"],answer:1,transcriptJa:"人生はまるで五味の瓶のようなもので、その中には酸っぱさ、甘さ、苦さ、辛さ、しょっぱさがすべて入っている。私たちが楽しく幸せなとき、それは甘い。悲しく辛いとき、それは酸っぱい。失敗して涙を流すとき、それは苦い……しかしどの味も欠くことはできない。なぜなら、まさにこれらの味が私たちの豊かで彩り豊かな人生を作り上げているからだ。"},
+    {id:"l-41006-42",transcript:"世界上有那么多的考试，很多考试我们无法拒绝，不得不参加，否则我们连“进门”的机会都没有。但只会考试，没有真正的知识和经验，就算你进了门也看不到世界的精彩。",question:"人们为什么要考试？",options:["反映问题","获得机会","想读研究生","养成好习惯"],answer:1,transcriptJa:"世の中にはあれほど多くの試験があり、私たちは多くの試験を拒否できず、参加せざるを得ない。そうでなければ、私たちは「入り口に入る」機会さえも得られないからだ。しかし試験ができるだけで、本当の知識と経験がなければ、たとえ入り口に入れたとしても、世界の素晴らしさを見ることはできない。"},
+    {id:"l-41006-43",transcript:"世界上有那么多的考试，很多考试我们无法拒绝，不得不参加，否则我们连“进门”的机会都没有。但只会考试，没有真正的知识和经验，就算你进了门也看不到世界的精彩。",question:"要看到世界的精彩，需要什么？",options:["友谊","高级眼镜","知识和经验","流利的中文"],answer:2,transcriptJa:"世の中にはあれほど多くの試験があり、私たちは多くの試験を拒否できず、参加せざるを得ない。そうでなければ、私たちは「入り口に入る」機会さえも得られないからだ。しかし試験ができるだけで、本当の知識と経験がなければ、たとえ入り口に入れたとしても、世界の素晴らしさを見ることはできない。"},
+    {id:"l-41006-44",transcript:"有个人在黑板上画了一个圆，问不同的学生：“看到这个圆，想到什么了？”大学生觉得太简单，不愿意回答；中学生认为是数字零；小学生的回答却多种多样：月亮、太阳、乒乓球、西红柿等等。",question:"那个人在黑板上画了什么？",options:["圆","鸡蛋","葡萄","眼睛"],answer:0,transcriptJa:"ある人が黒板に丸を一つ描き、様々な学生に「この丸を見て、何を思い浮かべますか？」と尋ねた。大学生は簡単すぎると思って答えたがらなかった。中学生は数字のゼロだと考えた。小学生の答えはさまざまで、月、太陽、卓球のボール、トマトなどだった。"},
+    {id:"l-41006-45",transcript:"有个人在黑板上画了一个圆，问不同的学生：“看到这个圆，想到什么了？”大学生觉得太简单，不愿意回答；中学生认为是数字零；小学生的回答却多种多样：月亮、太阳、乒乓球、西红柿等等。",question:"大学生觉得这个问题怎么样？",options:["太简单","不好解释","需要讨论","无正确答案"],answer:0,transcriptJa:"ある人が黒板に丸を一つ描き、様々な学生に「この丸を見て、何を思い浮かべますか？」と尋ねた。大学生は簡単すぎると思って答えたがらなかった。中学生は数字のゼロだと考えた。小学生の答えはさまざまで、月、太陽、卓球のボール、トマトなどだった。"},
+    {id:"l-41007-01",transcript:"与公共汽车相比，地铁最大的优点是不会堵车。所以，很多人选择乘坐地铁上下班。",question:"地铁不会堵车。",options:["对","错"],answer:0,transcriptJa:"バスと比べて、地下鉄の最大の利点は渋滞しないことだ。だから、多くの人が通勤に地下鉄を選んでいる。"},
+    {id:"l-41007-02",transcript:"其实，只要我们真正努力过了，就不需要太关心结果。因为无论最后是成功还是失败，在努力的过程中，我们已经学到了很多东西。",question:"结果比过程更重要。",options:["对","错"],answer:1,transcriptJa:"実は、私たちが本当に努力しさえすれば、結果をあまり気にする必要はない。なぜなら、最終的に成功しようが失敗しようが、努力する過程で私たちはすでに多くのことを学んでいるからだ。"},
+    {id:"l-41007-03",transcript:"马经理这两天去上海出差了，现在不在公司。您如果有什么着急的事情找他，可以打他的手机。",question:"马经理不在上海。",options:["对","错"],answer:1,transcriptJa:"馬部長はここ数日上海に出張していて、今は会社にいません。もし急ぎの用件で彼に連絡が必要でしたら、携帯電話にかけてください。"},
+    {id:"l-41007-04",transcript:"幽默是一把钥匙，它能帮助人们打开友谊的大门。因为与幽默的人聊天儿总是很快乐。",question:"幽默的人容易交朋友。",options:["对","错"],answer:0,transcriptJa:"ユーモアは一本の鍵であり、人々が友情の扉を開ける手助けをしてくれる。なぜなら、ユーモアのある人とおしゃべりするのはいつも楽しいからだ。"},
+    {id:"l-41007-05",transcript:"毕业是一件让人高兴的事，因为我们将要开始新的生活。毕业也是一件让人伤心的事，许多平时常在一起的朋友，以后见面的机会将变得很少。",question:"毕业让人又高兴又难过。",options:["对","错"],answer:0,transcriptJa:"卒業は人を喜ばせる出来事だ、なぜなら私たちはこれから新しい生活を始めるからだ。卒業はまた人を悲しませる出来事でもある、普段よく一緒にいた多くの友人と、これから会う機会がとても少なくなってしまうからだ。"},
+    {id:"l-41007-06",transcript:"小时候，他希望自己将来成为一名勇敢的警察。长大后，他却成为一名优秀的律师，用自己的法律知识来帮助别人。",question:"他现在是警察。",options:["对","错"],answer:1,transcriptJa:"子供の頃、彼は将来勇敢な警察官になりたいと思っていた。大人になった今、彼は優秀な弁護士となり、自分の法律の知識を使って人を助けている。"},
+    {id:"l-41007-07",transcript:"足球受到很多人的喜爱，世界杯比赛不仅吸引了很多观众，也吸引了许多公司。那些公司相信，通过赛场上的广告，能让更多的人了解它们。",question:"世界杯吸引了很多公司。",options:["对","错"],answer:0,transcriptJa:"サッカーは多くの人に愛されており、ワールドカップの試合は多くの観客を引きつけるだけでなく、多くの企業も引きつけている。それらの企業は、試合会場での広告を通じて、より多くの人に自分たちを知ってもらえると信じている。"},
+    {id:"l-41007-08",transcript:"请安静一下，大家请注意，我们马上就到目的地了，请大家带好行李，准备下车，我先带大家去宾馆。",question:"他是售货员。",options:["对","错"],answer:1,transcriptJa:"少し静かにしてください、皆さん注意してください、まもなく目的地に到着します。皆さん荷物をお持ちになって、下車の準備をしてください。まず皆さんをホテルにご案内します。"},
+    {id:"l-41007-09",transcript:"父母应该找时间和孩子一起玩儿游戏，这样不但可以增进父母和孩子之间的感情交流，而且可以让父母暂时忘记工作的压力。",question:"孩子要少玩儿游戏。",options:["对","错"],answer:1,transcriptJa:"親は時間を見つけて子供と一緒にゲームをするべきだ。そうすれば親子間の感情の交流を深められるだけでなく、親が一時的に仕事のストレスを忘れることもできる。"},
+    {id:"l-41007-10",transcript:"小李，麻烦你跟司机说一声，我的手表忘在房间里了，得回去取一下，让他在楼下等我几分钟，我马上就来。",question:"司机在楼下。",options:["对","错"],answer:0,transcriptJa:"李さん、すみませんが運転手さんに伝えてください、私の腕時計を部屋に忘れてきたので、取りに戻らなければなりません。下で数分待っていてもらってください、すぐ行きますので。"},
+    {id:"l-41007-11",transcript:"男：这个帽子挺漂亮的，你戴上试试？\n女：这个不适合我，再去前面看看别的吧。\n问：女的觉得帽子怎么样？",question:"女的觉得帽子怎么样？",options:["很好看","很高级","颜色暗","不合适"],answer:3,transcriptJa:"男：この帽子、なかなかきれいだね、被ってみたら？\n女：これは私に似合わないよ、前の方に行って他のを見てみよう。\n問：女性は帽子についてどう思っているか。"},
+    {id:"l-41007-12",transcript:"女：能再给我一张表格吗？我把民族和性别填反了。\n男：请稍等，我再打印一张。\n问：女的刚才把什么填错了？",question:"女的刚才把什么填错了？",options:["出生地","兴趣和爱好","姓名和职业","民族和性别"],answer:3,transcriptJa:"女：もう1枚用紙をいただけますか？民族と性別を逆に記入してしまいました。\n男：少々お待ちください、もう1枚印刷します。\n問：女性はさっき何を記入し間違えたか。"},
+    {id:"l-41007-13",transcript:"男：怎么又买这么多饼干和巧克力，难道你不减肥了？\n女：减了一个月都没有瘦下来，我实在没有信心了。\n问：女的是什么意思？",question:"女的是什么意思？",options:["不想吃饭","需要鼓励","放弃减肥","继续运动"],answer:2,transcriptJa:"男：どうしてまたこんなにたくさんクッキーとチョコレートを買ったの？もうダイエットしないの？\n女：1か月ダイエットしても全然痩せなかったから、本当に自信がなくなっちゃった。\n問：女性が言いたいことは何か。"},
+    {id:"l-41007-14",transcript:"女：你的腿怎么流血了？我带你去医院吧。\n男：没关系，刚才踢足球不小心擦破了皮，不疼。\n问：男的刚才怎么了？",question:"男的刚才怎么了？",options:["哭了","被骗了","腿擦破了","把篮球丢了"],answer:2,transcriptJa:"女：あなたの足、どうして血が出てるの？病院に連れて行くよ。\n男：大丈夫、さっきサッカーをしていてうっかり擦りむいただけで、痛くないよ。\n問：男性はさっきどうしたか。"},
+    {id:"l-41007-15",transcript:"男：早上起床，要先把窗户打开，让新鲜空气进来。\n女：我刚去洗脸了，还没来得及开呢，这就开。\n问：女的没来得及做什么？",question:"女的没来得及做什么？",options:["洗澡","跑步","开窗户","打扫洗手间"],answer:2,transcriptJa:"男：朝起きたら、まず窓を開けて新鮮な空気を入れないと。\n女：さっき顔を洗いに行ってて、まだ開ける時間がなかったの、今すぐ開けるね。\n問：女性は何をする時間がなかったか。"},
+    {id:"l-41007-16",transcript:"女：喂，我在超市入口这儿呢，你怎么还没到？\n男：我对这儿不太熟悉，好了，我看见你了，马上到，先挂了。\n问：他们打算在哪儿见面？",question:"他们打算在哪儿见面？",options:["公园对面","超市入口","教室门口","火车站旁边"],answer:1,transcriptJa:"女：もしもし、私スーパーの入口にいるんだけど、どうしてまだ着かないの？\n男：ここはあまり詳しくなくて。あ、見えた、すぐ行くよ、じゃあ切るね。\n問：彼らはどこで会うつもりか。"},
+    {id:"l-41007-17",transcript:"男：明天你打车直接去机场，不用来接我了，我坐地铁去，很方便。\n女：也行，那咱们明天机场见。\n问：男的明天怎么去机场？",question:"男的明天怎么去机场？",options:["开车","坐地铁","坐出租车","骑自行车"],answer:1,transcriptJa:"男：明日は直接タクシーで空港に行って、僕を迎えに来なくていいよ、地下鉄で行くから、便利だし。\n女：それでもいいよ、じゃあ明日空港で会おう。\n問：男性は明日どうやって空港に行くか。"},
+    {id:"l-41007-18",transcript:"女：每天要按时吃药，注意休息，月底再来检查一次。\n男：明白了，谢谢大夫，再见。\n问：关于男的，可以知道什么？",question:"关于男的，可以知道什么？",options:["很粗心","生病了","爱抽烟","刚刚打针了"],answer:1,transcriptJa:"女：毎日時間通りに薬を飲んで、休養に気をつけて、月末にもう一度検査に来てください。\n男：分かりました、先生ありがとうございます、失礼します。\n問：男性について何が分かるか。"},
+    {id:"l-41007-19",transcript:"男：小赵，由你负责写这次会议的总结怎么样？\n女：没问题，您放心，周四我就可以给您。\n问：女的觉得这个任务怎么样？",question:"女的觉得这个任务怎么样？",options:["很危险","比较奇怪","不用担心","没办法完成"],answer:2,transcriptJa:"男：趙さん、今回の会議のまとめはあなたに担当してもらうのはどうですか？\n女：大丈夫です、ご安心ください、木曜日にはお渡しできます。\n問：女性はこの任務についてどう思っているか。"},
+    {id:"l-41007-20",transcript:"女：孙师傅，您昨天下午出去了？\n男：对，我陪几个客人去了趟长城，然后就回公司了，有什么事吗？\n问：男的陪谁去长城了？",question:"男的陪谁去长城了？",options:["客人","邻居","妻子","哥哥"],answer:0,transcriptJa:"女：孫さん、昨日の午後出かけていましたか？\n男：はい、お客様を何人か連れて長城に行って、それから会社に戻りました。何かありましたか？\n問：男性は誰と長城に行ったか。"},
+    {id:"l-41007-21",transcript:"男：终于到家了，快把空调打开，真是热死了。\n女：打开了，真希望下一场大雨，让天气凉快下来。\n问：女的为什么希望下场大雨？",question:"女的为什么希望下场大雨？",options:["气温高","更浪漫","可以睡懒觉","不想去锻炼"],answer:0,transcriptJa:"男：やっと家に着いた、早くエアコンをつけて、本当に暑くて死にそうだ。\n女：つけたよ、本当に大雨が降って、涼しくなってほしいな。\n問：女性はなぜ大雨が降ってほしいと思っているか。"},
+    {id:"l-41007-22",transcript:"女：李先生，这是给您留的座位，您请。\n男：谢谢，先给我们来两杯绿茶，把菜单给我，我来点菜。\n问：男的想要喝什么？",question:"男的想要喝什么？",options:["咖啡","果汁","绿茶","啤酒"],answer:2,transcriptJa:"女：李様、こちらがお取りしておいた席です、どうぞ。\n男：ありがとう、まず緑茶を2杯持ってきてください、メニューをください、注文しますので。\n問：男性は何を飲みたいか。"},
+    {id:"l-41007-23",transcript:"男：这本小说这么厚，什么时候才能看完啊。\n女：每天晚上看十几页，差不多一个月就可以看完。\n问：男的认为这本书怎么样？",question:"男的认为这本书怎么样？",options:["太厚","无聊","很有名","翻译得不好"],answer:0,transcriptJa:"男：この小説はこんなに厚くて、いつになったら読み終わるんだろう。\n女：毎晩十数ページ読めば、だいたい1か月で読み終わるよ。\n問：男性はこの本についてどう思っているか。"},
+    {id:"l-41007-24",transcript:"女：今天中午我们出去吃吧。\n男：好，附近刚开了一家饭馆儿，菜做得很好吃，而且不贵。\n问：关于那个饭馆儿，可以知道什么？",question:"关于那个饭馆儿，可以知道什么？",options:["菜便宜","汤免费","服务差","正在打折"],answer:0,transcriptJa:"女：今日のお昼は外に食べに行こうよ。\n男：いいね、近くに最近レストランが1軒開店して、料理がとても美味しくて、しかも高くないんだ。\n問：そのレストランについて何が分かるか。"},
+    {id:"l-41007-25",transcript:"男：这份材料我看过了，我的意见都写在上面了。\n女：谢谢您，我们回去后会按照您的意见再重新整理一下。\n问：男的在材料上写什么了？",question:"男的在材料上写什么了？",options:["密码","一些解释","一些意见","招聘说明"],answer:2,transcriptJa:"男：この資料は見ました、私の意見はすべて上に書いておきました。\n女：ありがとうございます、戻りましたらご意見に従ってもう一度整理し直します。\n問：男性は資料に何を書いたか。"},
+    {id:"l-41007-26",transcript:"女：把香蕉皮扔到垃圾桶里去，以后别随便扔东西。\n男：知道了，奶奶。\n女：数学作业写完了吗？\n男：没呢，我先出去玩儿一会儿，您在家休息吧。\n问：根据对话，可以知道什么？",question:"根据对话，可以知道什么？",options:["天黑了","西瓜不好吃","孙子去上课","作业没写完"],answer:3,transcriptJa:"女：バナナの皮はゴミ箱に捨てて、これからは物を勝手に捨てないで。\n男：分かったよ、おばあちゃん。\n女：数学の宿題は終わったの？\n男：まだだよ、先にちょっと遊びに行ってくる、おばあちゃんは家で休んでて。\n問：会話から何が分かるか。"},
+    {id:"l-41007-27",transcript:"男：您能给我们介绍一些您的成功经验吗？\n女：我觉得要重视平时的积累，要多向周围的人学习。\n男：那您觉得您最大的优点是什么呢？\n女：是诚实。\n问：女的觉得自己怎么样？",question:"女的觉得自己怎么样？",options:["很勇敢","很诚实","很可爱","很有礼貌"],answer:1,transcriptJa:"男：あなたの成功の経験を少し教えていただけますか？\n女：普段からの積み重ねを重視すること、そして周りの人からたくさん学ぶことが大切だと思います。\n男：では、あなたの最大の長所は何だと思いますか？\n女：誠実さです。\n問：女性は自分自身についてどう思っているか。"},
+    {id:"l-41007-28",transcript:"女：小王，你也来商场购物啊？\n男：我要买个行李箱。您要买什么？\n女：今天休息，所以过来逛逛。你买行李箱要去哪儿？\n男：我周末要去外地演出。\n问：男的最可能是做什么的？",question:"男的最可能是做什么的？",options:["医生","记者","演员","运动员"],answer:2,transcriptJa:"女：王さん、あなたもデパートに買い物に来たの？\n男：スーツケースを買いたいんです。あなたは何を買うんですか？\n女：今日は休みだから、ぶらぶら見に来たの。スーツケースを買ってどこに行くの？\n男：週末に地方で公演があるんです。\n問：男性は何をしている可能性が高いか。"},
+    {id:"l-41007-29",transcript:"男：你那儿最近有什么好消息没？\n女：好消息和坏消息各有一个，你先听哪个？\n男：那你先说坏消息是什么？\n女：以前那家奶牛场不向我们提供牛奶了。好消息是我们又联系上了另一家奶牛场。\n问：以前的奶牛场怎么了？",question:"以前的奶牛场怎么了？",options:["搬走了","生意不好","牛奶不合格","不提供牛奶了"],answer:3,transcriptJa:"男：最近そちらで何かいいニュースある？\n女：いいニュースと悪いニュースがそれぞれ一つずつあるけど、どっちから聞く？\n男：じゃあまず悪いニュースを教えて。\n女：以前のあの牧場が私たちに牛乳を提供してくれなくなったの。いいニュースは、また別の牧場と連絡が取れたこと。\n問：以前の牧場はどうなったか。"},
+    {id:"l-41007-30",transcript:"女：去年夏天我去国外旅游，没想到买回来的礼物竟然都是中国制造。\n男：这很正常，中国现在是世界制造大国。\n女：是，随着质量的进一步提高，相信会有更多的中国制造。\n男：当然，我们还需要继续提高质量，提高竞争力。\n问：他们在谈什么？",question:"他们在谈什么？",options:["中国制造","旅行计划","环境污染","科学精神"],answer:0,transcriptJa:"女：去年の夏、私は海外旅行に行ったんだけど、思いがけず買って帰ったお土産が全部中国製だったの。\n男：それは普通のことだよ、中国は今や世界の製造大国だから。\n女：そうね、品質がさらに向上するにつれて、もっと多くの中国製品が出てくると思う。\n男：もちろん、私たちはさらに品質を高めて、競争力を上げる必要があるね。\n問：彼らは何について話しているか。"},
+    {id:"l-41007-31",transcript:"男：听说你从小就开始写日记了？\n女：是，开始是老师要求写，写每天发生的有意思的事，慢慢就成习惯了。\n男：你觉得写日记有什么好处？\n女：可以给我留下一些美好的回忆。\n问：刚开始是谁要求她写日记的？",question:"刚开始是谁要求她写日记的？",options:["丈夫","爷爷","阿姨","老师"],answer:3,transcriptJa:"男：小さい頃から日記を書き始めたって聞いたけど？\n女：うん、最初は先生に書くよう求められて、毎日起こった面白いことを書いていたら、だんだん習慣になったの。\n男：日記を書くことにどんな良いことがあると思う？\n女：私に美しい思い出を残してくれるの。\n問：最初は誰が彼女に日記を書くよう求めたか。"},
+    {id:"l-41007-32",transcript:"女：动作快一点儿，快来不及了。\n男：什么来不及了，你拉我去哪里？\n女：出发时间改下午两点了，现在就集合。\n男：怎么没通知我们啊？\n问：女的为什么着急？",question:"女的为什么着急？",options:["变胖了","要考试了","游泳输了","时间提前了"],answer:3,transcriptJa:"女：もっと急いで、間に合わなくなるよ。\n男：何が間に合わないの、僕をどこに連れて行くの？\n女：出発時間が午後2時に変更になったの、今すぐ集合だよ。\n男：どうして僕たちに知らせてくれなかったの？\n問：女性はなぜ焦っているか。"},
+    {id:"l-41007-33",transcript:"男：你们俩真的是姐妹呀？\n女：对，不像吗？\n男：细看的话，鼻子和眼睛确实挺像的。\n女：别人也都这么说，不过我妹性格比我活泼。\n问：关于她妹妹，可以知道什么？",question:"关于她妹妹，可以知道什么？",options:["爱吃鱼","是大学生","性格活泼","喜欢上网"],answer:2,transcriptJa:"男：あなたたち二人は本当に姉妹なの？\n女：うん、似てない？\n男：よく見ると、鼻と目は確かにかなり似てるね。\n女：他の人もみんなそう言うよ、でも妹は私より性格が活発なの。\n問：彼女の妹について何が分かるか。"},
+    {id:"l-41007-34",transcript:"女：周老师，没想到在这儿遇到您！您去哪儿？\n男：去北京参加一个教育工作会，你呢？\n女：我也回北京，我弟弟要结婚。您是十点零五的飞机吗？\n男：对。我刚听广播里说，飞机要推迟半小时起飞。\n问：周老师去北京做什么？",question:"周老师去北京做什么？",options:["开会","办签证","看同事","看京剧表演"],answer:0,transcriptJa:"女：周先生、ここでお会いするとは思いませんでした！どちらへ行かれるんですか？\n男：北京へ教育関係の会議に参加しに行きます、あなたは？\n女：私も北京に戻ります、弟が結婚するんです。先生は10時5分の飛行機ですか？\n男：そうです。さっき放送で、飛行機が30分遅れて出発すると聞きました。\n問：周先生は北京へ何をしに行くか。"},
+    {id:"l-41007-35",transcript:"男：你好，我想报名参加这个月的普通话水平考试。\n女：对不起，报名工作今天上午刚结束。\n男：啊，那下一次考试是什么时候？\n女：八月十五号，报名时间您可以上我们的网站查一下。\n问：下一次考试是几月？",question:"下一次考试是几月？",options:["4月","5月","8月","10月"],answer:2,transcriptJa:"男：こんにちは、今月の普通話水平試験に申し込みたいのですが。\n女：申し訳ございません、申し込み受付は今日の午前中に終わったばかりです。\n男：ああ、では次回の試験はいつですか？\n女：8月15日です、申し込み期間は当ウェブサイトでご確認いただけます。\n問：次回の試験は何月か。"},
+    {id:"l-41007-36",transcript:"我爸和我妈是大学同学，现在我又在他们那个学校里读博士。可以说，我和他们既是儿子和父母的关系，又是同学关系。我常和我爸爸开玩笑，叫他“老同学”。",question:"说话人现在在学校做什么？",options:["读硕士","读博士","当教授","当校长"],answer:1,transcriptJa:"父と母は大学の同級生で、今私も彼らと同じ学校で博士課程を学んでいる。私と両親は、息子と親という関係であると同時に、同級生という関係でもあると言える。私はよく父に冗談を言って、彼を「先輩同級生」と呼んでいる。"},
+    {id:"l-41007-37",transcript:"我爸和我妈是大学同学，现在我又在他们那个学校里读博士。可以说，我和他们既是儿子和父母的关系，又是同学关系。我常和我爸爸开玩笑，叫他“老同学”。",question:"关于说话人，可以知道什么？",options:["个子矮","会弹钢琴","和父母同校","专业是中文"],answer:2,transcriptJa:"父と母は大学の同級生で、今私も彼らと同じ学校で博士課程を学んでいる。私と両親は、息子と親という関係であると同時に、同級生という関係でもあると言える。私はよく父に冗談を言って、彼を「先輩同級生」と呼んでいる。"},
+    {id:"l-41007-38",transcript:"学习一种语言不是简单的事情，许多人在开始学的时候觉得很困难，于是就放弃了。但是只要坚持下来，从最基础的东西学起，慢慢就会发现自己的变化。这时候就会增加我们的信心，离学好这种语言也就越来越近了。",question:"很多人开始学习一种语言时会觉得怎么样？",options:["很害怕","很困难","非常得意","十分有趣"],answer:1,transcriptJa:"言語を学ぶことは簡単なことではない。多くの人は学び始めたときに難しいと感じ、そのため諦めてしまう。しかし、続けさえすれば、最も基礎的なことから学び始めて、徐々に自分の変化に気づくようになる。そのとき私たちの自信は増し、その言語をマスターすることにますます近づいていくのだ。"},
+    {id:"l-41007-39",transcript:"学习一种语言不是简单的事情，许多人在开始学的时候觉得很困难，于是就放弃了。但是只要坚持下来，从最基础的东西学起，慢慢就会发现自己的变化。这时候就会增加我们的信心，离学好这种语言也就越来越近了。",question:"怎样才能学好一种语言？",options:["要坚持","去留学","多练习","要特别仔细"],answer:0,transcriptJa:"言語を学ぶことは簡単なことではない。多くの人は学び始めたときに難しいと感じ、そのため諦めてしまう。しかし、続けさえすれば、最も基礎的なことから学び始めて、徐々に自分の変化に気づくようになる。そのとき私たちの自信は増し、その言語をマスターすることにますます近づいていくのだ。"},
+    {id:"l-41007-40",transcript:"真正的爱情可以使两个人相互理解、信任和尊重，使我们的生活变得更精彩。无论穷还是富，真正的爱情会让人觉得不孤单，仅仅一个笑脸、一句关心的话，就会让人感觉非常幸福。",question:"爱情可以让生活变得怎么样？",options:["精彩","复杂","可惜","安全"],answer:0,transcriptJa:"本当の愛は二人が互いに理解し、信頼し、尊重し合うことを可能にし、私たちの生活をより素晴らしいものにしてくれる。貧しくても豊かでも、本当の愛は人に孤独を感じさせない。ただ一つの笑顔、一言の気遣う言葉だけで、人はとても幸せを感じることができるのだ。"},
+    {id:"l-41007-41",transcript:"真正的爱情可以使两个人相互理解、信任和尊重，使我们的生活变得更精彩。无论穷还是富，真正的爱情会让人觉得不孤单，仅仅一个笑脸、一句关心的话，就会让人感觉非常幸福。",question:"这段话主要谈什么？",options:["什么是信任","什么是幸福","爱情的作用","怎样尊重别人"],answer:2,transcriptJa:"本当の愛は二人が互いに理解し、信頼し、尊重し合うことを可能にし、私たちの生活をより素晴らしいものにしてくれる。貧しくても豊かでも、本当の愛は人に孤独を感じさせない。ただ一つの笑顔、一言の気遣う言葉だけで、人はとても幸せを感じることができるのだ。"},
+    {id:"l-41007-42",transcript:"有人说时间就是金钱，我认为时间更像生命，钱花完了可以再赚，但是时间过去了就再也找不回来。时间不会为任何人、任何事停下脚步。每个人都不应该浪费时间，因为浪费时间也就是浪费生命。",question:"说话人认为时间更像什么？",options:["金钱","阳光","生命","风景"],answer:2,transcriptJa:"時間は金なりと言う人がいるが、私は時間はむしろ命に似ていると思う。お金は使い果たしてもまた稼ぐことができるが、時間は過ぎてしまえばもう二度と取り戻せない。時間は誰のためにも、どんな事のためにも足を止めることはない。誰もが時間を無駄にすべきではない。なぜなら、時間を無駄にすることは命を無駄にすることでもあるからだ。"},
+    {id:"l-41007-43",transcript:"有人说时间就是金钱，我认为时间更像生命，钱花完了可以再赚，但是时间过去了就再也找不回来。时间不会为任何人、任何事停下脚步。每个人都不应该浪费时间，因为浪费时间也就是浪费生命。",question:"这段话主要想告诉我们什么？",options:["不要骄傲","要积累经验","要节约用水","别浪费时间"],answer:3,transcriptJa:"時間は金なりと言う人がいるが、私は時間はむしろ命に似ていると思う。お金は使い果たしてもまた稼ぐことができるが、時間は過ぎてしまえばもう二度と取り戻せない。時間は誰のためにも、どんな事のためにも足を止めることはない。誰もが時間を無駄にすべきではない。なぜなら、時間を無駄にすることは命を無駄にすることでもあるからだ。"},
+    {id:"l-41007-44",transcript:"我不同意提高门票价格。门票价格提高后，门票收入好像会增加，可是来这儿的游客却有可能因此而减少，实际上总的收入在减少。所以我觉得应该降低门票价格，以吸引更多的人来这儿。",question:"说话人对提高门票价格是什么态度？",options:["支持","反对","后悔","同情"],answer:1,transcriptJa:"私は入場料の値上げに同意しません。入場料を値上げすると、入場券の収入は増えるように見えますが、ここに来る観光客はそれによって減少する可能性があり、実際には総収入は減少しています。ですから、より多くの人をここに呼び込むために、入場料を引き下げるべきだと思います。"},
+    {id:"l-41007-45",transcript:"我不同意提高门票价格。门票价格提高后，门票收入好像会增加，可是来这儿的游客却有可能因此而减少，实际上总的收入在减少。所以我觉得应该降低门票价格，以吸引更多的人来这儿。",question:"说话人最可能在哪儿工作？",options:["图书馆","大使馆","电影院","动物园"],answer:3,transcriptJa:"私は入場料の値上げに同意しません。入場料を値上げすると、入場券の収入は増えるように見えますが、ここに来る観光客はそれによって減少する可能性があり、実際には総収入は減少しています。ですから、より多くの人をここに呼び込むために、入場料を引き下げるべきだと思います。"}
+  ];
+
+  // ---- state ----
+  var STORE_KEY = "hsk4-daily-app-v1";
+  var INTERVALS = [1, 2, 4, 7, 14]; // days, indexed by box
+
+  function todayStr() {
+    var d = new Date();
+    return d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+  }
+  function addDays(dateStr, n) {
+    var parts = dateStr.split("-").map(Number);
+    var d = new Date(parts[0], parts[1]-1, parts[2]);
+    d.setDate(d.getDate() + n);
+    return d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+  }
+  function isPastOrToday(dateStr) {
+    var t = todayStr().split("-").map(Number);
+    var d = dateStr.split("-").map(Number);
+    var td = new Date(t[0], t[1]-1, t[2]).getTime();
+    var dd = new Date(d[0], d[1]-1, d[2]).getTime();
+    return dd <= td;
+  }
+
+  function loadState() {
+    try {
+      var raw = localStorage.getItem(STORE_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    return { items: {}, streak: { last: null, count: 0 } };
+  }
+  function saveState() {
+    localStorage.setItem(STORE_KEY, JSON.stringify(state));
+  }
+  function getItemState(id) {
+    if (!state.items[id]) {
+      state.items[id] = { box: 0, nextDue: todayStr(), needsReview: false, wrongCount: 0, seen: 0 };
+    }
+    return state.items[id];
+  }
+
+  var state = loadState();
+
+  function bumpStreak() {
+    var t = todayStr();
+    if (state.streak.last === t) return;
+    if (state.streak.last === addDays(t, -1)) {
+      state.streak.count += 1;
+    } else {
+      state.streak.count = 1;
+    }
+    state.streak.last = t;
+    saveState();
+  }
+
+  // ---- queues ----
+  function dueQueue(pool) {
+    var due = [];
+    var fresh = [];
+    pool.forEach(function (it) {
+      var s = getItemState(it.id);
+      if (s.seen === 0) fresh.push(it);
+      else if (isPastOrToday(s.nextDue)) due.push(it);
+    });
+    due.sort(function (a, b) {
+      return getItemState(a.id).needsReview === getItemState(b.id).needsReview ? 0 : (getItemState(a.id).needsReview ? -1 : 1);
+    });
+    var queue = due.concat(fresh);
+    return queue.slice(0, 20);
+  }
+  function reviewQueue() {
+    var all = VOCAB.concat(LISTENING);
+    return all.filter(function (it) {
+      return getItemState(it.id).needsReview;
+    });
+  }
+
+  function counts() {
+    return {
+      vocabDue: dueQueue(VOCAB).length,
+      listenDue: dueQueue(LISTENING).length,
+      review: reviewQueue().length,
+      mastered: VOCAB.concat(LISTENING).filter(function (it) { return getItemState(it.id).box >= 4; }).length
+    };
+  }
+
+  function renderHome() {
+    var c = counts();
+    document.getElementById("streakNum").textContent = state.streak.count || 0;
+    document.getElementById("statDue").textContent = c.vocabDue + c.listenDue;
+    document.getElementById("statReview").textContent = c.review;
+    document.getElementById("statMastered").textContent = c.mastered;
+    document.getElementById("badgeVocab").textContent = c.vocabDue;
+    document.getElementById("badgeListening").textContent = c.listenDue;
+    document.getElementById("badgeReview").textContent = c.review;
+  }
+
+  // ---- session engine ----
+  var session = null; // { type, queue, index, correct }
+
+  function goHome() {
+    document.getElementById("sessionView").classList.remove("active");
+    document.getElementById("homeView").classList.remove("hidden");
+    document.getElementById("doneView").classList.remove("show");
+    renderHome();
+  }
+
+  function startSession(type) {
+    var queue;
+    var kind;
+    if (type === "vocab") { queue = dueQueue(VOCAB); kind = "vocab"; }
+    else if (type === "listening") { queue = dueQueue(LISTENING); kind = "listening"; }
+    else { queue = reviewQueue(); kind = "mixed"; }
+
+    session = { queue: queue, index: 0, correct: 0, kind: kind };
+    document.getElementById("homeView").classList.add("hidden");
+    document.getElementById("sessionView").classList.add("active");
+    document.getElementById("doneView").classList.remove("show");
+    renderStep();
+  }
+
+  function itemKind(it) {
+    return it.hanzi ? "vocab" : "listening";
+  }
+
+  function renderStep() {
+    var body = document.getElementById("sessionBody");
+    var total = session.queue.length;
+    var i = session.index;
+
+    document.getElementById("progressCount").textContent = Math.min(i, total) + "/" + total;
+    document.getElementById("progressFill").style.width = (total ? (i / total * 100) : 0) + "%";
+
+    if (total === 0) {
+      body.innerHTML = "";
+      var empty = document.createElement("div");
+      empty.className = "empty-state";
+      empty.innerHTML = "<div style='font-size:32px;'>🎉</div><div>今はここに予定がありません。<br>他のモードを試してみてください。</div>";
+      body.appendChild(empty);
+      return;
+    }
+
+    if (i >= total) {
+      body.innerHTML = "";
+      document.getElementById("doneMsg").textContent = "今回は " + total + " 問中 " + session.correct + " 問正解でした。";
+      document.getElementById("doneView").classList.add("show");
+      bumpStreak();
+      return;
+    }
+
+    var it = session.queue[i];
+    if (itemKind(it) === "vocab") renderVocabCard(body, it);
+    else renderListeningCard(body, it);
+  }
+
+  var WRONG_REASONS = ["発音", "意味", "使い方", "その他"];
+
+  function grade(it, correct, reason) {
+    var s = getItemState(it.id);
+    s.seen += 1;
+    if (correct) {
+      s.box = Math.min(s.box + 1, 4);
+      if (s.needsReview) s.needsReview = false;
+      s.nextDue = addDays(todayStr(), INTERVALS[s.box]);
+      session.correct += 1;
+    } else {
+      s.box = 0;
+      s.needsReview = true;
+      s.wrongCount += 1;
+      s.nextDue = addDays(todayStr(), 1);
+      if (reason) {
+        if (!s.reasonCounts) s.reasonCounts = {};
+        s.reasonCounts[reason] = (s.reasonCounts[reason] || 0) + 1;
+      }
+    }
+    saveState();
+    session.index += 1;
+    renderStep();
+  }
+
+  function renderVocabCard(body, it) {
+    var exampleHtml = it.example
+      ? '<div class="example-block">' +
+          '<div class="ex-zh">' + it.example.zh + '</div>' +
+          '<div class="ex-pinyin">' + it.example.pinyin + '</div>' +
+          '<div>' + it.example.ja + '</div>' +
+        '</div>'
+      : '';
+
+    body.innerHTML =
+      '<div class="card" id="flipCard" tabindex="0" role="button" aria-label="タップして答えを見る">' +
+        '<div class="hanzi-row">' +
+          '<div class="hanzi">' + it.hanzi + '</div>' +
+          '<button class="mini-play-btn" id="vocabPlayBtn" aria-label="発音を再生">▶</button>' +
+        '</div>' +
+        '<div class="reveal-hint" id="revealHint">タップして意味を見る</div>' +
+        '<div class="answer-block" id="answerBlock">' +
+          '<div class="pinyin">' + it.pinyin + '</div>' +
+          '<div class="meaning">' + it.meaning + '</div>' +
+          exampleHtml +
+        '</div>' +
+      '</div>' +
+      '<div class="grade-row" id="gradeRow">' +
+        '<button class="grade-btn wrong" id="btnWrong">わからなかった</button>' +
+        '<button class="grade-btn right" id="btnRight">わかった</button>' +
+      '</div>' +
+      '<div class="reason-row" id="reasonRow">' +
+        WRONG_REASONS.map(function (r) { return '<button class="reason-chip" data-reason="' + r + '">' + r + '</button>'; }).join('') +
+      '</div>';
+
+    document.getElementById("vocabPlayBtn").addEventListener("click", function (e) {
+      e.stopPropagation();
+      speak(it.hanzi);
+    });
+
+    var revealed = false;
+    function reveal() {
+      if (revealed) return;
+      revealed = true;
+      document.getElementById("answerBlock").classList.add("show");
+      document.getElementById("revealHint").style.display = "none";
+      document.getElementById("btnWrong").classList.add("show");
+      document.getElementById("btnRight").classList.add("show");
+    }
+    var card = document.getElementById("flipCard");
+    card.addEventListener("click", reveal);
+    card.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); reveal(); }
+    });
+
+    document.getElementById("btnWrong").addEventListener("click", function () {
+      document.getElementById("gradeRow").style.display = "none";
+      document.getElementById("reasonRow").classList.add("show");
+    });
+    document.getElementById("btnRight").addEventListener("click", function () { grade(it, true); });
+    document.getElementById("reasonRow").addEventListener("click", function (e) {
+      var btn = e.target.closest(".reason-chip");
+      if (!btn) return;
+      grade(it, false, btn.getAttribute("data-reason"));
+    });
+  }
+
+  function speak(text) {
+    if (!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = "zh-CN";
+    u.rate = 0.95;
+    window.speechSynthesis.speak(u);
+  }
+
+  function renderListeningCard(body, it) {
+    var optionsHtml = it.options.map(function (opt, idx) {
+      return '<button class="option-btn" data-idx="' + idx + '">' + opt + '</button>';
+    }).join("");
+
+    body.innerHTML =
+      '<div class="listen-card">' +
+        '<button class="play-btn" id="playBtn" aria-label="音声を再生">▶</button>' +
+        '<div class="listen-hint">タップして音声を聞く（合成音声）</div>' +
+        '<div class="question-text">' + it.question + '</div>' +
+        '<div class="options" id="optionsWrap">' + optionsHtml + '</div>' +
+        '<div class="transcript" id="transcript">スクリプト：' + it.transcript +
+          (it.transcriptJa ? '<span class="ja">訳：' + it.transcriptJa + '</span>' : '') +
+        '</div>' +
+      '</div>' +
+      '<button class="next-btn" id="nextBtn">次へ</button>';
+
+    document.getElementById("playBtn").addEventListener("click", function () {
+      speak(it.transcript);
+    });
+
+    var answered = false;
+    var buttons = body.querySelectorAll(".option-btn");
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        if (answered) return;
+        answered = true;
+        var idx = Number(btn.getAttribute("data-idx"));
+        var isCorrect = idx === it.answer;
+        buttons.forEach(function (b, bi) {
+          b.disabled = true;
+          if (bi === it.answer) b.classList.add("correct");
+          else if (bi === idx && !isCorrect) b.classList.add("incorrect");
+        });
+        document.getElementById("transcript").classList.add("show");
+        document.getElementById("nextBtn").classList.add("show");
+        document.getElementById("nextBtn").addEventListener("click", function handler() {
+          grade(it, isCorrect);
+        }, { once: true });
+      });
+    });
+  }
+
+  window.startSession = startSession;
+  window.goHome = goHome;
+
+  renderHome();
+})();
+</script>
