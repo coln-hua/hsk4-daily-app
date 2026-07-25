@@ -1,57 +1,66 @@
-<title>每日一练 - HSK4毎日トレーニング</title>
+<title>圆圆日记 - HSK4まいにち練習</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%BC%3C/text%3E%3C/svg%3E">
 <style>
   :root {
-    --bg: #EFF1EC;
+    --bg: #FBF2EE;
     --surface: #FFFFFF;
-    --surface-2: #E4E7E0;
-    --ink: #1F2A24;
-    --ink-soft: #55605A;
-    --accent: #2F6F5E;
-    --accent-soft: #DCEAE4;
-    --danger: #AD4A3A;
-    --danger-soft: #F3DEDA;
-    --border: #D9DCD3;
-    --font-ui: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
+    --surface-2: #F6E4DC;
+    --ink: #3A2E2A;
+    --ink-soft: #9C8880;
+    --accent: #4C8A6A;
+    --accent-soft: #DEEEE2;
+    --danger: #E0685A;
+    --danger-soft: #FBE1DC;
+    --celebrate: #E88CA0;
+    --celebrate-soft: #FBE3E8;
+    --border: #F0DDD3;
+    --font-ui: ui-rounded, "Hiragino Maru Gothic ProN", "Rounded Mplus 1c", "Hiragino Sans", sans-serif;
     --font-hanzi: "Songti SC", "Noto Serif SC", "Hiragino Serif", serif;
     --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #121613;
-      --surface: #1B211D;
-      --surface-2: #232B25;
-      --ink: #E7E9E2;
-      --ink-soft: #A8AEA4;
-      --accent: #5FBF9E;
-      --accent-soft: #1E3B32;
-      --danger: #E2897A;
-      --danger-soft: #3A211E;
-      --border: #303830;
+      --bg: #1C1613;
+      --surface: #261E1B;
+      --surface-2: #2F2521;
+      --ink: #F1E6E0;
+      --ink-soft: #B39D93;
+      --accent: #6FC29B;
+      --accent-soft: #22392E;
+      --danger: #EB8A7C;
+      --danger-soft: #3D241F;
+      --celebrate: #F0A3B4;
+      --celebrate-soft: #3D2530;
+      --border: #3A2C26;
     }
   }
   :root[data-theme="dark"] {
-    --bg: #121613;
-    --surface: #1B211D;
-    --surface-2: #232B25;
-    --ink: #E7E9E2;
-    --ink-soft: #A8AEA4;
-    --accent: #5FBF9E;
-    --accent-soft: #1E3B32;
-    --danger: #E2897A;
-    --danger-soft: #3A211E;
-    --border: #303830;
+    --bg: #1C1613;
+    --surface: #261E1B;
+    --surface-2: #2F2521;
+    --ink: #F1E6E0;
+    --ink-soft: #B39D93;
+    --accent: #6FC29B;
+    --accent-soft: #22392E;
+    --danger: #EB8A7C;
+    --danger-soft: #3D241F;
+    --celebrate: #F0A3B4;
+    --celebrate-soft: #3D2530;
+    --border: #3A2C26;
   }
   :root[data-theme="light"] {
-    --bg: #EFF1EC;
+    --bg: #FBF2EE;
     --surface: #FFFFFF;
-    --surface-2: #E4E7E0;
-    --ink: #1F2A24;
-    --ink-soft: #55605A;
-    --accent: #2F6F5E;
-    --accent-soft: #DCEAE4;
-    --danger: #AD4A3A;
-    --danger-soft: #F3DEDA;
-    --border: #D9DCD3;
+    --surface-2: #F6E4DC;
+    --ink: #3A2E2A;
+    --ink-soft: #9C8880;
+    --accent: #4C8A6A;
+    --accent-soft: #DEEEE2;
+    --danger: #E0685A;
+    --danger-soft: #FBE1DC;
+    --celebrate: #E88CA0;
+    --celebrate-soft: #FBE3E8;
+    --border: #F0DDD3;
   }
 
   * { box-sizing: border-box; }
@@ -107,12 +116,12 @@
     display: flex;
     align-items: baseline;
     gap: 4px;
-    background: var(--accent-soft);
-    color: var(--accent);
+    background: var(--celebrate-soft);
+    color: var(--celebrate);
     border-radius: 999px;
     padding: 6px 12px;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     white-space: nowrap;
   }
   .streak-chip .num {
@@ -622,10 +631,10 @@
   <div class="home-view" id="homeView">
     <header class="topbar">
       <div>
-        <h1>每日一练</h1>
-        <div class="sub">HSK4 毎日トレーニング</div>
+        <h1>🐼 圆圆日记</h1>
+        <div class="sub">今日もコツコツ、HSK4</div>
       </div>
-      <div class="streak-chip">🔥<span class="num" id="streakNum">0</span>日</div>
+      <div class="streak-chip"><span class="num" id="streakNum">0</span>日連続</div>
     </header>
 
     <div class="stat-row">
@@ -699,7 +708,7 @@
     <div id="sessionBody"></div>
 
     <div class="done-view" id="doneView">
-      <div class="big">✅</div>
+      <div class="big">🐼</div>
       <div class="msg" id="doneMsg"></div>
       <button class="home-btn" onclick="goHome()">ホームに戻る</button>
     </div>
@@ -1164,7 +1173,9 @@
 
     if (i >= total) {
       body.innerHTML = "";
-      document.getElementById("doneMsg").textContent = "今回は " + total + " 問中 " + session.correct + " 問正解でした。";
+      var rate = total ? session.correct / total : 0;
+      var praise = rate === 1 ? "パーフェクト！えらすぎる🎉" : rate >= 0.7 ? "いい調子！その調子でいこう" : "今日もよく頑張った、それだけで十分えらい";
+      document.getElementById("doneMsg").textContent = praise + "（" + total + "問中" + session.correct + "問正解）";
       document.getElementById("doneView").classList.add("show");
       bumpStreak();
       return;
