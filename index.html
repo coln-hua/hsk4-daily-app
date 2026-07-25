@@ -1375,20 +1375,27 @@
     if (activePlayBtn) setBtnPlaying(activePlayBtn, false);
   }
 
-  var zhVoice = null;
-  function pickZhVoice() {
+  var VOICE_BLOCKLIST = /zarvox|whisper|trinoids|bad news|good news|bubbles|cellos|wobble|hysterical|deranged|bahh|boing|pipe organ|albert|junior|kathy|ralph|organ|superstar|bells|jester|rocko|shelley|grandma|grandpa|eddy|reed|sandy|flo/i;
+  var voiceCache = {};
+  function pickVoice(langPrefix) {
     if (!("speechSynthesis" in window)) return null;
     var voices = window.speechSynthesis.getVoices();
-    var zh = voices.filter(function (v) { return /^zh/i.test(v.lang); });
-    if (!zh.length) return null;
-    var premium = zh.find(function (v) { return /google|premium|enhanced|natural|neural/i.test(v.name); });
+    var matches = voices.filter(function (v) {
+      return v.lang.toLowerCase().indexOf(langPrefix) === 0 && !VOICE_BLOCKLIST.test(v.name);
+    });
+    if (!matches.length) return null;
+    var premium = matches.find(function (v) { return /google|premium|enhanced|natural|neural|samantha/i.test(v.name); });
     if (premium) return premium;
-    var nonCompact = zh.find(function (v) { return !/compact/i.test(v.name); });
-    return nonCompact || zh[0];
+    var nonCompact = matches.find(function (v) { return !/compact/i.test(v.name); });
+    return nonCompact || matches[0];
   }
   if ("speechSynthesis" in window) {
-    zhVoice = pickZhVoice();
-    window.speechSynthesis.onvoiceschanged = function () { zhVoice = pickZhVoice(); };
+    voiceCache.zh = pickVoice("zh");
+    voiceCache.en = pickVoice("en");
+    window.speechSynthesis.onvoiceschanged = function () {
+      voiceCache.zh = pickVoice("zh");
+      voiceCache.en = pickVoice("en");
+    };
   }
 
   function speak(text, btn, lang) {
@@ -1396,15 +1403,13 @@
     stopAllAudio();
     setBtnPlaying(btn, true);
     if (!("speechSynthesis" in window)) { setBtnPlaying(btn, false); return; }
+    var isZh = lang === "zh-CN";
+    var key = isZh ? "zh" : "en";
+    if (!voiceCache[key]) voiceCache[key] = pickVoice(key);
     var u = new SpeechSynthesisUtterance(text);
     u.lang = lang;
-    if (lang === "zh-CN") {
-      if (!zhVoice) zhVoice = pickZhVoice();
-      if (zhVoice) u.voice = zhVoice;
-      u.rate = 0.9;
-    } else {
-      u.rate = 1;
-    }
+    if (voiceCache[key]) u.voice = voiceCache[key];
+    u.rate = isZh ? 0.9 : 1;
     u.onend = function () { setBtnPlaying(btn, false); };
     u.onerror = function () { setBtnPlaying(btn, false); };
     window.speechSynthesis.speak(u);
