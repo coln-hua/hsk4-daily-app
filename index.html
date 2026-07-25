@@ -494,6 +494,10 @@
     justify-content: center;
   }
   .play-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .play-btn.playing, .mini-play-btn.playing {
+    background: var(--danger);
+    color: var(--surface);
+  }
   .listen-hint { text-align: center; font-size: 12px; color: var(--ink-soft); }
   .question-text { font-size: 15px; font-weight: 600; text-align: center; }
   .options { display: flex; flex-direction: column; gap: 10px; }
@@ -583,6 +587,27 @@
   @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; }
   }
+
+  .lookup-popup {
+    position: fixed;
+    z-index: 50;
+    transform: translate(-50%, -100%);
+  }
+  .lookup-popup[hidden] { display: none; }
+  #lookupBtn {
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: inherit;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  }
+  #lookupBtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 </style>
 
 <div class="shell">
@@ -673,6 +698,10 @@
     </div>
   </div>
 
+</div>
+
+<div class="lookup-popup" id="lookupPopup" hidden>
+  <button id="lookupBtn"></button>
 </div>
 
 <script>
@@ -1202,12 +1231,14 @@
 
     document.getElementById("vocabPlayBtn").addEventListener("click", function (e) {
       e.stopPropagation();
-      speak(it.hanzi);
+      if (this.classList.contains("playing")) { stopAllAudio(); return; }
+      speak(it.hanzi, this);
     });
     if (it.example) {
       document.getElementById("examplePlayBtn").addEventListener("click", function (e) {
         e.stopPropagation();
-        speak(it.example.zh);
+        if (this.classList.contains("playing")) { stopAllAudio(); return; }
+        speak(it.example.zh, this);
       });
     }
 
@@ -1245,6 +1276,25 @@
   }
 
   var currentAudio = null;
+  var activePlayBtn = null;
+
+  function setBtnPlaying(btn, playing) {
+    if (!btn) return;
+    if (!btn.dataset.icon) btn.dataset.icon = btn.textContent;
+    if (playing) {
+      if (activePlayBtn && activePlayBtn !== btn) {
+        activePlayBtn.textContent = activePlayBtn.dataset.icon;
+        activePlayBtn.classList.remove("playing");
+      }
+      activePlayBtn = btn;
+      btn.textContent = "■";
+      btn.classList.add("playing");
+    } else {
+      btn.textContent = btn.dataset.icon;
+      btn.classList.remove("playing");
+      if (activePlayBtn === btn) activePlayBtn = null;
+    }
+  }
 
   function stopAllAudio() {
     if (currentAudio) {
@@ -1253,33 +1303,39 @@
       currentAudio = null;
     }
     if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    if (activePlayBtn) setBtnPlaying(activePlayBtn, false);
   }
 
-  function speak(text) {
+  function speak(text, btn) {
     stopAllAudio();
-    if (!("speechSynthesis" in window)) return;
+    setBtnPlaying(btn, true);
+    if (!("speechSynthesis" in window)) { setBtnPlaying(btn, false); return; }
     var u = new SpeechSynthesisUtterance(text);
     u.lang = "zh-CN";
     u.rate = 0.95;
+    u.onend = function () { setBtnPlaying(btn, false); };
+    u.onerror = function () { setBtnPlaying(btn, false); };
     window.speechSynthesis.speak(u);
   }
 
-  function playListening(it) {
+  function playListening(it, btn) {
     stopAllAudio();
+    setBtnPlaying(btn, true);
     var audio = new Audio("audio/" + it.id + ".mp3");
     currentAudio = audio;
+    audio.addEventListener("ended", function () { setBtnPlaying(btn, false); });
     var fellBack = false;
     audio.addEventListener("error", function () {
       if (fellBack) return;
       fellBack = true;
       currentAudio = null;
-      speak(it.transcript);
+      speak(it.transcript, btn);
     });
     audio.play().catch(function () {
       if (fellBack) return;
       fellBack = true;
       currentAudio = null;
-      speak(it.transcript);
+      speak(it.transcript, btn);
     });
   }
 
@@ -1292,7 +1348,7 @@
       '<div class="listen-card">' +
         '<div class="item-tag">' + itemLabel(it.id) + '</div>' +
         '<button class="play-btn" id="playBtn" aria-label="音声を再生">▶</button>' +
-        '<div class="listen-hint">タップして音声を聞く</div>' +
+        '<div class="listen-hint">タップして音声を聞く（再生中はタップで停止）</div>' +
         '<div class="question-text">' + it.question + '</div>' +
         '<div class="options" id="optionsWrap">' + optionsHtml + '</div>' +
         '<div class="transcript" id="transcript">スクリプト：' + it.transcript +
@@ -1303,7 +1359,8 @@
       '<button class="next-btn" id="nextBtn">' + (session.browsing ? '問題一覧に戻る' : '次へ') + '</button>';
 
     document.getElementById("playBtn").addEventListener("click", function () {
-      playListening(it);
+      if (this.classList.contains("playing")) { stopAllAudio(); return; }
+      playListening(it, this);
     });
 
     var answered = false;
@@ -1338,6 +1395,46 @@
     state = loadState();
     renderHome();
   });
+
+  // ---- 選択した中国語をその場で辞書検索 ----
+  var lookupPopup = document.getElementById("lookupPopup");
+  var lookupBtn = document.getElementById("lookupBtn");
+  var lookupTimer = null;
+
+  document.addEventListener("selectionchange", function () {
+    clearTimeout(lookupTimer);
+    lookupTimer = setTimeout(updateLookupPopup, 150);
+  });
+
+  function updateLookupPopup() {
+    var sel = window.getSelection();
+    var text = sel && sel.toString().trim();
+    var sessionBody = document.getElementById("sessionBody");
+    if (!text || text.length > 15 || !sel.rangeCount || !sessionBody) {
+      lookupPopup.hidden = true;
+      return;
+    }
+    var range = sel.getRangeAt(0);
+    if (!sessionBody.contains(range.commonAncestorContainer)) {
+      lookupPopup.hidden = true;
+      return;
+    }
+    var rect = range.getBoundingClientRect();
+    if (rect.width === 0 && rect.height === 0) { lookupPopup.hidden = true; return; }
+    lookupBtn.textContent = "「" + text + "」を調べる";
+    lookupPopup.style.left = (rect.left + rect.width / 2) + "px";
+    lookupPopup.style.top = (rect.top - 10) + "px";
+    lookupPopup.hidden = false;
+  }
+
+  lookupBtn.addEventListener("click", function () {
+    var text = window.getSelection().toString().trim();
+    if (text) window.open("https://cjjc.weblio.jp/content/" + encodeURIComponent(text), "_blank", "noopener");
+    lookupPopup.hidden = true;
+    window.getSelection().removeAllRanges();
+  });
+
+  document.addEventListener("scroll", function () { lookupPopup.hidden = true; }, true);
 
   renderHome();
 })();
