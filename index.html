@@ -1019,6 +1019,21 @@
     window.speechSynthesis.speak(u);
   }
 
+  function playListening(it) {
+    var audio = new Audio("audio/" + it.id + ".mp3");
+    var fellBack = false;
+    audio.addEventListener("error", function () {
+      if (fellBack) return;
+      fellBack = true;
+      speak(it.transcript);
+    });
+    audio.play().catch(function () {
+      if (fellBack) return;
+      fellBack = true;
+      speak(it.transcript);
+    });
+  }
+
   function renderListeningCard(body, it) {
     var optionsHtml = it.options.map(function (opt, idx) {
       return '<button class="option-btn" data-idx="' + idx + '">' + opt + '</button>';
@@ -1027,7 +1042,7 @@
     body.innerHTML =
       '<div class="listen-card">' +
         '<button class="play-btn" id="playBtn" aria-label="音声を再生">▶</button>' +
-        '<div class="listen-hint">タップして音声を聞く（合成音声）</div>' +
+        '<div class="listen-hint">タップして音声を聞く</div>' +
         '<div class="question-text">' + it.question + '</div>' +
         '<div class="options" id="optionsWrap">' + optionsHtml + '</div>' +
         '<div class="transcript" id="transcript">スクリプト：' + it.transcript +
@@ -1037,7 +1052,7 @@
       '<button class="next-btn" id="nextBtn">次へ</button>';
 
     document.getElementById("playBtn").addEventListener("click", function () {
-      speak(it.transcript);
+      playListening(it);
     });
 
     var answered = false;
