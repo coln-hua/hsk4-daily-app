@@ -402,8 +402,15 @@
     font-size: 12px;
     color: var(--ink-soft);
     font-style: italic;
+  }
+  .en-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
     margin-top: 3px;
   }
+  .en-row .mini-play-btn.small { flex-shrink: 0; }
   .example-block {
     border-top: 1px dashed var(--border);
     padding-top: 10px;
@@ -1220,8 +1227,14 @@
           '</div>' +
           '<div class="ex-pinyin">' + it.example.pinyin + '</div>' +
           '<div>' + it.example.ja + '</div>' +
-          (it.example.en ? '<div class="en-line">' + it.example.en + '</div>' : '') +
+          (it.example.en
+            ? '<div class="ex-row en-row"><div class="en-line">' + it.example.en + '</div><button class="mini-play-btn small" id="exampleEnPlayBtn" aria-label="例文の英語発音を再生">▶</button></div>'
+            : '') +
         '</div>'
+      : '';
+
+    var meaningEnHtml = it.meaningEn
+      ? '<span class="en-row"><span class="en-line">' + it.meaningEn + '</span><button class="mini-play-btn small" id="meaningEnPlayBtn" aria-label="英語の発音を再生">▶</button></span>'
       : '';
 
     body.innerHTML =
@@ -1234,7 +1247,8 @@
         '<div class="reveal-hint" id="revealHint">タップして意味を見る</div>' +
         '<div class="answer-block" id="answerBlock">' +
           '<div class="pinyin">' + it.pinyin + '</div>' +
-          '<div class="meaning">' + it.meaning + (it.meaningEn ? '<span class="en-line">' + it.meaningEn + '</span>' : '') + '</div>' +
+          '<div class="meaning">' + it.meaning + '</div>' +
+          meaningEnHtml +
           exampleHtml +
         '</div>' +
       '</div>' +
@@ -1258,6 +1272,20 @@
         e.stopPropagation();
         if (this.classList.contains("playing")) { stopAllAudio(); return; }
         speak(it.example.zh, this);
+      });
+      if (it.example.en) {
+        document.getElementById("exampleEnPlayBtn").addEventListener("click", function (e) {
+          e.stopPropagation();
+          if (this.classList.contains("playing")) { stopAllAudio(); return; }
+          speak(it.example.en, this, "en-US");
+        });
+      }
+    }
+    if (it.meaningEn) {
+      document.getElementById("meaningEnPlayBtn").addEventListener("click", function (e) {
+        e.stopPropagation();
+        if (this.classList.contains("playing")) { stopAllAudio(); return; }
+        speak(it.meaningEn, this, "en-US");
       });
     }
 
@@ -1341,15 +1369,20 @@
     window.speechSynthesis.onvoiceschanged = function () { zhVoice = pickZhVoice(); };
   }
 
-  function speak(text, btn) {
+  function speak(text, btn, lang) {
+    lang = lang || "zh-CN";
     stopAllAudio();
     setBtnPlaying(btn, true);
     if (!("speechSynthesis" in window)) { setBtnPlaying(btn, false); return; }
-    if (!zhVoice) zhVoice = pickZhVoice();
     var u = new SpeechSynthesisUtterance(text);
-    u.lang = "zh-CN";
-    if (zhVoice) u.voice = zhVoice;
-    u.rate = 0.9;
+    u.lang = lang;
+    if (lang === "zh-CN") {
+      if (!zhVoice) zhVoice = pickZhVoice();
+      if (zhVoice) u.voice = zhVoice;
+      u.rate = 0.9;
+    } else {
+      u.rate = 1;
+    }
     u.onend = function () { setBtnPlaying(btn, false); };
     u.onerror = function () { setBtnPlaying(btn, false); };
     window.speechSynthesis.speak(u);
