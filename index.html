@@ -201,6 +201,10 @@
     background: var(--surface-2);
     color: var(--ink-soft);
   }
+  .mode-card.tone .glyph {
+    background: var(--celebrate-soft);
+    color: var(--celebrate);
+  }
   .mode-card .body { flex: 1; min-width: 0; }
   .mode-card .title { font-size: 15px; font-weight: 700; }
   .mode-card .desc { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
@@ -675,6 +679,14 @@
         </div>
         <div class="badge" id="badgeReview">0</div>
       </button>
+      <button class="mode-card tone" onclick="startSession('tone')">
+        <div class="glyph">调</div>
+        <div class="body">
+          <div class="title">声調だけ復習</div>
+          <div class="desc">声調を間違えた単語だけピンポイントで</div>
+        </div>
+        <div class="badge" id="badgeTone">0</div>
+      </button>
       <button class="mode-card browse" onclick="openBrowse()">
         <div class="glyph">览</div>
         <div class="body">
@@ -1043,11 +1055,19 @@
     });
   }
 
+  function toneReviewQueue() {
+    return VOCAB.filter(function (it) {
+      var s = getItemState(it.id);
+      return s.needsReview && s.reasonCounts && s.reasonCounts["発音"] > 0;
+    });
+  }
+
   function counts() {
     return {
       vocabDue: dueQueue(VOCAB).length,
       listenDue: dueQueue(LISTENING).length,
       review: reviewQueue().length,
+      tone: toneReviewQueue().length,
       mastered: VOCAB.concat(LISTENING).filter(function (it) { return getItemState(it.id).box >= 4; }).length
     };
   }
@@ -1061,6 +1081,7 @@
     document.getElementById("badgeVocab").textContent = c.vocabDue;
     document.getElementById("badgeListening").textContent = c.listenDue;
     document.getElementById("badgeReview").textContent = c.review;
+    document.getElementById("badgeTone").textContent = c.tone;
   }
 
   // ---- session engine ----
@@ -1136,6 +1157,7 @@
     var kind;
     if (type === "vocab") { queue = dueQueue(VOCAB); kind = "vocab"; }
     else if (type === "listening") { queue = dueQueue(LISTENING); kind = "listening"; }
+    else if (type === "tone") { queue = toneReviewQueue(); kind = "vocab"; }
     else { queue = reviewQueue(); kind = "mixed"; }
 
     session = { queue: queue, index: 0, correct: 0, kind: kind };
