@@ -869,6 +869,7 @@
   var session = null; // { type, queue, index, correct }
 
   function goHome() {
+    stopAllAudio();
     document.getElementById("sessionView").classList.remove("active");
     document.getElementById("homeView").classList.remove("hidden");
     document.getElementById("doneView").classList.remove("show");
@@ -894,6 +895,7 @@
   }
 
   function renderStep() {
+    stopAllAudio();
     var body = document.getElementById("sessionBody");
     var total = session.queue.length;
     var i = session.index;
@@ -1010,9 +1012,20 @@
     });
   }
 
+  var currentAudio = null;
+
+  function stopAllAudio() {
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+      currentAudio = null;
+    }
+    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  }
+
   function speak(text) {
+    stopAllAudio();
     if (!("speechSynthesis" in window)) return;
-    window.speechSynthesis.cancel();
     var u = new SpeechSynthesisUtterance(text);
     u.lang = "zh-CN";
     u.rate = 0.95;
@@ -1020,16 +1033,20 @@
   }
 
   function playListening(it) {
+    stopAllAudio();
     var audio = new Audio("audio/" + it.id + ".mp3");
+    currentAudio = audio;
     var fellBack = false;
     audio.addEventListener("error", function () {
       if (fellBack) return;
       fellBack = true;
+      currentAudio = null;
       speak(it.transcript);
     });
     audio.play().catch(function () {
       if (fellBack) return;
       fellBack = true;
+      currentAudio = null;
       speak(it.transcript);
     });
   }
