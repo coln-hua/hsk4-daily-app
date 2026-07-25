@@ -388,6 +388,13 @@
     font-size: 16px;
     color: var(--ink);
   }
+  .en-line {
+    display: block;
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-top: 3px;
+  }
   .example-block {
     border-top: 1px dashed var(--border);
     padding-top: 10px;
@@ -710,56 +717,56 @@
 
   // ---- HSK4真題4セット（41004・41005・41006・41007）から抽出した実データ ----
   var VOCAB = [
-    {id:"v1",hanzi:"伤心",pinyin:"shāng xīn",meaning:"悲しむ、心を痛める",example:{zh:"听到这个消息，她伤心地哭了起来。",pinyin:"Tīng dào zhège xiāoxi, tā shāngxīn de kū le qǐlái.",ja:"この知らせを聞いて、彼女は悲しくて泣き出した。"}},
-    {id:"v2",hanzi:"按时",pinyin:"àn shí",meaning:"時間通りに",example:{zh:"医生让我按时吃药，不能忘记。",pinyin:"Yīshēng ràng wǒ ànshí chī yào, bù néng wàngjì.",ja:"医者は私に時間通りに薬を飲むように言った、忘れてはいけない。"}},
-    {id:"v3",hanzi:"距离",pinyin:"jù lí",meaning:"距離",example:{zh:"我家离公司的距离不算远，坐地铁只要二十分钟。",pinyin:"Wǒ jiā lí gōngsī de jùlí bú suàn yuǎn, zuò dìtiě zhǐ yào èrshí fēnzhōng.",ja:"私の家から会社までの距離はそれほど遠くなく、地下鉄で20分しかかからない。"}},
-    {id:"v4",hanzi:"坚持",pinyin:"jiān chí",meaning:"堅持する、頑張り続ける",example:{zh:"虽然很累，但他还是坚持每天跑步。",pinyin:"Suīrán hěn lèi, dàn tā háishi jiānchí měitiān pǎobù.",ja:"疲れているけれど、彼は毎日走ることを続けている。"}},
-    {id:"v5",hanzi:"耐心",pinyin:"nài xīn",meaning:"根気、辛抱強い",example:{zh:"教小孩子写字需要很大的耐心。",pinyin:"Jiāo xiǎoháizi xiězì xūyào hěn dà de nàixīn.",ja:"子供に字を教えるには大きな忍耐が必要だ。"}},
-    {id:"v6",hanzi:"个子",pinyin:"gè zi",meaning:"背丈、身長",example:{zh:"他个子很高，一眼就能在人群中看到他。",pinyin:"Tā gèzi hěn gāo, yìyǎn jiù néng zài rénqún zhōng kàndào tā.",ja:"彼は背が高く、人ごみの中でもすぐに見つけられる。"}},
-    {id:"v7",hanzi:"严格",pinyin:"yán gé",meaning:"厳格である",example:{zh:"这位老师对学生要求很严格。",pinyin:"Zhè wèi lǎoshī duì xuésheng yāoqiú hěn yángé.",ja:"この先生は学生に対してとても厳しい。"}},
-    {id:"v8",hanzi:"后悔",pinyin:"hòu huǐ",meaning:"後悔する",example:{zh:"我很后悔当时没有听你的建议。",pinyin:"Wǒ hěn hòuhuǐ dāngshí méiyǒu tīng nǐ de jiànyì.",ja:"あのときあなたの助言を聞かなかったことをとても後悔している。"}},
-    {id:"v9",hanzi:"温度",pinyin:"wēn dù",meaning:"温度",example:{zh:"今天的温度比昨天低了很多，出门要多穿点儿。",pinyin:"Jīntiān de wēndù bǐ zuótiān dī le hěn duō, chūmén yào duō chuān diǎnr.",ja:"今日の気温は昨日よりずっと低いので、出かけるときは厚着したほうがいい。"}},
-    {id:"v10",hanzi:"直接",pinyin:"zhí jiē",meaning:"直接に",example:{zh:"有什么问题你可以直接跟我说。",pinyin:"Yǒu shénme wèntí nǐ kěyǐ zhíjiē gēn wǒ shuō.",ja:"何か問題があれば直接私に言ってください。"}},
-    {id:"v11",hanzi:"重点",pinyin:"zhòng diǎn",meaning:"重点、ポイント",example:{zh:"复习的时候要抓住重点，别浪费时间。",pinyin:"Fùxí de shíhou yào zhuāzhù zhòngdiǎn, bié làngfèi shíjiān.",ja:"復習するときは重要な点をしっかりつかんで、時間を無駄にしないようにしよう。"}},
-    {id:"v12",hanzi:"提醒",pinyin:"tí xǐng",meaning:"注意を促す、気づかせる",example:{zh:"谢谢你提醒我，不然我就忘了今天的会议。",pinyin:"Xièxie nǐ tíxǐng wǒ, bùrán wǒ jiù wàng le jīntiān de huìyì.",ja:"教えてくれてありがとう、そうでなければ今日の会議を忘れるところだった。"}},
-    {id:"v13",hanzi:"尊重",pinyin:"zūn zhòng",meaning:"尊重する",example:{zh:"无论对方是谁，我们都应该尊重他的意见。",pinyin:"Wúlùn duìfāng shì shéi, wǒmen dōu yīnggāi zūnzhòng tā de yìjiàn.",ja:"相手が誰であっても、私たちはその人の意見を尊重すべきだ。"}},
-    {id:"v14",hanzi:"幽默",pinyin:"yōu mò",meaning:"ユーモラスな、ユーモアがある",example:{zh:"他说话很幽默，总能让大家笑起来。",pinyin:"Tā shuōhuà hěn yōumò, zǒng néng ràng dàjiā xiào qǐlái.",ja:"彼の話し方はとてもユーモラスで、いつもみんなを笑わせる。"}},
-    {id:"v15",hanzi:"竞争",pinyin:"jìng zhēng",meaning:"競争する",example:{zh:"现在市场上的竞争越来越激烈。",pinyin:"Xiànzài shìchǎng shàng de jìngzhēng yuèláiyuè jīliè.",ja:"今、市場での競争はますます激しくなっている。"}},
-    {id:"v16",hanzi:"举办",pinyin:"jǔ bàn",meaning:"開催する",example:{zh:"学校下个月要举办一场篮球比赛。",pinyin:"Xuéxiào xià ge yuè yào jǔbàn yì chǎng lánqiú bǐsài.",ja:"学校は来月バスケットボールの試合を開催する予定だ。"}},
-    {id:"v17",hanzi:"可是",pinyin:"kě shì",meaning:"しかし、でも",example:{zh:"我很想去旅游，可是最近工作太忙了。",pinyin:"Wǒ hěn xiǎng qù lǚyóu, kěshì zuìjìn gōngzuò tài máng le.",ja:"旅行に行きたいけれど、最近仕事がとても忙しい。"}},
-    {id:"v18",hanzi:"味道",pinyin:"wèi dào",meaning:"味",example:{zh:"这道菜的味道有点儿咸，你尝尝。",pinyin:"Zhè dào cài de wèidao yǒudiǎnr xián, nǐ chángchang.",ja:"この料理の味は少し塩辛い、食べてみて。"}},
-    {id:"v19",hanzi:"食品",pinyin:"shí pǐn",meaning:"食品",example:{zh:"超市里的食品种类越来越丰富了。",pinyin:"Chāoshì lǐ de shípǐn zhǒnglèi yuèláiyuè fēngfù le.",ja:"スーパーの食品の種類はますます豊富になっている。"}},
-    {id:"v20",hanzi:"流行",pinyin:"liú xíng",meaning:"流行する",example:{zh:"这种颜色的衣服今年很流行。",pinyin:"Zhè zhǒng yánsè de yīfu jīnnián hěn liúxíng.",ja:"この色の服は今年とても流行している。"}},
-    {id:"v21",hanzi:"主动",pinyin:"zhǔ dòng",meaning:"積極的だ、自発的だ",example:{zh:"遇到问题应该主动去解决，不要总是等别人帮忙。",pinyin:"Yùdào wèntí yīnggāi zhǔdòng qù jiějué, búyào zǒngshì děng biéren bāngmáng.",ja:"問題に出会ったら自分から進んで解決すべきで、いつも人の助けを待っていてはいけない。"}},
-    {id:"v22",hanzi:"重新",pinyin:"chóng xīn",meaning:"改めて、再び",example:{zh:"这份报告写得不好，请你重新写一遍。",pinyin:"Zhè fèn bàogào xiě de bù hǎo, qǐng nǐ chóngxīn xiě yí biàn.",ja:"この報告書はよく書けていないので、もう一度書き直してください。"}},
-    {id:"v23",hanzi:"来不及",pinyin:"lái bu jí",meaning:"間に合わない",example:{zh:"再不出发就来不及赶飞机了。",pinyin:"Zài bù chūfā jiù láibují gǎn fēijī le.",ja:"今すぐ出発しないと飛行機に間に合わなくなる。"}},
-    {id:"v24",hanzi:"严重",pinyin:"yán zhòng",meaning:"深刻だ、重大だ",example:{zh:"这次事故造成了严重的经济损失。",pinyin:"Zhè cì shìgù zàochéng le yánzhòng de jīngjì sǔnshī.",ja:"今回の事故は深刻な経済的損失をもたらした。"}},
-    {id:"v25",hanzi:"大概",pinyin:"dà gài",meaning:"大体、おそらく",example:{zh:"从这儿到火车站大概需要半个小时。",pinyin:"Cóng zhèr dào huǒchēzhàn dàgài xūyào bàn ge xiǎoshí.",ja:"ここから駅までだいたい30分かかる。"}},
-    {id:"v26",hanzi:"适应",pinyin:"shì yìng",meaning:"適応する",example:{zh:"刚到北京的时候，我花了很长时间才适应那里的气候。",pinyin:"Gāng dào Běijīng de shíhou, wǒ huā le hěn cháng shíjiān cái shìyìng nàli de qìhòu.",ja:"北京に着いたばかりの頃、私はその土地の気候に慣れるのにとても長い時間がかかった。"}},
-    {id:"v27",hanzi:"污染",pinyin:"wū rǎn",meaning:"汚染する",example:{zh:"为了保护环境，我们应该减少空气污染。",pinyin:"Wèile bǎohù huánjìng, wǒmen yīnggāi jiǎnshǎo kōngqì wūrǎn.",ja:"環境を守るために、私たちは大気汚染を減らすべきだ。"}},
-    {id:"v28",hanzi:"及时",pinyin:"jí shí",meaning:"タイムリーに、すぐに",example:{zh:"幸好送医院及时，病人现在没有危险了。",pinyin:"Xìnghǎo sòng yīyuàn jíshí, bìngrén xiànzài méiyǒu wēixiǎn le.",ja:"幸い病院に運ぶのが間に合ったので、患者は今はもう危険な状態ではない。"}},
-    {id:"v29",hanzi:"钥匙",pinyin:"yào shi",meaning:"鍵",example:{zh:"我把家里的钥匙忘在办公室了。",pinyin:"Wǒ bǎ jiā lǐ de yàoshi wàng zài bàngōngshì le.",ja:"家の鍵をオフィスに忘れてきてしまった。"}},
-    {id:"v30",hanzi:"回忆",pinyin:"huí yì",meaning:"思い出す、回想する",example:{zh:"每次听到这首歌，我都会回忆起大学时代。",pinyin:"Měi cì tīngdào zhè shǒu gē, wǒ dōu huì huíyì qǐ dàxué shídài.",ja:"この歌を聞くたびに、大学時代を思い出す。"}},
-    {id:"v31",hanzi:"适合",pinyin:"shì hé",meaning:"適する、ふさわしい",example:{zh:"这件衣服的颜色很适合你。",pinyin:"Zhè jiàn yīfu de yánsè hěn shìhé nǐ.",ja:"この服の色はあなたにとても似合っている。"}},
-    {id:"v32",hanzi:"由于",pinyin:"yóu yú",meaning:"～のため、～によって",example:{zh:"由于天气原因，今天的比赛取消了。",pinyin:"Yóuyú tiānqì yuányīn, jīntiān de bǐsài qǔxiāo le.",ja:"天候の理由により、今日の試合は中止になった。"}},
-    {id:"v33",hanzi:"页",pinyin:"yè",meaning:"ページ",example:{zh:"请大家翻到课本第三十页。",pinyin:"Qǐng dàjiā fān dào kèběn dì sānshí yè.",ja:"皆さん教科書の30ページを開いてください。"}},
-    {id:"v34",hanzi:"收拾",pinyin:"shōu shi",meaning:"片付ける",example:{zh:"出发前，我得先把房间收拾一下。",pinyin:"Chūfā qián, wǒ děi xiān bǎ fángjiān shōushi yíxià.",ja:"出発する前に、まず部屋を片付けなければならない。"}},
-    {id:"v35",hanzi:"不过",pinyin:"bú guò",meaning:"しかし、ただ",example:{zh:"这家饭馆儿菜很好吃，不过价格有点儿贵。",pinyin:"Zhè jiā fànguǎnr cài hěn hǎochī, búguò jiàgé yǒudiǎnr guì.",ja:"このレストランの料理はとても美味しいが、値段が少し高い。"}},
-    {id:"v36",hanzi:"毕业",pinyin:"bì yè",meaning:"卒業する",example:{zh:"他去年从大学毕业，现在在一家公司工作。",pinyin:"Tā qùnián cóng dàxué bìyè, xiànzài zài yì jiā gōngsī gōngzuò.",ja:"彼は去年大学を卒業し、今はある会社で働いている。"}},
-    {id:"v37",hanzi:"窄",pinyin:"zhǎi",meaning:"狭い",example:{zh:"这条路太窄了，大车开不进去。",pinyin:"Zhè tiáo lù tài zhǎi le, dà chē kāi bú jìnqù.",ja:"この道は狭すぎて、大きな車は入れない。"}},
-    {id:"v38",hanzi:"误会",pinyin:"wù huì",meaning:"誤解する",example:{zh:"都是一场误会，其实我没有生你的气。",pinyin:"Dōu shì yì chǎng wùhuì, qíshí wǒ méiyǒu shēng nǐ de qì.",ja:"これはすべて誤解で、実は私はあなたに怒っていない。"}},
-    {id:"v39",hanzi:"羡慕",pinyin:"xiàn mù",meaning:"うらやむ",example:{zh:"我很羡慕她能说一口流利的英语。",pinyin:"Wǒ hěn xiànmù tā néng shuō yì kǒu liúlì de Yīngyǔ.",ja:"彼女が流暢な英語を話せることを私はとてもうらやましく思う。"}},
-    {id:"v40",hanzi:"详细",pinyin:"xiáng xì",meaning:"詳しい、詳細である",example:{zh:"请把事情的经过详细地告诉我。",pinyin:"Qǐng bǎ shìqing de jīngguò xiángxì de gàosu wǒ.",ja:"事の経緯を詳しく私に教えてください。"}},
-    {id:"v41",hanzi:"偶尔",pinyin:"ǒu ěr",meaning:"たまに、時折",example:{zh:"我平时很少喝咖啡，偶尔喝一杯。",pinyin:"Wǒ píngshí hěn shǎo hē kāfēi, ǒu'ěr hē yì bēi.",ja:"私は普段コーヒーをほとんど飲まないが、たまに一杯飲む。"}},
-    {id:"v42",hanzi:"印象",pinyin:"yìn xiàng",meaning:"印象",example:{zh:"第一次见面，他给我留下了很好的印象。",pinyin:"Dì yī cì jiànmiàn, tā gěi wǒ liú xià le hěn hǎo de yìnxiàng.",ja:"初めて会ったとき、彼は私に良い印象を残した。"}},
-    {id:"v43",hanzi:"经验",pinyin:"jīng yàn",meaning:"経験",example:{zh:"这位老师有二十年的教学经验。",pinyin:"Zhè wèi lǎoshī yǒu èrshí nián de jiàoxué jīngyàn.",ja:"この先生には20年の教育経験がある。"}},
-    {id:"v44",hanzi:"一共",pinyin:"yí gòng",meaning:"合計で、全部で",example:{zh:"这些东西一共多少钱？",pinyin:"Zhèxiē dōngxi yígòng duōshao qián?",ja:"これらの品物は全部でいくらですか。"}},
-    {id:"v45",hanzi:"安排",pinyin:"ān pái",meaning:"手配する、段取りする",example:{zh:"老师帮我们安排了下周的参观活动。",pinyin:"Lǎoshī bāng wǒmen ānpái le xià zhōu de cānguān huódòng.",ja:"先生は私たちのために来週の見学活動を手配してくれた。"}},
-    {id:"v46",hanzi:"扔",pinyin:"rēng",meaning:"捨てる、投げる",example:{zh:"别把垃圾扔在地上，扔进垃圾桶里。",pinyin:"Bié bǎ lājī rēng zài dì shàng, rēng jìn lājītǒng lǐ.",ja:"ゴミを地面に捨てないで、ゴミ箱に捨ててください。"}},
-    {id:"v47",hanzi:"准时",pinyin:"zhǔn shí",meaning:"時間通りに",example:{zh:"会议九点开始，请大家准时到。",pinyin:"Huìyì jiǔ diǎn kāishǐ, qǐng dàjiā zhǔnshí dào.",ja:"会議は9時に始まりますので、皆さん時間通りにお越しください。"}},
-    {id:"v48",hanzi:"份",pinyin:"fèn",meaning:"（部数・人数分を数える量詞）",example:{zh:"请给我一份炒饭，谢谢。",pinyin:"Qǐng gěi wǒ yí fèn chǎofàn, xièxie.",ja:"チャーハンを一つください、ありがとう。"}},
-    {id:"v49",hanzi:"恐怕",pinyin:"kǒng pà",meaning:"おそらく～だろう",example:{zh:"天这么黑，恐怕要下雨了。",pinyin:"Tiān zhème hēi, kǒngpà yào xiàyǔ le.",ja:"空がこんなに暗いので、たぶん雨が降りそうだ。"}},
-    {id:"v50",hanzi:"骄傲",pinyin:"jiāo ào",meaning:"誇りに思う／傲慢である",example:{zh:"儿子考上了大学，父母都感到很骄傲。",pinyin:"Érzi kǎoshàng le dàxué, fùmǔ dōu gǎndào hěn jiāo'ào.",ja:"息子が大学に合格し、両親はとても誇らしく思っている。"}}
+    {id:"v1",hanzi:"伤心",pinyin:"shāng xīn",meaning:"悲しむ、心を痛める",meaningEn:"to be sad, heartbroken",example:{zh:"听到这个消息，她伤心地哭了起来。",pinyin:"Tīng dào zhège xiāoxi, tā shāngxīn de kū le qǐlái.",ja:"この知らせを聞いて、彼女は悲しくて泣き出した。",en:"Hearing this news, she broke down and cried."}},
+    {id:"v2",hanzi:"按时",pinyin:"àn shí",meaning:"時間通りに",meaningEn:"on time, punctually",example:{zh:"医生让我按时吃药，不能忘记。",pinyin:"Yīshēng ràng wǒ ànshí chī yào, bù néng wàngjì.",ja:"医者は私に時間通りに薬を飲むように言った、忘れてはいけない。",en:"The doctor told me to take the medicine on time and not to forget."}},
+    {id:"v3",hanzi:"距离",pinyin:"jù lí",meaning:"距離",meaningEn:"distance",example:{zh:"我家离公司的距离不算远，坐地铁只要二十分钟。",pinyin:"Wǒ jiā lí gōngsī de jùlí bú suàn yuǎn, zuò dìtiě zhǐ yào èrshí fēnzhōng.",ja:"私の家から会社までの距離はそれほど遠くなく、地下鉄で20分しかかからない。",en:"The distance from my home to the office isn't far — it's only 20 minutes by subway."}},
+    {id:"v4",hanzi:"坚持",pinyin:"jiān chí",meaning:"堅持する、頑張り続ける",meaningEn:"to persist, keep at it",example:{zh:"虽然很累，但他还是坚持每天跑步。",pinyin:"Suīrán hěn lèi, dàn tā háishi jiānchí měitiān pǎobù.",ja:"疲れているけれど、彼は毎日走ることを続けている。",en:"Although he's tired, he still keeps up his daily jogging."}},
+    {id:"v5",hanzi:"耐心",pinyin:"nài xīn",meaning:"根気、辛抱強い",meaningEn:"patience",example:{zh:"教小孩子写字需要很大的耐心。",pinyin:"Jiāo xiǎoháizi xiězì xūyào hěn dà de nàixīn.",ja:"子供に字を教えるには大きな忍耐が必要だ。",en:"Teaching children to write requires a lot of patience."}},
+    {id:"v6",hanzi:"个子",pinyin:"gè zi",meaning:"背丈、身長",meaningEn:"height, build",example:{zh:"他个子很高，一眼就能在人群中看到他。",pinyin:"Tā gèzi hěn gāo, yìyǎn jiù néng zài rénqún zhōng kàndào tā.",ja:"彼は背が高く、人ごみの中でもすぐに見つけられる。",en:"He's quite tall — you can spot him in a crowd right away."}},
+    {id:"v7",hanzi:"严格",pinyin:"yán gé",meaning:"厳格である",meaningEn:"strict",example:{zh:"这位老师对学生要求很严格。",pinyin:"Zhè wèi lǎoshī duì xuésheng yāoqiú hěn yángé.",ja:"この先生は学生に対してとても厳しい。",en:"This teacher is very strict with the students."}},
+    {id:"v8",hanzi:"后悔",pinyin:"hòu huǐ",meaning:"後悔する",meaningEn:"to regret",example:{zh:"我很后悔当时没有听你的建议。",pinyin:"Wǒ hěn hòuhuǐ dāngshí méiyǒu tīng nǐ de jiànyì.",ja:"あのときあなたの助言を聞かなかったことをとても後悔している。",en:"I really regret not listening to your advice at the time."}},
+    {id:"v9",hanzi:"温度",pinyin:"wēn dù",meaning:"温度",meaningEn:"temperature",example:{zh:"今天的温度比昨天低了很多，出门要多穿点儿。",pinyin:"Jīntiān de wēndù bǐ zuótiān dī le hěn duō, chūmén yào duō chuān diǎnr.",ja:"今日の気温は昨日よりずっと低いので、出かけるときは厚着したほうがいい。",en:"Today's temperature is much lower than yesterday's, so dress warmly when you go out."}},
+    {id:"v10",hanzi:"直接",pinyin:"zhí jiē",meaning:"直接に",meaningEn:"direct(ly)",example:{zh:"有什么问题你可以直接跟我说。",pinyin:"Yǒu shénme wèntí nǐ kěyǐ zhíjiē gēn wǒ shuō.",ja:"何か問題があれば直接私に言ってください。",en:"If you have any questions, you can talk to me directly."}},
+    {id:"v11",hanzi:"重点",pinyin:"zhòng diǎn",meaning:"重点、ポイント",meaningEn:"key point, focus",example:{zh:"复习的时候要抓住重点，别浪费时间。",pinyin:"Fùxí de shíhou yào zhuāzhù zhòngdiǎn, bié làngfèi shíjiān.",ja:"復習するときは重要な点をしっかりつかんで、時間を無駄にしないようにしよう。",en:"When reviewing, focus on the key points — don't waste time."}},
+    {id:"v12",hanzi:"提醒",pinyin:"tí xǐng",meaning:"注意を促す、気づかせる",meaningEn:"to remind",example:{zh:"谢谢你提醒我，不然我就忘了今天的会议。",pinyin:"Xièxie nǐ tíxǐng wǒ, bùrán wǒ jiù wàng le jīntiān de huìyì.",ja:"教えてくれてありがとう、そうでなければ今日の会議を忘れるところだった。",en:"Thanks for reminding me, otherwise I would have forgotten today's meeting."}},
+    {id:"v13",hanzi:"尊重",pinyin:"zūn zhòng",meaning:"尊重する",meaningEn:"to respect",example:{zh:"无论对方是谁，我们都应该尊重他的意见。",pinyin:"Wúlùn duìfāng shì shéi, wǒmen dōu yīnggāi zūnzhòng tā de yìjiàn.",ja:"相手が誰であっても、私たちはその人の意見を尊重すべきだ。",en:"No matter who the other person is, we should respect their opinion."}},
+    {id:"v14",hanzi:"幽默",pinyin:"yōu mò",meaning:"ユーモラスな、ユーモアがある",meaningEn:"humorous",example:{zh:"他说话很幽默，总能让大家笑起来。",pinyin:"Tā shuōhuà hěn yōumò, zǒng néng ràng dàjiā xiào qǐlái.",ja:"彼の話し方はとてもユーモラスで、いつもみんなを笑わせる。",en:"He's very funny and always makes everyone laugh."}},
+    {id:"v15",hanzi:"竞争",pinyin:"jìng zhēng",meaning:"競争する",meaningEn:"competition, to compete",example:{zh:"现在市场上的竞争越来越激烈。",pinyin:"Xiànzài shìchǎng shàng de jìngzhēng yuèláiyuè jīliè.",ja:"今、市場での競争はますます激しくなっている。",en:"Competition in the market is getting fiercer these days."}},
+    {id:"v16",hanzi:"举办",pinyin:"jǔ bàn",meaning:"開催する",meaningEn:"to hold (an event)",example:{zh:"学校下个月要举办一场篮球比赛。",pinyin:"Xuéxiào xià ge yuè yào jǔbàn yì chǎng lánqiú bǐsài.",ja:"学校は来月バスケットボールの試合を開催する予定だ。",en:"The school will hold a basketball game next month."}},
+    {id:"v17",hanzi:"可是",pinyin:"kě shì",meaning:"しかし、でも",meaningEn:"but, however",example:{zh:"我很想去旅游，可是最近工作太忙了。",pinyin:"Wǒ hěn xiǎng qù lǚyóu, kěshì zuìjìn gōngzuò tài máng le.",ja:"旅行に行きたいけれど、最近仕事がとても忙しい。",en:"I'd love to travel, but I've been too busy with work lately."}},
+    {id:"v18",hanzi:"味道",pinyin:"wèi dào",meaning:"味",meaningEn:"taste, flavor",example:{zh:"这道菜的味道有点儿咸，你尝尝。",pinyin:"Zhè dào cài de wèidao yǒudiǎnr xián, nǐ chángchang.",ja:"この料理の味は少し塩辛い、食べてみて。",en:"This dish is a bit salty — try it."}},
+    {id:"v19",hanzi:"食品",pinyin:"shí pǐn",meaning:"食品",meaningEn:"food, food products",example:{zh:"超市里的食品种类越来越丰富了。",pinyin:"Chāoshì lǐ de shípǐn zhǒnglèi yuèláiyuè fēngfù le.",ja:"スーパーの食品の種類はますます豊富になっている。",en:"The variety of food at the supermarket keeps growing."}},
+    {id:"v20",hanzi:"流行",pinyin:"liú xíng",meaning:"流行する",meaningEn:"to be popular, trendy",example:{zh:"这种颜色的衣服今年很流行。",pinyin:"Zhè zhǒng yánsè de yīfu jīnnián hěn liúxíng.",ja:"この色の服は今年とても流行している。",en:"Clothes in this color are very popular this year."}},
+    {id:"v21",hanzi:"主动",pinyin:"zhǔ dòng",meaning:"積極的だ、自発的だ",meaningEn:"proactive, on one's own initiative",example:{zh:"遇到问题应该主动去解决，不要总是等别人帮忙。",pinyin:"Yùdào wèntí yīnggāi zhǔdòng qù jiějué, búyào zǒngshì děng biéren bāngmáng.",ja:"問題に出会ったら自分から進んで解決すべきで、いつも人の助けを待っていてはいけない。",en:"When you run into a problem, take the initiative to solve it — don't always wait for others' help."}},
+    {id:"v22",hanzi:"重新",pinyin:"chóng xīn",meaning:"改めて、再び",meaningEn:"again, anew",example:{zh:"这份报告写得不好，请你重新写一遍。",pinyin:"Zhè fèn bàogào xiě de bù hǎo, qǐng nǐ chóngxīn xiě yí biàn.",ja:"この報告書はよく書けていないので、もう一度書き直してください。",en:"This report isn't well written — please rewrite it."}},
+    {id:"v23",hanzi:"来不及",pinyin:"lái bu jí",meaning:"間に合わない",meaningEn:"not enough time, too late",example:{zh:"再不出发就来不及赶飞机了。",pinyin:"Zài bù chūfā jiù láibují gǎn fēijī le.",ja:"今すぐ出発しないと飛行機に間に合わなくなる。",en:"If we don't leave now, we'll miss the flight."}},
+    {id:"v24",hanzi:"严重",pinyin:"yán zhòng",meaning:"深刻だ、重大だ",meaningEn:"serious, severe",example:{zh:"这次事故造成了严重的经济损失。",pinyin:"Zhè cì shìgù zàochéng le yánzhòng de jīngjì sǔnshī.",ja:"今回の事故は深刻な経済的損失をもたらした。",en:"This accident caused serious economic losses."}},
+    {id:"v25",hanzi:"大概",pinyin:"dà gài",meaning:"大体、おそらく",meaningEn:"approximately, probably",example:{zh:"从这儿到火车站大概需要半个小时。",pinyin:"Cóng zhèr dào huǒchēzhàn dàgài xūyào bàn ge xiǎoshí.",ja:"ここから駅までだいたい30分かかる。",en:"It takes about half an hour to get to the train station from here."}},
+    {id:"v26",hanzi:"适应",pinyin:"shì yìng",meaning:"適応する",meaningEn:"to adapt",example:{zh:"刚到北京的时候，我花了很长时间才适应那里的气候。",pinyin:"Gāng dào Běijīng de shíhou, wǒ huā le hěn cháng shíjiān cái shìyìng nàli de qìhòu.",ja:"北京に着いたばかりの頃、私はその土地の気候に慣れるのにとても長い時間がかかった。",en:"When I first arrived in Beijing, it took me a long time to get used to the climate there."}},
+    {id:"v27",hanzi:"污染",pinyin:"wū rǎn",meaning:"汚染する",meaningEn:"pollution, to pollute",example:{zh:"为了保护环境，我们应该减少空气污染。",pinyin:"Wèile bǎohù huánjìng, wǒmen yīnggāi jiǎnshǎo kōngqì wūrǎn.",ja:"環境を守るために、私たちは大気汚染を減らすべきだ。",en:"To protect the environment, we should reduce air pollution."}},
+    {id:"v28",hanzi:"及时",pinyin:"jí shí",meaning:"タイムリーに、すぐに",meaningEn:"timely, in time",example:{zh:"幸好送医院及时，病人现在没有危险了。",pinyin:"Xìnghǎo sòng yīyuàn jíshí, bìngrén xiànzài méiyǒu wēixiǎn le.",ja:"幸い病院に運ぶのが間に合ったので、患者は今はもう危険な状態ではない。",en:"Luckily he got to the hospital in time, so the patient is no longer in danger."}},
+    {id:"v29",hanzi:"钥匙",pinyin:"yào shi",meaning:"鍵",meaningEn:"key",example:{zh:"我把家里的钥匙忘在办公室了。",pinyin:"Wǒ bǎ jiā lǐ de yàoshi wàng zài bàngōngshì le.",ja:"家の鍵をオフィスに忘れてきてしまった。",en:"I left my house key at the office."}},
+    {id:"v30",hanzi:"回忆",pinyin:"huí yì",meaning:"思い出す、回想する",meaningEn:"to recall, memory",example:{zh:"每次听到这首歌，我都会回忆起大学时代。",pinyin:"Měi cì tīngdào zhè shǒu gē, wǒ dōu huì huíyì qǐ dàxué shídài.",ja:"この歌を聞くたびに、大学時代を思い出す。",en:"Every time I hear this song, I remember my college days."}},
+    {id:"v31",hanzi:"适合",pinyin:"shì hé",meaning:"適する、ふさわしい",meaningEn:"to suit, be suitable for",example:{zh:"这件衣服的颜色很适合你。",pinyin:"Zhè jiàn yīfu de yánsè hěn shìhé nǐ.",ja:"この服の色はあなたにとても似合っている。",en:"This color of clothing suits you very well."}},
+    {id:"v32",hanzi:"由于",pinyin:"yóu yú",meaning:"～のため、～によって",meaningEn:"due to, because of",example:{zh:"由于天气原因，今天的比赛取消了。",pinyin:"Yóuyú tiānqì yuányīn, jīntiān de bǐsài qǔxiāo le.",ja:"天候の理由により、今日の試合は中止になった。",en:"Due to the weather, today's match was canceled."}},
+    {id:"v33",hanzi:"页",pinyin:"yè",meaning:"ページ",meaningEn:"page",example:{zh:"请大家翻到课本第三十页。",pinyin:"Qǐng dàjiā fān dào kèběn dì sānshí yè.",ja:"皆さん教科書の30ページを開いてください。",en:"Everyone please turn to page 30 of the textbook."}},
+    {id:"v34",hanzi:"收拾",pinyin:"shōu shi",meaning:"片付ける",meaningEn:"to tidy up, pack",example:{zh:"出发前，我得先把房间收拾一下。",pinyin:"Chūfā qián, wǒ děi xiān bǎ fángjiān shōushi yíxià.",ja:"出発する前に、まず部屋を片付けなければならない。",en:"Before I leave, I need to tidy up my room."}},
+    {id:"v35",hanzi:"不过",pinyin:"bú guò",meaning:"しかし、ただ",meaningEn:"but, however",example:{zh:"这家饭馆儿菜很好吃，不过价格有点儿贵。",pinyin:"Zhè jiā fànguǎnr cài hěn hǎochī, búguò jiàgé yǒudiǎnr guì.",ja:"このレストランの料理はとても美味しいが、値段が少し高い。",en:"The food at this restaurant is delicious, but it's a bit expensive."}},
+    {id:"v36",hanzi:"毕业",pinyin:"bì yè",meaning:"卒業する",meaningEn:"to graduate",example:{zh:"他去年从大学毕业，现在在一家公司工作。",pinyin:"Tā qùnián cóng dàxué bìyè, xiànzài zài yì jiā gōngsī gōngzuò.",ja:"彼は去年大学を卒業し、今はある会社で働いている。",en:"He graduated from university last year and now works at a company."}},
+    {id:"v37",hanzi:"窄",pinyin:"zhǎi",meaning:"狭い",meaningEn:"narrow",example:{zh:"这条路太窄了，大车开不进去。",pinyin:"Zhè tiáo lù tài zhǎi le, dà chē kāi bú jìnqù.",ja:"この道は狭すぎて、大きな車は入れない。",en:"This road is too narrow for a big car to drive through."}},
+    {id:"v38",hanzi:"误会",pinyin:"wù huì",meaning:"誤解する",meaningEn:"misunderstanding",example:{zh:"都是一场误会，其实我没有生你的气。",pinyin:"Dōu shì yì chǎng wùhuì, qíshí wǒ méiyǒu shēng nǐ de qì.",ja:"これはすべて誤解で、実は私はあなたに怒っていない。",en:"It was all a misunderstanding — I'm actually not mad at you."}},
+    {id:"v39",hanzi:"羡慕",pinyin:"xiàn mù",meaning:"うらやむ",meaningEn:"to envy, admire",example:{zh:"我很羡慕她能说一口流利的英语。",pinyin:"Wǒ hěn xiànmù tā néng shuō yì kǒu liúlì de Yīngyǔ.",ja:"彼女が流暢な英語を話せることを私はとてもうらやましく思う。",en:"I really envy how fluently she speaks English."}},
+    {id:"v40",hanzi:"详细",pinyin:"xiáng xì",meaning:"詳しい、詳細である",meaningEn:"detailed",example:{zh:"请把事情的经过详细地告诉我。",pinyin:"Qǐng bǎ shìqing de jīngguò xiángxì de gàosu wǒ.",ja:"事の経緯を詳しく私に教えてください。",en:"Please tell me in detail what happened."}},
+    {id:"v41",hanzi:"偶尔",pinyin:"ǒu ěr",meaning:"たまに、時折",meaningEn:"occasionally",example:{zh:"我平时很少喝咖啡，偶尔喝一杯。",pinyin:"Wǒ píngshí hěn shǎo hē kāfēi, ǒu'ěr hē yì bēi.",ja:"私は普段コーヒーをほとんど飲まないが、たまに一杯飲む。",en:"I rarely drink coffee, but I have one once in a while."}},
+    {id:"v42",hanzi:"印象",pinyin:"yìn xiàng",meaning:"印象",meaningEn:"impression",example:{zh:"第一次见面，他给我留下了很好的印象。",pinyin:"Dì yī cì jiànmiàn, tā gěi wǒ liú xià le hěn hǎo de yìnxiàng.",ja:"初めて会ったとき、彼は私に良い印象を残した。",en:"He made a great impression on me the first time we met."}},
+    {id:"v43",hanzi:"经验",pinyin:"jīng yàn",meaning:"経験",meaningEn:"experience",example:{zh:"这位老师有二十年的教学经验。",pinyin:"Zhè wèi lǎoshī yǒu èrshí nián de jiàoxué jīngyàn.",ja:"この先生には20年の教育経験がある。",en:"This teacher has twenty years of teaching experience."}},
+    {id:"v44",hanzi:"一共",pinyin:"yí gòng",meaning:"合計で、全部で",meaningEn:"in total, altogether",example:{zh:"这些东西一共多少钱？",pinyin:"Zhèxiē dōngxi yígòng duōshao qián?",ja:"これらの品物は全部でいくらですか。",en:"How much do these items cost in total?"}},
+    {id:"v45",hanzi:"安排",pinyin:"ān pái",meaning:"手配する、段取りする",meaningEn:"to arrange",example:{zh:"老师帮我们安排了下周的参观活动。",pinyin:"Lǎoshī bāng wǒmen ānpái le xià zhōu de cānguān huódòng.",ja:"先生は私たちのために来週の見学活動を手配してくれた。",en:"The teacher arranged a field trip for us next week."}},
+    {id:"v46",hanzi:"扔",pinyin:"rēng",meaning:"捨てる、投げる",meaningEn:"to throw away",example:{zh:"别把垃圾扔在地上，扔进垃圾桶里。",pinyin:"Bié bǎ lājī rēng zài dì shàng, rēng jìn lājītǒng lǐ.",ja:"ゴミを地面に捨てないで、ゴミ箱に捨ててください。",en:"Don't throw trash on the ground — throw it in the bin."}},
+    {id:"v47",hanzi:"准时",pinyin:"zhǔn shí",meaning:"時間通りに",meaningEn:"on time, punctual",example:{zh:"会议九点开始，请大家准时到。",pinyin:"Huìyì jiǔ diǎn kāishǐ, qǐng dàjiā zhǔnshí dào.",ja:"会議は9時に始まりますので、皆さん時間通りにお越しください。",en:"The meeting starts at nine — please arrive on time."}},
+    {id:"v48",hanzi:"份",pinyin:"fèn",meaning:"（部数・人数分を数える量詞）",meaningEn:"(measure word for portions/copies)",example:{zh:"请给我一份炒饭，谢谢。",pinyin:"Qǐng gěi wǒ yí fèn chǎofàn, xièxie.",ja:"チャーハンを一つください、ありがとう。",en:"Please give me a portion of fried rice, thanks."}},
+    {id:"v49",hanzi:"恐怕",pinyin:"kǒng pà",meaning:"おそらく～だろう",meaningEn:"I'm afraid (that), probably",example:{zh:"天这么黑，恐怕要下雨了。",pinyin:"Tiān zhème hēi, kǒngpà yào xiàyǔ le.",ja:"空がこんなに暗いので、たぶん雨が降りそうだ。",en:"The sky is so dark — I'm afraid it's going to rain."}},
+    {id:"v50",hanzi:"骄傲",pinyin:"jiāo ào",meaning:"誇りに思う／傲慢である",meaningEn:"proud",example:{zh:"儿子考上了大学，父母都感到很骄傲。",pinyin:"Érzi kǎoshàng le dàxué, fùmǔ dōu gǎndào hěn jiāo'ào.",ja:"息子が大学に合格し、両親はとても誇らしく思っている。",en:"The son got into university, and his parents are very proud."}}
   ];
 
   var LISTENING = [
@@ -1202,6 +1209,7 @@
           '</div>' +
           '<div class="ex-pinyin">' + it.example.pinyin + '</div>' +
           '<div>' + it.example.ja + '</div>' +
+          (it.example.en ? '<div class="en-line">' + it.example.en + '</div>' : '') +
         '</div>'
       : '';
 
@@ -1215,7 +1223,7 @@
         '<div class="reveal-hint" id="revealHint">タップして意味を見る</div>' +
         '<div class="answer-block" id="answerBlock">' +
           '<div class="pinyin">' + it.pinyin + '</div>' +
-          '<div class="meaning">' + it.meaning + '</div>' +
+          '<div class="meaning">' + it.meaning + (it.meaningEn ? '<span class="en-line">' + it.meaningEn + '</span>' : '') + '</div>' +
           exampleHtml +
         '</div>' +
       '</div>' +
