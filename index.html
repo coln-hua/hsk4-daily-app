@@ -288,6 +288,45 @@
     cursor: pointer;
   }
   .browse-num-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .browse-num-btn.done {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .browse-overall {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .browse-overall-bar {
+    height: 8px;
+    background: var(--surface-2);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .browse-overall-fill {
+    height: 100%;
+    background: var(--celebrate);
+    border-radius: 999px;
+  }
+  .browse-overall-label {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+  .set-progress {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-weight: 400;
+  }
   .browse-set {
     border: 1px solid var(--border);
     border-radius: 14px;
@@ -1136,23 +1175,37 @@
   function renderBrowsePanels() {
     var vp = document.getElementById("browseVocabPanel");
     vp.innerHTML = '<div class="browse-vocab-grid">' + VOCAB.map(function (v) {
-      return '<button class="browse-num-btn" onclick="openBrowseItem(\'vocab\',\'' + v.id + '\')">' + v.id.replace("v", "") + '</button>';
+      var seen = getItemState(v.id).seen > 0;
+      return '<button class="browse-num-btn' + (seen ? ' done' : '') + '" onclick="openBrowseItem(\'vocab\',\'' + v.id + '\')">' + v.id.replace("v", "") + '</button>';
     }).join('') + '</div>';
 
     var sets = {};
     LISTENING.forEach(function (it) {
-      var m = it.id.match(/^l-(\d+)-(\d+)$/);
+      var m = it.id.match(/^l-([0-9A-Za-z]+)-(\d+)$/);
       if (!sets[m[1]]) sets[m[1]] = [];
       sets[m[1]].push({ num: Number(m[2]), id: it.id });
     });
+    var setIds = Object.keys(sets).sort();
+    var totalItems = 0, totalDone = 0, setsFinished = 0;
     var lp = document.getElementById("browseListenPanel");
-    lp.innerHTML = Object.keys(sets).sort().map(function (setId) {
+    var setsHtml = setIds.map(function (setId) {
       var items = sets[setId].sort(function (a, b) { return a.num - b.num; });
+      var doneCount = items.filter(function (it) { return getItemState(it.id).seen > 0; }).length;
+      totalItems += items.length;
+      totalDone += doneCount;
+      if (doneCount === items.length) setsFinished += 1;
       var grid = items.map(function (it) {
-        return '<button class="browse-num-btn" onclick="openBrowseItem(\'listening\',\'' + it.id + '\')">' + it.num + '</button>';
+        var seen = getItemState(it.id).seen > 0;
+        return '<button class="browse-num-btn' + (seen ? ' done' : '') + '" onclick="openBrowseItem(\'listening\',\'' + it.id + '\')">' + it.num + '</button>';
       }).join('');
-      return '<details class="browse-set"><summary>HSK4 ' + setId + '（45問）</summary><div class="browse-grid">' + grid + '</div></details>';
+      return '<details class="browse-set"><summary>HSK4 ' + setId + '　<span class="set-progress">' + doneCount + '/' + items.length + '</span></summary><div class="browse-grid">' + grid + '</div></details>';
     }).join('');
+    var overallPct = totalItems ? Math.round(totalDone / totalItems * 100) : 0;
+    lp.innerHTML =
+      '<div class="browse-overall">' +
+        '<div class="browse-overall-bar"><div class="browse-overall-fill" style="width:' + overallPct + '%"></div></div>' +
+        '<div class="browse-overall-label">全' + setIds.length + 'セット中 ' + setsFinished + 'セット完了・' + totalDone + '/' + totalItems + '問（' + overallPct + '%）</div>' +
+      '</div>' + setsHtml;
   }
 
   function openBrowseItem(kind, id) {
