@@ -292,6 +292,22 @@
   }
   .sync-input:focus-visible { outline: 2px solid var(--accent); }
   .sync-gen-btn { white-space: nowrap; flex-shrink: 0; }
+  .icon-btn {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .icon-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .icon-btn.copied { background: var(--accent-soft); border-color: var(--accent); }
   .sync-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .sync-btn {
     border: none;
@@ -907,7 +923,7 @@
       <div class="sync-desc">同期コードを決めて、他の端末でも同じコードを使うと進捗を共有できます。</div>
       <div class="sync-row">
         <input type="text" id="syncCodeInput" class="sync-input" placeholder="同期コード（例: yuanyuan-xxxx）" autocomplete="off" autocapitalize="off" spellcheck="false">
-        <button id="syncCopyBtn" class="text-link sync-gen-btn">コピー</button>
+        <button id="syncCopyBtn" class="icon-btn" aria-label="コードをコピー" title="コピー">📋</button>
         <button id="syncGenBtn" class="text-link sync-gen-btn">自動生成</button>
       </div>
       <div class="sync-btn-row">
@@ -3053,8 +3069,9 @@
     var btn = this;
     function done() {
       var original = btn.textContent;
-      btn.textContent = "コピーしました";
-      setTimeout(function () { btn.textContent = original; }, 1500);
+      btn.textContent = "✅";
+      btn.classList.add("copied");
+      setTimeout(function () { btn.textContent = original; btn.classList.remove("copied"); }, 1500);
     }
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(code).then(done).catch(function () {
