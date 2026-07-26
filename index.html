@@ -278,7 +278,7 @@
   }
   .sync-title { font-size: 13px; font-weight: 700; }
   .sync-desc { font-size: 11px; color: var(--ink-soft); line-height: 1.5; }
-  .sync-row { display: flex; align-items: center; gap: 8px; }
+  .sync-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .sync-input {
     flex: 1;
     min-width: 0;
@@ -907,6 +907,7 @@
       <div class="sync-desc">同期コードを決めて、他の端末でも同じコードを使うと進捗を共有できます。</div>
       <div class="sync-row">
         <input type="text" id="syncCodeInput" class="sync-input" placeholder="同期コード（例: yuanyuan-xxxx）" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <button id="syncCopyBtn" class="text-link sync-gen-btn">コピー</button>
         <button id="syncGenBtn" class="text-link sync-gen-btn">自動生成</button>
       </div>
       <div class="sync-btn-row">
@@ -3044,6 +3045,27 @@
     syncCodeInput.value = code;
     localStorage.setItem(SYNC_CODE_KEY, code);
     setSyncStatus("コードを生成しました。「この端末→送る」で保存してください。", "");
+  });
+
+  document.getElementById("syncCopyBtn").addEventListener("click", function () {
+    var code = syncCodeInput.value.trim();
+    if (!code) { setSyncStatus("コピーするコードがありません。", "error"); return; }
+    var btn = this;
+    function done() {
+      var original = btn.textContent;
+      btn.textContent = "コピーしました";
+      setTimeout(function () { btn.textContent = original; }, 1500);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(code).then(done).catch(function () {
+        setSyncStatus("コピーに失敗しました。手動で選択してコピーしてください。", "error");
+      });
+    } else {
+      syncCodeInput.select();
+      try { document.execCommand("copy"); done(); } catch (e) {
+        setSyncStatus("コピーに失敗しました。手動で選択してコピーしてください。", "error");
+      }
+    }
   });
 
   function setSyncStatus(msg, cls) {
