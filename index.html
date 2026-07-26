@@ -298,6 +298,7 @@
     height: 34px;
     border: 1px solid var(--border);
     background: var(--surface-2);
+    color: var(--ink-soft);
     border-radius: 10px;
     font-size: 15px;
     cursor: pointer;
@@ -307,7 +308,7 @@
     padding: 0;
   }
   .icon-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .icon-btn.copied { background: var(--accent-soft); border-color: var(--accent); }
+  .icon-btn.copied { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
   .sync-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .sync-btn {
     border: none;
@@ -923,7 +924,7 @@
       <div class="sync-desc">同期コードを決めて、他の端末でも同じコードを使うと進捗を共有できます。</div>
       <div class="sync-row">
         <input type="text" id="syncCodeInput" class="sync-input" placeholder="同期コード（例: yuanyuan-xxxx）" autocomplete="off" autocapitalize="off" spellcheck="false">
-        <button id="syncCopyBtn" class="icon-btn" aria-label="コードをコピー" title="コピー">📋</button>
+        <button id="syncCopyBtn" class="icon-btn" aria-label="コードをコピー" title="コピー"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
         <button id="syncGenBtn" class="text-link sync-gen-btn">自動生成</button>
       </div>
       <div class="sync-btn-row">
@@ -3067,11 +3068,12 @@
     var code = syncCodeInput.value.trim();
     if (!code) { setSyncStatus("コピーするコードがありません。", "error"); return; }
     var btn = this;
+    var checkIcon = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
     function done() {
-      var original = btn.textContent;
-      btn.textContent = "✅";
+      var original = btn.innerHTML;
+      btn.innerHTML = checkIcon;
       btn.classList.add("copied");
-      setTimeout(function () { btn.textContent = original; btn.classList.remove("copied"); }, 1500);
+      setTimeout(function () { btn.innerHTML = original; btn.classList.remove("copied"); }, 1500);
     }
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(code).then(done).catch(function () {
