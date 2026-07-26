@@ -267,6 +267,48 @@
     flex-shrink: 0;
   }
 
+  .sync-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .sync-title { font-size: 13px; font-weight: 700; }
+  .sync-desc { font-size: 11px; color: var(--ink-soft); line-height: 1.5; }
+  .sync-row { display: flex; align-items: center; gap: 8px; }
+  .sync-input {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--ink);
+    border-radius: 10px;
+    padding: 9px 10px;
+    font-size: 13px;
+    font-family: var(--font-mono);
+  }
+  .sync-input:focus-visible { outline: 2px solid var(--accent); }
+  .sync-gen-btn { white-space: nowrap; flex-shrink: 0; }
+  .sync-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .sync-btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .sync-btn.push { background: var(--accent-soft); color: var(--accent); }
+  .sync-btn.pull { background: var(--celebrate-soft); color: var(--celebrate); }
+  .sync-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .sync-btn:disabled { opacity: 0.5; cursor: default; }
+  .sync-status { font-size: 11px; color: var(--ink-soft); min-height: 14px; }
+  .sync-status.error { color: var(--danger); }
+  .sync-status.ok { color: var(--accent); }
   .footnote {
     font-size: 11px;
     color: var(--ink-soft);
@@ -860,8 +902,22 @@
       </button>
     </div>
 
+    <div class="sync-card">
+      <div class="sync-title">端末間で同期</div>
+      <div class="sync-desc">同期コードを決めて、他の端末でも同じコードを使うと進捗を共有できます。</div>
+      <div class="sync-row">
+        <input type="text" id="syncCodeInput" class="sync-input" placeholder="同期コード（例: yuanyuan-xxxx）" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <button id="syncGenBtn" class="text-link sync-gen-btn">自動生成</button>
+      </div>
+      <div class="sync-btn-row">
+        <button id="syncPushBtn" class="sync-btn push">この端末→送る</button>
+        <button id="syncPullBtn" class="sync-btn pull">送信済みを取り込む</button>
+      </div>
+      <div class="sync-status" id="syncStatus"></div>
+    </div>
+
     <div class="footnote">
-      データはこの端末のブラウザ内にのみ保存されます。<br>
+      データはこの端末のブラウザ内にのみ保存されます（同期コードを使わない場合）。<br>
       HSK4真題19セット・リスニング855問。語彙はHSK4公式新出600語＋過去問由来の語で計606語を収録。<br>
       <button id="resetBtn" class="text-link">進捗をリセット</button>
     </div>
@@ -2967,6 +3023,101 @@
     state = loadState();
     renderHome();
   });
+
+  // ---- 端末間同期（Supabase） ----
+  var SUPABASE_URL = "https://czxcyjcozlucokgesmot.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_zkfB1BbcwmOnb9G2ssSCyw_sXFrWP94";
+  var SYNC_CODE_KEY = "hsk4-sync-code";
+
+  var syncCodeInput = document.getElementById("syncCodeInput");
+  var syncStatus = document.getElementById("syncStatus");
+  var syncPushBtn = document.getElementById("syncPushBtn");
+  var syncPullBtn = document.getElementById("syncPullBtn");
+
+  syncCodeInput.value = localStorage.getItem(SYNC_CODE_KEY) || "";
+  syncCodeInput.addEventListener("input", function () {
+    localStorage.setItem(SYNC_CODE_KEY, syncCodeInput.value.trim());
+  });
+
+  document.getElementById("syncGenBtn").addEventListener("click", function () {
+    var code = "yuanyuan-" + Math.random().toString(36).slice(2, 8);
+    syncCodeInput.value = code;
+    localStorage.setItem(SYNC_CODE_KEY, code);
+    setSyncStatus("コードを生成しました。「この端末→送る」で保存してください。", "");
+  });
+
+  function setSyncStatus(msg, cls) {
+    syncStatus.textContent = msg;
+    syncStatus.className = "sync-status" + (cls ? " " + cls : "");
+  }
+
+  function getSyncCode() {
+    var code = syncCodeInput.value.trim();
+    if (!code) {
+      setSyncStatus("先に同期コードを入力するか、自動生成してください。", "error");
+      return null;
+    }
+    return code;
+  }
+
+  function syncHeaders(code) {
+    return {
+      "apikey": SUPABASE_KEY,
+      "Authorization": "Bearer " + SUPABASE_KEY,
+      "x-sync-code": code,
+      "Content-Type": "application/json"
+    };
+  }
+
+  function pushSync() {
+    var code = getSyncCode();
+    if (!code) return;
+    syncPushBtn.disabled = true;
+    setSyncStatus("送信中…", "");
+    fetch(SUPABASE_URL + "/rest/v1/sync_data", {
+      method: "POST",
+      headers: Object.assign(syncHeaders(code), { "Prefer": "resolution=merge-duplicates" }),
+      body: JSON.stringify({ sync_code: code, state: state, updated_at: new Date().toISOString() })
+    }).then(function (res) {
+      syncPushBtn.disabled = false;
+      if (!res.ok) { return res.text().then(function (t) { throw new Error(t); }); }
+      setSyncStatus("送信しました（" + new Date().toLocaleTimeString() + "）", "ok");
+    }).catch(function (err) {
+      syncPushBtn.disabled = false;
+      setSyncStatus("送信に失敗しました。コードやネット接続を確認してください。", "error");
+    });
+  }
+
+  function pullSync() {
+    var code = getSyncCode();
+    if (!code) return;
+    if (!confirm("この端末の今の進捗を、同期コードに保存されているデータで上書きします。よろしいですか？")) return;
+    syncPullBtn.disabled = true;
+    setSyncStatus("取り込み中…", "");
+    fetch(SUPABASE_URL + "/rest/v1/sync_data?sync_code=eq." + encodeURIComponent(code) + "&select=state,updated_at", {
+      method: "GET",
+      headers: syncHeaders(code)
+    }).then(function (res) {
+      if (!res.ok) { return res.text().then(function (t) { throw new Error(t); }); }
+      return res.json();
+    }).then(function (rows) {
+      syncPullBtn.disabled = false;
+      if (!rows || !rows.length) {
+        setSyncStatus("このコードで保存されたデータがまだありません。先に送ってください。", "error");
+        return;
+      }
+      state = rows[0].state;
+      saveState();
+      renderHome();
+      setSyncStatus("取り込みました（" + new Date(rows[0].updated_at).toLocaleString() + " 時点）", "ok");
+    }).catch(function (err) {
+      syncPullBtn.disabled = false;
+      setSyncStatus("取り込みに失敗しました。コードやネット接続を確認してください。", "error");
+    });
+  }
+
+  syncPushBtn.addEventListener("click", pushSync);
+  syncPullBtn.addEventListener("click", pullSync);
 
   // ---- 選択した中国語をその場で辞書検索 ----
   var lookupPopup = document.getElementById("lookupPopup");
