@@ -135,6 +135,51 @@
     font-size: 14px;
   }
 
+  .progress-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px 16px;
+  }
+  .progress-card-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .progress-card-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .progress-card-pct {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--celebrate);
+  }
+  .progress-card-pct.mastered { color: var(--accent); }
+  .progress-card-bar {
+    height: 10px;
+    background: var(--surface-2);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+  .progress-card-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--celebrate);
+    transition: width 0.4s ease;
+  }
+  .progress-card-fill.mastered { background: var(--accent); }
+  .progress-card-sub {
+    font-size: 11px;
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    margin-top: 4px;
+  }
   .stat-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -271,30 +316,79 @@
   .browse-panel[hidden] { display: none; }
   .browse-vocab-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 8px;
   }
-  @media (min-width: 380px) { .browse-vocab-grid { grid-template-columns: repeat(6, 1fr); } }
-  @media (min-width: 500px) { .browse-vocab-grid { grid-template-columns: repeat(8, 1fr); } }
-  @media (min-width: 700px) { .browse-vocab-grid { grid-template-columns: repeat(10, 1fr); } }
-  .browse-num-btn {
+  @media (min-width: 380px) { .browse-vocab-grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 500px) { .browse-vocab-grid { grid-template-columns: repeat(5, 1fr); } }
+  @media (min-width: 700px) { .browse-vocab-grid { grid-template-columns: repeat(6, 1fr); } }
+  .browse-word-btn {
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--ink);
     border-radius: 10px;
-    padding: 9px 4px;
-    font-family: var(--font-mono);
-    font-variant-numeric: tabular-nums;
-    font-size: 13px;
+    padding: 8px 6px;
+    font-family: inherit;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    text-align: left;
+    min-width: 0;
   }
-  .browse-num-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .browse-num-btn.done {
+  .browse-word-btn .bw-hanzi {
+    font-family: var(--font-hanzi);
+    font-size: 16px;
+    white-space: nowrap;
+  }
+  .browse-word-btn .bw-meaning {
+    font-size: 10px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  .browse-word-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .browse-word-btn.done {
     background: var(--accent-soft);
     border-color: var(--accent);
-    color: var(--accent);
-    font-weight: 700;
   }
+  .browse-word-btn.done .bw-hanzi { color: var(--accent); }
+  .browse-row-btn {
+    border: none;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink);
+    padding: 10px 14px;
+    font-family: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    text-align: left;
+  }
+  .browse-row-btn:first-child { border-top: none; }
+  .browse-row-btn .br-num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    color: var(--ink-soft);
+    flex-shrink: 0;
+    width: 32px;
+  }
+  .browse-row-btn .br-preview {
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .browse-row-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .browse-row-btn.done { background: var(--accent-soft); }
+  .browse-row-btn.done .br-num { color: var(--accent); font-weight: 700; }
+  .browse-list { display: flex; flex-direction: column; padding-bottom: 8px; }
   .browse-overall {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -347,15 +441,6 @@
   .browse-set summary::-webkit-details-marker { display: none; }
   .browse-set summary::after { content: "▾"; color: var(--ink-soft); font-weight: 400; }
   .browse-set[open] summary::after { content: "▴"; }
-  .browse-set .browse-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 8px;
-    padding: 0 14px 14px;
-  }
-  @media (min-width: 380px) { .browse-set .browse-grid { grid-template-columns: repeat(7, 1fr); } }
-  @media (min-width: 500px) { .browse-set .browse-grid { grid-template-columns: repeat(9, 1fr); } }
-  @media (min-width: 700px) { .browse-set .browse-grid { grid-template-columns: repeat(11, 1fr); } }
   .browse-back-row { margin-top: 4px; }
 
   .session-head {
@@ -373,6 +458,16 @@
     line-height: 1;
   }
   .back-btn:focus-visible { outline: 2px solid var(--accent); border-radius: 6px; }
+  .pick-btn {
+    background: none;
+    border: none;
+    color: var(--ink-soft);
+    font-size: 17px;
+    cursor: pointer;
+    padding: 4px 0 4px 8px;
+    line-height: 1;
+  }
+  .pick-btn:focus-visible { outline: 2px solid var(--accent); border-radius: 6px; }
   .progress-track {
     flex: 1;
     height: 6px;
@@ -701,6 +796,21 @@
       <div class="streak-chip"><span class="num" id="streakNum">0</span>日連続</div>
     </header>
 
+    <div class="progress-card">
+      <div class="progress-card-row">
+        <span class="progress-card-label">これまでの取り組み</span>
+        <span class="progress-card-pct" id="overallCoveragePct">0%</span>
+      </div>
+      <div class="progress-card-bar"><div class="progress-card-fill coverage" id="overallCoverageFill" style="width:0%"></div></div>
+      <div class="progress-card-sub" id="overallCoverageLabel">0/0 問に取り組み済み</div>
+      <div class="progress-card-row" style="margin-top:10px;">
+        <span class="progress-card-label">習得済み</span>
+        <span class="progress-card-pct mastered" id="overallMasteredPct">0%</span>
+      </div>
+      <div class="progress-card-bar"><div class="progress-card-fill mastered" id="overallMasteredFill" style="width:0%"></div></div>
+      <div class="progress-card-sub" id="overallMasteredLabel">0/0 問を習得</div>
+    </div>
+
     <div class="stat-row">
       <div class="stat-tile"><div class="n" id="statDue">0</div><div class="l">今日の予定</div></div>
       <div class="stat-tile"><div class="n" id="statReview">0</div><div class="l">苦手</div></div>
@@ -759,7 +869,7 @@
 
   <div class="browse-view" id="browseView">
     <div class="session-head">
-      <button class="back-btn" onclick="goHome()" aria-label="ホームに戻る">←</button>
+      <button class="back-btn" onclick="browseBack()" aria-label="戻る">←</button>
       <div class="browse-title">問題をさがす</div>
     </div>
     <div class="browse-tabs">
@@ -775,6 +885,7 @@
       <button class="back-btn" onclick="sessionBack()" aria-label="戻る">←</button>
       <div class="progress-track" id="progressTrack"><div class="progress-fill" id="progressFill"></div></div>
       <div class="progress-count" id="progressCount">0/0</div>
+      <button class="pick-btn" id="pickBtn" onclick="openPickerFromSession()" aria-label="問題を選ぶ">🔍</button>
     </div>
 
     <div id="sessionBody"></div>
@@ -2347,12 +2458,15 @@
   }
 
   function counts() {
+    var all = VOCAB.concat(LISTENING);
     return {
       vocabDue: dueQueue(VOCAB).length,
       listenDue: dueQueue(LISTENING).length,
       review: reviewQueue().length,
       tone: toneReviewQueue().length,
-      mastered: VOCAB.concat(LISTENING).filter(function (it) { return getItemState(it.id).box >= 4; }).length
+      mastered: all.filter(function (it) { return getItemState(it.id).box >= 4; }).length,
+      seen: all.filter(function (it) { return getItemState(it.id).seen > 0; }).length,
+      total: all.length
     };
   }
 
@@ -2366,13 +2480,24 @@
     document.getElementById("badgeListening").textContent = c.listenDue;
     document.getElementById("badgeReview").textContent = c.review;
     document.getElementById("badgeTone").textContent = c.tone;
+
+    var covPct = c.total ? Math.round(c.seen / c.total * 100) : 0;
+    var masPct = c.total ? Math.round(c.mastered / c.total * 100) : 0;
+    document.getElementById("overallCoveragePct").textContent = covPct + "%";
+    document.getElementById("overallCoverageFill").style.width = covPct + "%";
+    document.getElementById("overallCoverageLabel").textContent = c.seen + "/" + c.total + " 問に取り組み済み";
+    document.getElementById("overallMasteredPct").textContent = masPct + "%";
+    document.getElementById("overallMasteredFill").style.width = masPct + "%";
+    document.getElementById("overallMasteredLabel").textContent = c.mastered + "/" + c.total + " 問を習得";
   }
 
   // ---- session engine ----
   var session = null; // { type, queue, index, correct }
+  var savedSession = null; // session parked while browsing via the in-session picker
 
   function goHome() {
     stopAllAudio();
+    savedSession = null;
     document.getElementById("sessionView").classList.remove("active");
     document.getElementById("browseView").classList.remove("active");
     document.getElementById("homeView").classList.remove("hidden");
@@ -2383,8 +2508,29 @@
   function sessionBack() {
     if (session && session.browsing) {
       stopAllAudio();
+      if (savedSession) {
+        session = savedSession;
+        savedSession = null;
+        document.getElementById("browseView").classList.remove("active");
+        document.getElementById("sessionView").classList.add("active");
+        renderStep();
+        return;
+      }
       document.getElementById("sessionView").classList.remove("active");
       document.getElementById("browseView").classList.add("active");
+      return;
+    }
+    goHome();
+  }
+
+  function browseBack() {
+    if (savedSession) {
+      stopAllAudio();
+      session = savedSession;
+      savedSession = null;
+      document.getElementById("browseView").classList.remove("active");
+      document.getElementById("sessionView").classList.add("active");
+      renderStep();
       return;
     }
     goHome();
@@ -2397,6 +2543,16 @@
     setBrowseTab("vocab");
   }
 
+  function openPickerFromSession() {
+    if (!session || session.browsing) return;
+    stopAllAudio();
+    savedSession = session;
+    document.getElementById("sessionView").classList.remove("active");
+    document.getElementById("browseView").classList.add("active");
+    renderBrowsePanels();
+    setBrowseTab(session.kind === "listening" ? "listening" : "vocab");
+  }
+
   function setBrowseTab(tab) {
     document.getElementById("tabVocab").classList.toggle("active", tab === "vocab");
     document.getElementById("tabListening").classList.toggle("active", tab === "listening");
@@ -2404,40 +2560,54 @@
     document.getElementById("browseListenPanel").hidden = tab !== "listening";
   }
 
-  function renderBrowsePanels() {
-    var vp = document.getElementById("browseVocabPanel");
-    vp.innerHTML = '<div class="browse-vocab-grid">' + VOCAB.map(function (v) {
-      var seen = getItemState(v.id).seen > 0;
-      return '<button class="browse-num-btn' + (seen ? ' done' : '') + '" onclick="openBrowseItem(\'vocab\',\'' + v.id + '\')">' + v.id.replace("v", "") + '</button>';
-    }).join('') + '</div>';
+  function truncate(s, n) {
+    if (!s) return "";
+    return s.length > n ? s.slice(0, n) + "…" : s;
+  }
 
-    var sets = {};
-    LISTENING.forEach(function (it) {
-      var m = it.id.match(/^l-([0-9A-Za-z]+)-(\d+)$/);
-      if (!sets[m[1]]) sets[m[1]] = [];
-      sets[m[1]].push({ num: Number(m[2]), id: it.id });
-    });
-    var setIds = Object.keys(sets).sort();
-    var totalItems = 0, totalDone = 0, setsFinished = 0;
-    var lp = document.getElementById("browseListenPanel");
-    var setsHtml = setIds.map(function (setId) {
-      var items = sets[setId].sort(function (a, b) { return a.num - b.num; });
-      var doneCount = items.filter(function (it) { return getItemState(it.id).seen > 0; }).length;
-      totalItems += items.length;
-      totalDone += doneCount;
-      if (doneCount === items.length) setsFinished += 1;
-      var grid = items.map(function (it) {
-        var seen = getItemState(it.id).seen > 0;
-        return '<button class="browse-num-btn' + (seen ? ' done' : '') + '" onclick="openBrowseItem(\'listening\',\'' + it.id + '\')">' + it.num + '</button>';
+  function renderBrowsePanels(kind) {
+    if (!kind || kind === "vocab") {
+      var vp = document.getElementById("browseVocabPanel");
+      vp.innerHTML = '<div class="browse-vocab-grid">' + VOCAB.map(function (v) {
+        var seen = getItemState(v.id).seen > 0;
+        return '<button class="browse-word-btn' + (seen ? ' done' : '') + '" onclick="openBrowseItem(\'vocab\',\'' + v.id + '\')">' +
+          '<span class="bw-hanzi">' + v.hanzi + '</span><span class="bw-meaning">' + truncate(v.meaning, 8) + '</span>' +
+        '</button>';
+      }).join('') + '</div>';
+    }
+
+    if (!kind || kind === "listening") {
+      var sets = {};
+      LISTENING.forEach(function (it) {
+        var m = it.id.match(/^l-([0-9A-Za-z]+)-(\d+)$/);
+        if (!sets[m[1]]) sets[m[1]] = [];
+        sets[m[1]].push({ num: Number(m[2]), id: it.id, question: it.question, transcript: it.transcript });
+      });
+      var setIds = Object.keys(sets).sort();
+      var totalItems = 0, totalDone = 0, setsFinished = 0;
+      var lp = document.getElementById("browseListenPanel");
+      var setsHtml = setIds.map(function (setId) {
+        var items = sets[setId].sort(function (a, b) { return a.num - b.num; });
+        var doneCount = items.filter(function (it) { return getItemState(it.id).seen > 0; }).length;
+        totalItems += items.length;
+        totalDone += doneCount;
+        if (doneCount === items.length) setsFinished += 1;
+        var rows = items.map(function (it) {
+          var seen = getItemState(it.id).seen > 0;
+          var preview = truncate(it.question || it.transcript, 22);
+          return '<button class="browse-row-btn' + (seen ? ' done' : '') + '" onclick="openBrowseItem(\'listening\',\'' + it.id + '\')">' +
+            '<span class="br-num">Q' + it.num + '</span><span class="br-preview">' + preview + '</span>' +
+          '</button>';
+        }).join('');
+        return '<details class="browse-set"><summary>HSK4 ' + setId + '　<span class="set-progress">' + doneCount + '/' + items.length + '</span></summary><div class="browse-list">' + rows + '</div></details>';
       }).join('');
-      return '<details class="browse-set"><summary>HSK4 ' + setId + '　<span class="set-progress">' + doneCount + '/' + items.length + '</span></summary><div class="browse-grid">' + grid + '</div></details>';
-    }).join('');
-    var overallPct = totalItems ? Math.round(totalDone / totalItems * 100) : 0;
-    lp.innerHTML =
-      '<div class="browse-overall">' +
-        '<div class="browse-overall-bar"><div class="browse-overall-fill" style="width:' + overallPct + '%"></div></div>' +
-        '<div class="browse-overall-label">全' + setIds.length + 'セット中 ' + setsFinished + 'セット完了・' + totalDone + '/' + totalItems + '問（' + overallPct + '%）</div>' +
-      '</div>' + setsHtml;
+      var overallPct = totalItems ? Math.round(totalDone / totalItems * 100) : 0;
+      lp.innerHTML =
+        '<div class="browse-overall">' +
+          '<div class="browse-overall-bar"><div class="browse-overall-fill" style="width:' + overallPct + '%"></div></div>' +
+          '<div class="browse-overall-label">全' + setIds.length + 'セット中 ' + setsFinished + 'セット完了・' + totalDone + '/' + totalItems + '問（' + overallPct + '%）</div>' +
+        '</div>' + setsHtml;
+    }
   }
 
   function openBrowseItem(kind, id) {
@@ -2482,6 +2652,7 @@
     var i = session.index;
 
     document.getElementById("progressTrack").style.visibility = session.browsing ? "hidden" : "visible";
+    document.getElementById("pickBtn").style.display = (session.browsing || session.kind === "mixed") ? "none" : "block";
     if (session.browsing) {
       document.getElementById("progressCount").textContent = "プレビュー（進捗には反映されません）";
     } else {
@@ -2784,7 +2955,9 @@
   window.startSession = startSession;
   window.goHome = goHome;
   window.sessionBack = sessionBack;
+  window.browseBack = browseBack;
   window.openBrowse = openBrowse;
+  window.openPickerFromSession = openPickerFromSession;
   window.setBrowseTab = setBrowseTab;
   window.openBrowseItem = openBrowseItem;
 
